@@ -1,5 +1,6 @@
 /build*
 /.idea
+/third_party
 /.vscode
 /.vs
 /doc/doxyfile
