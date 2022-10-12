@@ -1,0 +1,8 @@
+/build*
+/.idea
+/.vscode
+/.vs
+/doc/doxyfile
+/bin
+/cpm_modules
+.DS_Store

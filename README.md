@@ -1,3 +1,2 @@
-ciao
-ho creato questo solo per non avere una repository vuota
-(e ho creato una task su trello e l'ho pure completata)
+# Capacitated Multi Agent Pickup & Delivery
+C++ porting of https://github.com/fenoy/capacitated_mapd. Work in progress...
