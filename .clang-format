@@ -9,8 +9,8 @@
   ConstructorInitializerAllOnOneLineOrOnePerLine: true
   IncludeBlocks: Regroup
   IndentPPDirectives: AfterHash
-  IndentWidth: 2
-  NamespaceIndentation: All
+  IndentWidth: 4
+  NamespaceIndentation: None
   BreakBeforeBinaryOperators: All
   BreakBeforeTernaryOperators: true
 ...

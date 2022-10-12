@@ -1,1 +1,1 @@
-add_executable(cmapd main.cpp)
+add_executable(cmapd main.cpp AmbientMap.cpp AmbientMap.h Point.h)
