@@ -1,9 +1,7 @@
 /build*
 /.idea
-/third_party
+/third_party/cpm_sources
 /.vscode
 /.vs
-/doc/doxyfile
 /bin
-/cpm_modules
 .DS_Store
