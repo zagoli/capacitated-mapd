@@ -1,6 +1,11 @@
-//
-// Created by Jacopo on 12/10/2022.
-//
+/**
+ * @file main.cpp
+ * @brief The program entry point. It mainly parses arguments and prints results.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 #include <argparse/argparse.hpp>
 #include <filesystem>
 #include <string>
