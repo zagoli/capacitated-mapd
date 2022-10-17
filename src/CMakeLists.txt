@@ -2,8 +2,6 @@ message(STATUS "processing src folder")
 
 # ---- Dependencies ----
 
-include(../cmake/CPM.cmake)
-
 CPMAddPackage(
         NAME argparse
         GITHUB_REPOSITORY p-ranav/argparse

@@ -14,7 +14,7 @@ class AmbientMap {
     std::vector<std::vector<char>> grid;
 
   public:
-    explicit AmbientMap(std::filesystem::path path_to_map);
+    explicit AmbientMap(const std::filesystem::path& path_to_map);
     [[nodiscard]] size_t get_rows() const;
     [[nodiscard]] size_t get_columns() const;
     [[nodiscard]] bool is_valid_position(Point p) const;
