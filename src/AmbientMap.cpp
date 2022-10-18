@@ -39,20 +39,21 @@ AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
     }
 }
 
-const std::vector<std::vector<char>>& AmbientMap::get_map(){
+const std::vector<std::vector<char>>& AmbientMap::get_map() const{
         return AmbientMap::grid;
 }
 
-size_t AmbientMap::get_rows() const{
-    return AmbientMap::grid.size();
+int AmbientMap::get_rows() const{
+    return (int)AmbientMap::grid.size();
 }
 
-size_t AmbientMap::get_columns() const{
-    return AmbientMap::grid[0].size();
+int AmbientMap::get_columns() const{
+    return (int)AmbientMap::grid[0].size();
 }
 
 bool AmbientMap::is_valid_position(Point p) const{
-    return p.row<AmbientMap::grid.size() && p.col<AmbientMap::grid[0].size();
+    return p.row >= 0 && p.row < AmbientMap::grid.size() &&
+           p.col >= 0 && p.col < AmbientMap::grid[0].size();
 }
 
 std::string AmbientMap::to_string() const{
