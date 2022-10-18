@@ -43,23 +43,26 @@ const std::vector<std::vector<char>>& AmbientMap::get_map() const{
         return AmbientMap::grid;
 }
 
-int AmbientMap::get_rows() const{
-    return (int)AmbientMap::grid.size();
+int AmbientMap::get_rows() const {
+    if (grid.size() > std::numeric_limits<int>::max())
+        throw std::overflow_error("The number of rows is larger than a int.");
+    return static_cast<int>(AmbientMap::grid.size());
 }
 
-int AmbientMap::get_columns() const{
-    return (int)AmbientMap::grid[0].size();
+int AmbientMap::get_columns() const {
+    if (grid[0].size() > std::numeric_limits<int>::max())
+        throw std::overflow_error("The number of columns is larger than a int.");
+    return static_cast<int>(AmbientMap::grid[0].size());
 }
 
-bool AmbientMap::is_valid_position(Point p) const{
-    return p.row >= 0 && p.row < AmbientMap::grid.size() &&
-           p.col >= 0 && p.col < AmbientMap::grid[0].size();
+bool AmbientMap::is_valid_position(Point p) const {
+    return p.row >= 0 && p.row < this->get_rows() && p.col >= 0 && p.col < this->get_columns();
 }
 
-std::string AmbientMap::to_string() const{
-    std::string s {""};
-    for(std::vector row : AmbientMap::grid){
-        for(char c : row){
+std::string AmbientMap::to_string() const {
+    std::string s;
+    for (const auto& row : AmbientMap::grid) {
+        for (char c : row) {
             s += c;
         }
         s += "\n";

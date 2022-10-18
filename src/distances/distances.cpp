@@ -13,11 +13,11 @@ namespace cmapd {
         for (int c = 0; c < map_instance.get_columns(); ++c) {
             Point current_cell{r, c};
             // iterate over every task to compute the distance
-            for (const auto task : map_instance.get_tasks()) {
+            for (const auto& [start, goal] : map_instance.get_tasks()) {
                 // compute distance from current cell to the task starting point
-                hTable[current_cell][task.first] = distance_function(current_cell, task.first);
+                hTable[current_cell][start] = distance_function(current_cell, start);
                 // compute distance from current cell to the task ending point
-                hTable[current_cell][task.second] = distance_function(current_cell, task.second);
+                hTable[current_cell][goal] = distance_function(current_cell, goal);
             }
         }
     }
