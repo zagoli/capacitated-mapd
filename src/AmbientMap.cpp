@@ -17,15 +17,15 @@ namespace cmapd {
 bool is_valid_char(char c){
     return c=='#' || c==' ' || c=='O';
 }
-
+// TODO: controlla che il file sia formattato correttamente
 AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
     std::ifstream map_file{path_to_map};
     if (!map_file) {
         throw std::runtime_error{path_to_map.string() + ": file does non exist"};
     }
-    size_t rows{};
+    size_t rows {};
     map_file >> rows;
-    size_t cols{};
+    size_t cols {};
     map_file >> cols;
     for (size_t r = 0; r < rows; r++){
         char ch {};
@@ -37,6 +37,10 @@ AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
             AmbientMap::grid[r].push_back(ch);
         }
     }
+}
+
+const std::vector<std::vector<char>>& AmbientMap::get_map(){
+        return AmbientMap::grid;
 }
 
 size_t AmbientMap::get_rows() const{

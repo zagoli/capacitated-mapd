@@ -15,6 +15,7 @@
  * @struct CmapdSolution
  * @brief Represents a solution to a CMAP instance.
  */
+namespace cmapd {
 struct CmapdSolution {
     /// A vector containing a path (vector of points) for every agent.
     const std::vector<std::vector<Point>> paths;
@@ -25,3 +26,4 @@ struct CmapdSolution {
     /// Number of resolved conflicts
     const int conflicts;
 };
+}
