@@ -21,5 +21,6 @@ namespace cmapd {
 using hTable_t = std::map<Point, std::map<Point, unsigned>>;
 
 hTable_t compute_HTable(const AmbientMapInstance& map_instance, auto distance_function);
+unsigned manhattan_distance(Point first, Point second);
 
 }  // namespace cmapd
