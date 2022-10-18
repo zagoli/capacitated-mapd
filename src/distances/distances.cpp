@@ -5,7 +5,7 @@
 
 namespace cmapd {
 
-[[nodiscard]] hTable_t compute_HTable(const AmbientMapInstance& map_instance,
+[[nodiscard]] hTable_t compute_hTable(const AmbientMapInstance& map_instance,
                                       auto distance_function) {
     hTable_t hTable;
     // iterate over every cell of the grid
@@ -24,7 +24,7 @@ namespace cmapd {
     return hTable;
 }
 
-unsigned manhattan_distance(const Point first, const Point second) {
+int manhattan_distance(const Point first, const Point second) {
     return abs(first.row - second.row) + abs(first.col - second.col);
 }
 
