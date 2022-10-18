@@ -24,9 +24,10 @@ class AmbientMapInstance : public cmapd::AmbientMap {
 
 namespace cmapd {
 /// A type alias for the h-table, provided for ease of use.
-using hTable_t = std::map<Point, std::map<Point, unsigned>>;
+using h_table_t = std::map<Point, std::map<Point, int>>;
 
-hTable_t compute_hTable(const AmbientMapInstance& map_instance, auto distance_function);
+[[nodiscard]] h_table_t compute_h_table(const AmbientMapInstance& map_instance,
+                                        auto distance_function);
 /**
  * @brief Computes the manhattan distance between two Points.
  * @param[in] first The first point.
@@ -34,5 +35,10 @@ hTable_t compute_hTable(const AmbientMapInstance& map_instance, auto distance_fu
  * @return The computed manhattan distance between first and second.
  */
 int manhattan_distance(Point first, Point second);
+
+namespace multi_a_star {
+int compute_h_value(Point location, int label, h_table_t& h_table,
+                    std::vector<Point>& goal_sequence);
+}
 
 }  // namespace cmapd
