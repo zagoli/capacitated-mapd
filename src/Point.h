@@ -3,7 +3,6 @@
 //
 
 #pragma once
-#include <cstddef>
 
 struct Point {
     int row;
