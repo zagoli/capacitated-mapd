@@ -5,7 +5,7 @@
 #pragma once
 #include <cstddef>
 
-struct Point{
-    size_t row;
-    size_t col;
+struct Point {
+    int row;
+    int col;
 };
