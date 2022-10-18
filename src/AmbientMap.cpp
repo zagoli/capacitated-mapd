@@ -17,15 +17,15 @@ namespace cmapd {
 bool is_valid_char(char c){
     return c=='#' || c==' ' || c=='O';
 }
-
+// TODO: controlla che il file sia formattato correttamente
 AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
     std::ifstream map_file{path_to_map};
     if (!map_file) {
         throw std::runtime_error{path_to_map.string() + ": file does non exist"};
     }
-    size_t rows{};
+    size_t rows {};
     map_file >> rows;
-    size_t cols{};
+    size_t cols {};
     map_file >> cols;
     for (size_t r = 0; r < rows; r++){
         char ch {};
@@ -39,16 +39,21 @@ AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
     }
 }
 
-size_t AmbientMap::get_rows() const{
-    return AmbientMap::grid.size();
+const std::vector<std::vector<char>>& AmbientMap::get_map() const{
+        return AmbientMap::grid;
 }
 
-size_t AmbientMap::get_columns() const{
-    return AmbientMap::grid[0].size();
+int AmbientMap::get_rows() const{
+    return (int)AmbientMap::grid.size();
+}
+
+int AmbientMap::get_columns() const{
+    return (int)AmbientMap::grid[0].size();
 }
 
 bool AmbientMap::is_valid_position(Point p) const{
-    return p.row<AmbientMap::grid.size() && p.col<AmbientMap::grid[0].size();
+    return p.row >= 0 && p.row < AmbientMap::grid.size() &&
+           p.col >= 0 && p.col < AmbientMap::grid[0].size();
 }
 
 std::string AmbientMap::to_string() const{
