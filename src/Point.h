@@ -7,4 +7,6 @@
 struct Point {
     int row;
     int col;
+    // needed for h_table_t to work properly
+    [[nodiscard]] inline auto operator<=>(const Point&) const = default;
 };

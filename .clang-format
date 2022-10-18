@@ -13,4 +13,5 @@
   NamespaceIndentation: None
   BreakBeforeBinaryOperators: All
   BreakBeforeTernaryOperators: true
+  PackConstructorInitializers: Never
 ...
