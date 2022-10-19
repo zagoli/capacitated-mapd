@@ -17,6 +17,7 @@ add_library(MultiAStar STATIC
         a_star/Node.cpp
         a_star/Node.h)
 target_include_directories(MultiAStar PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(MultiAStar distances)
 
-add_executable(cmapd main.cpp AmbientMap.cpp AmbientMap.h Point.h)
+add_executable(cmapd main.cpp AmbientMap.cpp AmbientMap.h)
 target_link_libraries(cmapd argparse)

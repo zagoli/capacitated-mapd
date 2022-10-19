@@ -37,8 +37,8 @@ using h_table_t = std::map<Point, std::map<Point, int>>;
 int manhattan_distance(Point first, Point second);
 
 namespace multi_a_star {
-int compute_h_value(Point location, int label, h_table_t& h_table,
-                    std::vector<Point>& goal_sequence);
+int compute_h_value(Point location, int label, const h_table_t& h_table,
+                    const std::vector<Point>& goal_sequence);
 }
 
 }  // namespace cmapd
