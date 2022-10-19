@@ -25,12 +25,13 @@ if (PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
 endif ()
 
 # --- Dependencies manager ---
-include(CPM)
 # Download dependencies here
-set(CPM_SOURCE_CACHE 
-        "${CMAKE_SOURCE_DIR}/third_party/cpm_sources" 
-        CACHE PATH "Directory to download CPM dependencies" 
+set(CPM_SOURCE_CACHE
+        "${CMAKE_SOURCE_DIR}/third_party/cpm_sources"
+        CACHE PATH "Directory to download CPM dependencies"
         FORCE)
+# Include dependency manager
+include(CPM)
 
 # --- Add source files ---
 add_subdirectory(src)

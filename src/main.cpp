@@ -1,6 +1,7 @@
 /**
  * @file main.cpp
- * @brief The program entry point. It mainly parses arguments and prints results.
+ * @brief The program entry point. It mainly parses arguments and prints results. Speak, friend, and
+ * enter.
  * @author Jacopo Zagoli
  * @version 1.0
  * @date October, 2022
