@@ -22,7 +22,6 @@ target_include_directories(cmapd_tests
         PRIVATE
         ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(cmapd_tests
-        PRIVATE
         Catch2::Catch2WithMain
         distances)
 

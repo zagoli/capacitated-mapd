@@ -18,7 +18,7 @@ class AmbientMapInstance : public cmapd::AmbientMap {
   public:
     size_t get_num_agents();
     size_t get_num_tasks();
-    std::vector<std::pair<Point, Point>> get_tasks() const;
+    std::vector<std::pair<cmapd::Point, cmapd::Point>> get_tasks() const;
 };
 // TODO: -------------------------------------------------
 

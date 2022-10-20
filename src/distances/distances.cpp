@@ -8,8 +8,8 @@ namespace cmapd {
 h_table_t compute_h_table(const AmbientMapInstance& map_instance, auto distance_function) {
     h_table_t hTable;
     // iterate over every cell of the grid
-    for (int r{0}; r < map_instance.get_rows(); ++r) {
-        for (int c{0}; c < map_instance.get_columns(); ++c) {
+    for (int r{0}; r < map_instance.get_rows_number(); ++r) {
+        for (int c{0}; c < map_instance.get_columns_number(); ++c) {
             Point current_cell{r, c};
             // iterate over every task to compute the distance
             for (const auto& [start, goal] : map_instance.get_tasks()) {
