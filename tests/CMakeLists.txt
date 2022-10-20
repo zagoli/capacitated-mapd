@@ -1,4 +1,4 @@
-message(STATUS "processing test folder")
+message(STATUS "PROCESSING TEST FOLDER")
 
 # ---- Options ----
 option(ENABLE_TEST_COVERAGE "Enable test coverage" OFF)
@@ -17,13 +17,10 @@ include(Catch)
 add_executable(cmapd_tests
         test_map_class.cpp
         test_distances.cpp
-        ${CMAKE_SOURCE_DIR}/src/Point.h
-        ${CMAKE_SOURCE_DIR}/src/AmbientMap.h
         ${CMAKE_SOURCE_DIR}/src/AmbientMap.cpp)
 target_include_directories(cmapd_tests
         PRIVATE
-        ${CMAKE_SOURCE_DIR}/src
-        ${CMAKE_SOURCE_DIR}/src/distances)
+        ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(cmapd_tests
         PRIVATE
         Catch2::Catch2WithMain

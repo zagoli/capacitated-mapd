@@ -9,6 +9,7 @@
 
 #pragma once
 #include <vector>
+
 #include "Point.h"
 
 /**
@@ -26,4 +27,4 @@ struct CmapdSolution {
     /// Number of resolved conflicts
     const int conflicts;
 };
-}
+}  // namespace cmapd

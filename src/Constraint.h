@@ -10,6 +10,7 @@
 #pragma once
 #include "Point.h"
 
+namespace cmapd {
 /// @struct Constraint
 /// @brief This struct models a constraint that prohibits an agent from moving in a certain way.
 /// Formally this is an edge-constraint, but we also use it to model a vertex constraint.
@@ -23,3 +24,5 @@ struct Constraint {
     /// The cell to which the agent can't arrive.
     Point to_position;
 };
+
+}

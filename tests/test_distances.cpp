@@ -3,12 +3,12 @@
 //
 #include <catch2/catch_test_macros.hpp>
 
-#include "distances.h"
+#include "distances/distances.h"
 
 namespace distanceTest {
 TEST_CASE("test manhattan distance", "[distances]") {
     // diagonal distance
-    Point first{0, 0}, second{1, 1};
+    cmapd::Point first{0, 0}, second{1, 1};
     REQUIRE(cmapd::manhattan_distance(first, second) == 2);
     // distance from self
     REQUIRE(cmapd::manhattan_distance(second, second) == 0);
