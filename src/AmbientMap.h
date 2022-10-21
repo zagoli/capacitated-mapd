@@ -17,13 +17,13 @@
 #include "Point.h"
 /**
  * @class AmbientMap
- * @brief Represents the ambient where agents will move.
+ * @brief Represents the ambient where m_agents will move.
  */
 namespace cmapd {
 class AmbientMap {
   protected:
     /// The parsed map
-    std::vector<std::vector<char>> grid;
+    std::vector<std::vector<char>> m_grid;
 
   public:
     /// Constructor of Ambient map: take a path to file containing 2 integers representing number of rows and columns of the map and the overall structure of the map ('#' for walls, ' ' for empty spaces, 'O' for possible agent and targets positions)

@@ -24,17 +24,17 @@ int main(int argc, char* argv[]) {
     parser.add_argument("--generate")
         .help(
             "Flag used to specify you want to generate instances. "
-            "If set you must provide the number of instances, agents and tasks.")
+            "If set you must provide the number of instances, m_agents and m_tasks.")
         .implicit_value(true)
         .default_value(false);
 
-    parser.add_argument("--agents")
-        .help("Specify the positive number of agents in the generated instances.")
+    parser.add_argument("--m_agents")
+        .help("Specify the positive number of m_agents in the generated instances.")
         .metavar("N_AGENTS")
         .scan<'u', unsigned>();
 
-    parser.add_argument("--tasks")
-        .help("Specify the positive number of tasks in the generated instances.")
+    parser.add_argument("--m_tasks")
+        .help("Specify the positive number of m_tasks in the generated instances.")
         .metavar("N_TASKS")
         .scan<'u', unsigned>();
 
@@ -77,18 +77,18 @@ int main(int argc, char* argv[]) {
     auto map_path = std::filesystem::path{parser.get("map_path")};
     if (parser["--generate"] == true) {
         auto instances_out_path = std::filesystem::path{parser.get("--instances-output")};
-        auto n_agents_opt = parser.present<unsigned>("--agents");
-        auto n_tasks_opt = parser.present<unsigned>("--tasks");
+        auto n_agents_opt = parser.present<unsigned>("--m_agents");
+        auto n_tasks_opt = parser.present<unsigned>("--m_tasks");
         auto n_instances_opt = parser.present<unsigned>("--instances");
         if (n_agents_opt && n_tasks_opt && n_instances_opt) {
             // TODO: replace print with call to generate instances.
             std::cout << "Generating " << n_instances_opt.value() << " instances with "
-                      << n_agents_opt.value() << " agents and " << n_tasks_opt.value()
-                      << " tasks on map " << map_path << " and saving them in "
+                      << n_agents_opt.value() << " m_agents and " << n_tasks_opt.value()
+                      << " m_tasks on map " << map_path << " and saving them in "
                       << instances_out_path << std::endl;
         } else {
             std::cerr << "If you want to generate instances, you must provide the number "
-                         "of instances, agents and tasks!\n";
+                         "of instances, m_agents and m_tasks!\n";
             std::exit(EXIT_FAILURE);
         }
     }

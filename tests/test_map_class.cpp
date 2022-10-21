@@ -10,19 +10,19 @@ using cmapd::AmbientMap;
 
 TEST_CASE("test instantiation map", "[instantiation]") {
     
-    std::filesystem::path path_to_map{"/home/dade/Desktop/capacitated-mapd/tests/test_maps.txt"};
+    std::filesystem::path path_to_map{"data/test_maps.txt"};
     REQUIRE_THROWS_AS(AmbientMap(path_to_map), std::runtime_error);
     
-    path_to_map = "/home/dade/Desktop/capacitated-mapd/tests/test_wrong_map.txt";
+    path_to_map = "data/test_wrong_map.txt";
     REQUIRE_THROWS_AS(AmbientMap(path_to_map), std::runtime_error);
     
-    path_to_map = "/home/dade/Desktop/capacitated-mapd/tests/test_map.txt";
+    path_to_map = "data/test_map.txt";
     REQUIRE_NOTHROW(AmbientMap(path_to_map));
 }
 
 TEST_CASE("test get number of rows and columns of a instantiated map", "[rows_and_columns]") {
     
-    std::filesystem::path path_to_map{"test_map.txt"};
+    std::filesystem::path path_to_map{"data/test_map.txt"};
     AmbientMap map {path_to_map};
     
     REQUIRE(map.get_rows_number() == 5);
@@ -32,7 +32,7 @@ TEST_CASE("test get number of rows and columns of a instantiated map", "[rows_an
 
 TEST_CASE("test if a point is valid in a instantiated map", "[is_valid_point]") {
     
-    std::filesystem::path path_to_map{"/home/dade/Desktop/capacitated-mapd/tests/test_map.txt"};
+    std::filesystem::path path_to_map{"data/test_map.txt"};
     AmbientMap map {path_to_map};
     
     cmapd::Point invalid_point{};
@@ -63,7 +63,7 @@ TEST_CASE("test if a point is valid in a instantiated map", "[is_valid_point]") 
 
 TEST_CASE("test if to_string return the correct string", "[to_string_method]") {
     
-    std::filesystem::path path_to_map{"/home/dade/Desktop/capacitated-mapd/tests/test_map.txt"};
+    std::filesystem::path path_to_map{"data/test_map.txt"};
     AmbientMap map {path_to_map};
     
     REQUIRE(map.to_string() == "#####\n OOO \n# # #\n OOO \n#####\n");

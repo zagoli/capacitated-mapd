@@ -16,10 +16,8 @@
 
 namespace cmapd {
 
-bool is_valid_char(char c, int row, int col){
-    if (c == '#' || c == ' ' || c == 'O') {
-        return true;
-    } else {
+void validate_char(char c, int row, int col){
+    if (c != '#' && c != ' ' && c != 'O') {
         throw std::runtime_error{fmt::format("character {} in line {}:{} is not a valid character", c, row, col)};
     }
 }
@@ -41,38 +39,38 @@ AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
         int cols_counter {0};
         for(char c : line){
             cols_counter++;
-            if(is_valid_char(c, rows_counter, cols_counter))
-                char_vec.push_back(c);
+            validate_char(c, rows_counter, cols_counter);
+            char_vec.push_back(c);
         }
-        AmbientMap::grid.emplace_back(char_vec);
+        AmbientMap::m_grid.emplace_back(char_vec);
     }
 }
 
 const std::vector<std::vector<char>>& AmbientMap::get_map() const{
-        return AmbientMap::grid;
+        return AmbientMap::m_grid;
 }
 
 int AmbientMap::get_rows_number() const {
-    if (grid.size() > std::numeric_limits<int>::max())
+    if (m_grid.size() > std::numeric_limits<int>::max())
         throw std::overflow_error("The number of rows is larger than a int.");
-    return static_cast<int>(AmbientMap::grid.size());
+    return static_cast<int>(m_grid.size());
 }
 
 int AmbientMap::get_columns_number() const {
-    if (grid[0].size() > std::numeric_limits<int>::max())
+    if (m_grid[0].size() > std::numeric_limits<int>::max())
         throw std::overflow_error("The number of columns is larger than a int.");
-    return static_cast<int>(AmbientMap::grid[0].size());
+    return static_cast<int>(m_grid[0].size());
 }
 
 bool AmbientMap::is_valid_position(Point p) const {
     return p.row >= 0 && p.row < this->get_rows_number() 
            && p.col >= 0 && p.col < this->get_columns_number()
-           && grid[p.row][p.col] != '#';
+           && m_grid[p.row][p.col] != '#';
 }
 
 std::string AmbientMap::to_string() const {
     std::string s;
-    for (const auto& row : AmbientMap::grid) {
+    for (const auto& row : AmbientMap::m_grid) {
         for (char c : row) {
             s += c;
         }

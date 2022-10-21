@@ -10,17 +10,8 @@
 #pragma once
 #include <map>
 
+#include "AmbientMapInstance.h"
 #include "Point.h"
-
-// TODO: replace with header import ---------------------
-#include "../AmbientMap.h"
-class AmbientMapInstance : public cmapd::AmbientMap {
-  public:
-    size_t get_num_agents();
-    size_t get_num_tasks();
-    std::vector<std::pair<cmapd::Point, cmapd::Point>> get_tasks() const;
-};
-// TODO: -------------------------------------------------
 
 namespace cmapd {
 /// A type alias for the h-table, provided for ease of use.

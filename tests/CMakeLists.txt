@@ -1,29 +1,29 @@
 message(STATUS "PROCESSING TEST FOLDER")
 
-# ---- Options ----
-option(ENABLE_TEST_COVERAGE "Enable test coverage" OFF)
+# --- Copy test data folder into build folder ---
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-# Catch2 dependency
-CPMAddPackage(
-        NAME Catch2
-        GITHUB_REPOSITORY catchorg/Catch2
-        VERSION 3.0.1)
+# --- Options ---
+option(ENABLE_TEST_COVERAGE "Enable test coverage" OFF)
 
 list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
 include(CTest)
 include(Catch)
 
-# ---- Create binary ----
+# --- Create binary ---
 add_executable(cmapd_tests
         test_map_class.cpp
         test_distances.cpp
-        ${CMAKE_SOURCE_DIR}/src/AmbientMap.cpp)
+        ${CMAKE_SOURCE_DIR}/src/AmbientMap.cpp
+        ${CMAKE_SOURCE_DIR}/src/AmbientMapInstance.cpp)
 target_include_directories(cmapd_tests
         PRIVATE
         ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(cmapd_tests
+        PRIVATE
+        distances
         Catch2::Catch2WithMain
-        distances)
+        fmt::fmt)
 
 catch_discover_tests(cmapd_tests)
 
@@ -33,7 +33,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU"
     target_compile_options(cmapd_tests PUBLIC -Wall -Wpedantic -Wextra -Werror)
 endif ()
 
-# ---- code coverage ----
+# --- code coverage ---
 
 if (ENABLE_TEST_COVERAGE)
     target_compile_options(cmapd_tests PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)

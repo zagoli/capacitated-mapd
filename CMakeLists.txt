@@ -32,6 +32,22 @@ set(CPM_SOURCE_CACHE
         FORCE)
 # Include dependency manager
 include(CPM)
+# Catch2 dependency
+CPMAddPackage(
+        NAME Catch2
+        GITHUB_REPOSITORY catchorg/Catch2
+        VERSION 3.0.1)
+# argparse dependency
+CPMAddPackage(
+        NAME argparse
+        GITHUB_REPOSITORY p-ranav/argparse
+        VERSION 2.9)
+# fmt dependency
+CPMAddPackage(
+        NAME fmt
+        GITHUB_REPOSITORY fmtlib/fmt
+        GIT_TAG 9.1.0
+)
 
 # --- Add source files ---
 add_subdirectory(src)

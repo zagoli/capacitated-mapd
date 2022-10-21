@@ -14,8 +14,8 @@ namespace cmapd {
 
 class AmbientMapInstance : public AmbientMap{
   private:
-    std::vector<Point> agents;
-    std::vector<std::pair<Point,Point>> tasks;
+    std::vector<Point> m_agents;
+    std::vector<std::pair<Point,Point>> m_tasks;
     
   public:
     explicit AmbientMapInstance(const std::filesystem::path& path_to_map,
@@ -23,6 +23,7 @@ class AmbientMapInstance : public AmbientMap{
     [[nodiscard]] int get_num_agents() const;
     [[nodiscard]] int get_num_tasks() const;
     [[nodiscard]] std::string to_string() const override;
+    [[nodiscard]] std::vector<std::pair<Point,Point>> get_tasks() const;
     
     
 };

@@ -33,8 +33,8 @@ AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map,
         int col_pos {0};
         map_instance_file >> row_pos;
         map_instance_file >> col_pos;
-        grid[row_pos][col_pos] = 'a';
-        agents.push_back(Point{row_pos, col_pos});
+        m_grid[row_pos][col_pos] = 'a';
+        m_agents.push_back(Point{row_pos, col_pos});
     }
     
     for(int i=0; i<num_tasks; i++){
@@ -44,37 +44,40 @@ AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map,
         int col_pos_goal {0};
         map_instance_file >> row_pos_start;
         map_instance_file >> col_pos_start;
-        grid[row_pos_start][col_pos_start] = 'o';
+        m_grid[row_pos_start][col_pos_start] = 'o';
         map_instance_file >> row_pos_goal;
         map_instance_file >> col_pos_goal;
-        grid[row_pos_goal][col_pos_goal] = 'o';
-        tasks.emplace_back(Point{row_pos_start, col_pos_start}, Point{row_pos_goal, col_pos_goal});
+        m_grid[row_pos_goal][col_pos_goal] = 'o';
+        m_tasks.emplace_back(Point{row_pos_start, col_pos_start}, Point{row_pos_goal, col_pos_goal});
     }
 }
 
 int AmbientMapInstance::get_num_agents() const {
-    if (agents.size() > std::numeric_limits<int>::max())
-        throw std::overflow_error("The number of agents is larger than a int.");
-    return static_cast<int>(agents.size());
+    if (m_agents.size() > std::numeric_limits<int>::max())
+        throw std::overflow_error("The number of m_agents is larger than a int.");
+    return static_cast<int>(m_agents.size());
 }
 
 int AmbientMapInstance::get_num_tasks() const {
-    if (tasks.size() > std::numeric_limits<int>::max())
-        throw std::overflow_error("The number of tasks is larger than a int.");
-    return static_cast<int>(tasks.size());
+    if (m_tasks.size() > std::numeric_limits<int>::max())
+        throw std::overflow_error("The number of m_tasks is larger than a int.");
+    return static_cast<int>(m_tasks.size());
 }
 
 std::string AmbientMapInstance::to_string() const {
     std::string s;
     for (int r=0; r<this->get_rows_number(); r++) {
         for (int c=0; c<this->get_columns_number(); c++) {
-            if(grid[r][c] == 'O')
+            if(m_grid[r][c] == 'O')
                 s += ' ';
             else
-                s += grid[r][c];
+                s += m_grid[r][c];
         }
         s += "\n";
     }
     return s;
+}
+std::vector<std::pair<Point, Point>> AmbientMapInstance::get_tasks() const {
+    return m_tasks;
 }
 }  // namespace cmapd
