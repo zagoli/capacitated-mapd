@@ -41,7 +41,7 @@ class AmbientMap {
     /// Checks if a position is valid in the map
     /// @param[in] p The point to check
     /// @returns True if the given Point is a valid position inside the map, false otherwise
-    [[nodiscard]] bool is_valid_position(Point p) const;
+    [[nodiscard]] virtual bool is_valid_position(Point p) const;
     /// Method that return a string representing the structure of the map
     /// @returns a string representing the structure of the map
     [[nodiscard]] virtual std::string to_string() const;

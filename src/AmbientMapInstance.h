@@ -22,6 +22,7 @@ class AmbientMapInstance : public AmbientMap{
                        const std::filesystem::path& path_to_map_instance);
     [[nodiscard]] int get_num_agents() const;
     [[nodiscard]] int get_num_tasks() const;
+    [[nodiscard]] bool is_valid_position(Point p) const override;
     [[nodiscard]] std::string to_string() const override;
     [[nodiscard]] std::vector<std::pair<Point,Point>> get_tasks() const;
     

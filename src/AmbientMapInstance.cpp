@@ -14,7 +14,7 @@
 namespace cmapd {
 
 
-AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map, const std::filesystem::path& path_to_map_instance) : AmbientMap(path_to_map) {
+AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map_instance, const std::filesystem::path& path_to_map) : AmbientMap(path_to_map) {
     
     //std::ifstream map_file{std::filesystem::absolute(path_to_map)};
     std::ifstream map_instance_file{path_to_map_instance};
@@ -44,10 +44,10 @@ AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map,
         int col_pos_goal {0};
         map_instance_file >> row_pos_start;
         map_instance_file >> col_pos_start;
-        m_grid[row_pos_start][col_pos_start] = 'o';
+        m_grid[row_pos_start][col_pos_start] = 't';
         map_instance_file >> row_pos_goal;
         map_instance_file >> col_pos_goal;
-        m_grid[row_pos_goal][col_pos_goal] = 'o';
+        m_grid[row_pos_goal][col_pos_goal] = 't';
         m_tasks.emplace_back(Point{row_pos_start, col_pos_start}, Point{row_pos_goal, col_pos_goal});
     }
 }
@@ -64,6 +64,11 @@ int AmbientMapInstance::get_num_tasks() const {
     return static_cast<int>(m_tasks.size());
 }
 
+bool AmbientMapInstance::is_valid_position(Point p) const {
+    return p.row >= 0 && p.row < this->get_rows_number() &&
+           p.col >= 0 && p.col < this->get_columns_number();
+}
+
 std::string AmbientMapInstance::to_string() const {
     std::string s;
     for (int r=0; r<this->get_rows_number(); r++) {
@@ -77,6 +82,7 @@ std::string AmbientMapInstance::to_string() const {
     }
     return s;
 }
+
 std::vector<std::pair<Point, Point>> AmbientMapInstance::get_tasks() const {
     return m_tasks;
 }

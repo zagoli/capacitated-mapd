@@ -13,6 +13,7 @@ include(Catch)
 # --- Create binary ---
 add_executable(cmapd_tests
         test_map_class.cpp
+        test_map_instance_class.cpp
         test_distances.cpp
         ${CMAKE_SOURCE_DIR}/src/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/AmbientMapInstance.cpp)
