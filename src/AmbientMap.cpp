@@ -65,7 +65,8 @@ int AmbientMap::get_columns_number() const {
 bool AmbientMap::is_valid_position(Point p) const {
     return p.row >= 0 && p.row < this->get_rows_number() 
            && p.col >= 0 && p.col < this->get_columns_number()
-           && m_grid[p.row][p.col] != '#';
+           && m_grid[p.row][p.col] != '#'
+           && m_grid[p.row][p.col] != ' ';
 }
 
 std::string AmbientMap::to_string() const {

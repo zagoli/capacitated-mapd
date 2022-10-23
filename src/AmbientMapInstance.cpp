@@ -66,7 +66,8 @@ int AmbientMapInstance::get_num_tasks() const {
 
 bool AmbientMapInstance::is_valid_position(Point p) const {
     return p.row >= 0 && p.row < this->get_rows_number() &&
-           p.col >= 0 && p.col < this->get_columns_number();
+           p.col >= 0 && p.col < this->get_columns_number()
+           && m_grid[p.row][p.col] != '#';
 }
 
 std::string AmbientMapInstance::to_string() const {
