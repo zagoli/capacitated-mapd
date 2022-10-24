@@ -44,7 +44,8 @@ int compute_h_value(Point x, int label, const h_table_t& h_table,
 }  // namespace multi_a_star
 
 // explicit template instantiation for usage with manhattan_distance
-template h_table_t compute_h_table<int (*)(Point, Point)>(const AmbientMapInstance&,
-                                                          int (*)(Point, Point));
+// in other translation units
+template h_table_t compute_h_table<decltype(&manhattan_distance)>(const AmbientMapInstance&,
+                                                                  decltype(&manhattan_distance));
 
 }  // namespace cmapd
