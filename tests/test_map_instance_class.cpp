@@ -41,9 +41,7 @@ TEST_CASE("test if a point is valid in a instance", "[is_valid_point_instance]")
     std::filesystem::path path_to_instance{"data/test_instance.txt"};
     AmbientMapInstance instance{path_to_instance, path_to_map};
 
-    cmapd::Point invalid_point{};
-    invalid_point.row = -1;
-    invalid_point.col = -1;
+    cmapd::Point invalid_point{-1, -1};
     REQUIRE_FALSE(instance.is_valid_position(invalid_point));
     invalid_point.row = 2;
     invalid_point.col = -1;
@@ -60,10 +58,8 @@ TEST_CASE("test if a point is valid in a instance", "[is_valid_point_instance]")
     invalid_point.row = 6;
     invalid_point.col = 6;
     REQUIRE_FALSE(instance.is_valid_position(invalid_point));
-    
-    cmapd::Point valid_point{};
-    valid_point.row = 2;
-    valid_point.col = 2;
+
+    cmapd::Point valid_point{2, 2};
     REQUIRE(instance.is_valid_position(valid_point));
 }
 

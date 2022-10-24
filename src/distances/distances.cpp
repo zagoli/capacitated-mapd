@@ -28,11 +28,17 @@ h_table_t compute_h_table(const AmbientMapInstance& map_instance, auto distance_
     return hTable;
 }
 
+// explicit template instantiation for usage with manhattan_distance
+// in other translation units
+template h_table_t compute_h_table<decltype(&manhattan_distance)>(const AmbientMapInstance&,
+                                                                  decltype(&manhattan_distance));
+
 int manhattan_distance(Point first, Point second) {
     return abs(first.row - second.row) + abs(first.col - second.col);
 }
 
 namespace multi_a_star {
+
 int compute_h_value(Point x, int label, const h_table_t& h_table,
                     const std::vector<Point>& goal_sequence) {
     int h_value{h_table.at(x).at(goal_sequence[label])};
@@ -41,11 +47,7 @@ int compute_h_value(Point x, int label, const h_table_t& h_table,
     }
     return h_value;
 }
-}  // namespace multi_a_star
 
-// explicit template instantiation for usage with manhattan_distance
-// in other translation units
-template h_table_t compute_h_table<decltype(&manhattan_distance)>(const AmbientMapInstance&,
-                                                                  decltype(&manhattan_distance));
+}  // namespace multi_a_star
 
 }  // namespace cmapd

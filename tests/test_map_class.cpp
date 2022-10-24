@@ -34,10 +34,8 @@ TEST_CASE("test if a point is valid in a map", "[is_valid_point_map]") {
     
     std::filesystem::path path_to_map{"data/test_map.txt"};
     AmbientMap map {path_to_map};
-    
-    cmapd::Point invalid_point{};
-    invalid_point.row = -1;
-    invalid_point.col = -1;
+
+    cmapd::Point invalid_point{-1, -1};
     REQUIRE_FALSE(map.is_valid_position(invalid_point));
     invalid_point.row = 2;
     invalid_point.col = -1;
@@ -57,10 +55,8 @@ TEST_CASE("test if a point is valid in a map", "[is_valid_point_map]") {
     invalid_point.row = 2;
     invalid_point.col = 2;
     REQUIRE_FALSE(map.is_valid_position(invalid_point));
-    
-    cmapd::Point valid_point{};
-    valid_point.row = 1;
-    valid_point.col = 2;
+
+    cmapd::Point valid_point{1, 2};
     REQUIRE(map.is_valid_position(valid_point));
 }
 
