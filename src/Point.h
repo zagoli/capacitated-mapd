@@ -4,7 +4,8 @@
 
 #pragma once
 namespace cmapd {
-/// Struct that represent a point in a Map
+/// @struct Point
+/// @brief Struct that represent a point in a Map
 /// @param row The row number of the point
 /// @param col The column number of the point
 struct Point {

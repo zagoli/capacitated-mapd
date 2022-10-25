@@ -1,6 +1,11 @@
-//
-// Created by Jacopo on 18/10/2022.
-//
+/**
+ * @file Node.h
+ * @brief Contains the class Node in namespace multi_a_star.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #pragma once
 #include <vector>
@@ -11,21 +16,56 @@
 
 namespace cmapd::multi_a_star {
 
+/**
+ * @class Node
+ * @brief This class represents a Node that is used in the multi A* search algorithm.
+ * @see Lifelong Multi-Agent Path Finding in Large-Scale Warehouses.
+ */
 class Node {
   private:
+    /// A location on the map.
     const Point m_location;
+    /// The Node who generated the current Node. For the first one is nullptr.
     const Node* m_parent;
+    /// The number of goal locations in goal_sequence that the current A* path has already visited.
     int m_label;
+    /// The cost of the path until the current Node.
     const int m_g;
+    /// The estimated cost of visiting the goals from the current Node.
     const int m_h;
+    /// A reference to the h-table, useful for generating other nodes.
     const h_table_t& m_h_table;
+    /// Goal to visit.
     const std::vector<Point>& m_goal_sequence;
 
   public:
+    /**
+     * Constructor for the parent Node.
+     * @param loc Position on the map.
+     * @param h_table A reference to the h-table for the current map.
+     * @param goal_sequence The goals to visit.
+     */
     explicit Node(Point loc, const h_table_t& h_table, const std::vector<Point>& goal_sequence);
+    /**
+     * Constructor for a Node with a parent.
+     * @param loc Position on the map.
+     * @param parent A reference to the parent Node.
+     * @param h_table A reference to the h-table for the current map.
+     * @param goal_sequence The goals to visit.
+     */
     explicit Node(Point loc, const Node& parent, const h_table_t& h_table,
                   const std::vector<Point>& goal_sequence);
-    [[nodiscard]] std::vector<Node> get_children(const AmbientMapInstance& ambient_map) const;
+    /**
+     * This method returns all children in valid positions of a Node with all the parameters set.
+     * @param instance The map used to find the path.
+     * @return A vector of child Nodes.
+     */
+    [[nodiscard]] std::vector<Node> get_children(const AmbientMapInstance& instance) const;
+    /**
+     * This method returns the positions from the parent to the current Node following the path.
+     * The parent and the current node are included.
+     * @return A vector of Points.
+     */
     [[nodiscard]] std::vector<Point> get_path() const;
 };
 

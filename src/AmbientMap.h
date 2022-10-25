@@ -1,6 +1,3 @@
-//
-// Created by dade on 12/10/22.
-//
 /**
  * @file AmbientMap.h
  * @brief Contains the class AmbientMap.
