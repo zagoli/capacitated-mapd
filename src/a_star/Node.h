@@ -25,7 +25,7 @@ class Node {
     explicit Node(Point loc, const h_table_t& h_table, const std::vector<Point>& goal_sequence);
     explicit Node(Point loc, const Node& parent, const h_table_t& h_table,
                   const std::vector<Point>& goal_sequence);
-    [[nodiscard]] std::vector<Node> get_children(const AmbientMap& ambient_map) const;
+    [[nodiscard]] std::vector<Node> get_children(const AmbientMapInstance& ambient_map) const;
     [[nodiscard]] std::vector<Point> get_path() const;
 };
 

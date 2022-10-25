@@ -27,12 +27,13 @@ Node::Node(const Point loc, const Node& parent, const h_table_t& h_table,
       m_h_table{h_table},
       m_goal_sequence{goal_sequence} {}
 
-std::vector<Node> Node::get_children(const AmbientMap& ambient_map) const {
+std::vector<Node> Node::get_children(const AmbientMapInstance& ambient_map) const {
     using moves_t = std::vector<std::pair<int, int>>;
     std::vector<Node> children;
     for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
-        if (ambient_map.is_valid_position(m_location + move)) {
-            children.emplace_back(m_location + move, *this, m_h_table, m_goal_sequence);
+        Point new_position = m_location + move;
+        if (ambient_map.is_valid_position(new_position)) {
+            children.emplace_back(new_position, *this, m_h_table, m_goal_sequence);
         }
     }
     return children;

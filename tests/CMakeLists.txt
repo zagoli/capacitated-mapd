@@ -15,6 +15,7 @@ add_executable(cmapd_tests
         test_map_class.cpp
         test_map_instance_class.cpp
         test_distances.cpp
+        test_multi_a_star.cpp
         ${CMAKE_SOURCE_DIR}/src/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/AmbientMapInstance.cpp)
 target_include_directories(cmapd_tests
@@ -23,6 +24,7 @@ target_include_directories(cmapd_tests
 target_link_libraries(cmapd_tests
         PRIVATE
         distances
+        MultiAStar
         Catch2::Catch2WithMain
         fmt::fmt)
 
