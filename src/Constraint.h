@@ -23,6 +23,8 @@ struct Constraint {
     Point from_position;
     /// The cell to which the agent can't arrive.
     Point to_position;
+    /// Equality operator for algorithms.
+    [[nodiscard]] bool operator==(const Constraint& rhs) const = default;
 };
 
 }

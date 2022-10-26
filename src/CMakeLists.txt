@@ -13,4 +13,4 @@ target_include_directories(MultiAStar PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(MultiAStar PRIVATE distances)
 
 add_executable(cmapd main.cpp AmbientMap.cpp AmbientMapInstance.cpp)
-target_link_libraries(cmapd PRIVATE argparse::argparse fmt::fmt)
+target_link_libraries(cmapd PRIVATE argparse::argparse fmt::fmt MultiAStar)

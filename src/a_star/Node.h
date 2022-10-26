@@ -8,6 +8,7 @@
  */
 
 #pragma once
+#include <compare>
 #include <vector>
 
 #include "AmbientMap.h"
@@ -25,7 +26,7 @@ class Node {
   private:
     /// A location on the map.
     Point m_location;
-    /// The Node who generated the current Node. For the first one is nullptr.
+    /// The Node who generated the current Node. For root is nullptr.
     Node* m_parent;
     /// The number of goal locations in goal_sequence that the current A* path has already visited.
     int m_label;
@@ -53,7 +54,9 @@ class Node {
      * @param h_table A reference to the h-table for the current map.
      * @param goal_sequence The goals to visit.
      */
-    explicit Node(Point loc, Node& parent, const h_table_t& h_table,
+    explicit Node(Point loc,
+                  Node& parent,
+                  const h_table_t& h_table,
                   const std::vector<Point>& goal_sequence);
     /**
      * This method returns all children in valid positions of a Node with all the parameters set.
@@ -79,6 +82,8 @@ class Node {
     void increment_label();
     /// Get the f-value of the node, that is, g-value + h-value;
     [[nodiscard]] int get_f_value() const;
+    /// Get the g-value of the node.
+    [[nodiscard]] int get_g_value() const;
 };
 
 }  // namespace cmapd::multi_a_star

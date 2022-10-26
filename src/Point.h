@@ -3,6 +3,10 @@
 //
 
 #pragma once
+
+#include <compare>
+#include <utility>
+
 namespace cmapd {
 /// @struct Point
 /// @brief Struct that represent a point in a Map

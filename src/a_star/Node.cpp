@@ -66,5 +66,6 @@ int Node::get_label() const { return m_label; }
 void Node::increment_label() { m_label++; }
 
 int Node::get_f_value() const { return m_g + m_h; }
+int Node::get_g_value() const { return m_g; }
 
 }  // namespace cmapd::multi_a_star
