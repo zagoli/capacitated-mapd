@@ -96,6 +96,8 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
         cmapd::multi_a_star::Frontier frontier{};
         cmapd::multi_a_star::Node node{{1, 0}, h_table, goal_sequence};
         cmapd::multi_a_star::Node node1{{1, 1}, h_table, goal_sequence};
+        // Replace node that's not in the frontier
+        REQUIRE_THROWS(frontier.replace(node, node));
         // Simple replace
         frontier.push(node);
         frontier.replace(node, node1);

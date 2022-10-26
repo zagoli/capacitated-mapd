@@ -15,7 +15,9 @@ Node Frontier::pop() {
 
 void Frontier::replace(const Node& old_node, const Node& new_node) {
     if (empty()) throw std::runtime_error("The frontier is empty.");
-    m_queue.remove(old_node);
+    if (m_queue.remove(old_node) == 0) {
+        throw std::runtime_error("old_node is not in the frontier.");
+    }
     m_queue.push_front(new_node);
 }
 
