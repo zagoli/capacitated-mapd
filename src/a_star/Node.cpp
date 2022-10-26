@@ -17,7 +17,7 @@ Node::Node(const Point loc, const h_table_t& h_table, const std::vector<Point>& 
       m_h_table{h_table},
       m_goal_sequence{goal_sequence} {}
 
-Node::Node(const Point loc, const Node& parent, const h_table_t& h_table,
+Node::Node(const Point loc, Node& parent, const h_table_t& h_table,
            const std::vector<Point>& goal_sequence)
     : m_location{loc},
       m_parent{&parent},
@@ -33,7 +33,8 @@ std::vector<Node> Node::get_children(const AmbientMapInstance& instance) const {
     for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
         Point new_position = m_location + move;
         if (instance.is_valid_position(new_position)) {
-            children.emplace_back(new_position, *this, m_h_table, m_goal_sequence);
+            children.emplace_back(new_position, const_cast<Node&>(*this), m_h_table,
+                                  m_goal_sequence);
         }
     }
     return children;
@@ -48,5 +49,22 @@ std::vector<Point> Node::get_path() const {
     }
     return path;
 }
+
+std::partial_ordering Node::operator<=>(const Node& rhs) const {
+    return get_f_value() <=> rhs.get_f_value();
+}
+
+bool Node::operator==(const Node& rhs) const {
+    return m_location == rhs.m_location && m_parent == rhs.m_parent && m_label == rhs.m_label
+           && m_g == rhs.m_g && m_h == rhs.m_h;
+}
+
+const Point& Node::get_location() const { return m_location; }
+
+int Node::get_label() const { return m_label; }
+
+void Node::increment_label() { m_label++; }
+
+int Node::get_f_value() const { return m_g + m_h; }
 
 }  // namespace cmapd::multi_a_star

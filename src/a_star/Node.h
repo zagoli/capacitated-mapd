@@ -24,23 +24,23 @@ namespace cmapd::multi_a_star {
 class Node {
   private:
     /// A location on the map.
-    const Point m_location;
+    Point m_location;
     /// The Node who generated the current Node. For the first one is nullptr.
-    const Node* m_parent;
+    Node* m_parent;
     /// The number of goal locations in goal_sequence that the current A* path has already visited.
     int m_label;
     /// The cost of the path until the current Node.
-    const int m_g;
+    int m_g;
     /// The estimated cost of visiting the goals from the current Node.
-    const int m_h;
+    int m_h;
     /// A reference to the h-table, useful for generating other nodes.
-    const h_table_t& m_h_table;
+    h_table_t m_h_table;
     /// Goal to visit.
-    const std::vector<Point>& m_goal_sequence;
+    std::vector<Point> m_goal_sequence;
 
   public:
     /**
-     * Constructor for the parent Node.
+     * Constructor for the root Node.
      * @param loc Position on the map.
      * @param h_table A reference to the h-table for the current map.
      * @param goal_sequence The goals to visit.
@@ -53,7 +53,7 @@ class Node {
      * @param h_table A reference to the h-table for the current map.
      * @param goal_sequence The goals to visit.
      */
-    explicit Node(Point loc, const Node& parent, const h_table_t& h_table,
+    explicit Node(Point loc, Node& parent, const h_table_t& h_table,
                   const std::vector<Point>& goal_sequence);
     /**
      * This method returns all children in valid positions of a Node with all the parameters set.
@@ -67,6 +67,18 @@ class Node {
      * @return A vector of Points.
      */
     [[nodiscard]] std::vector<Point> get_path() const;
+    /// Comparison between nodes based on their f-value.
+    [[nodiscard]] std::partial_ordering operator<=>(const Node& rhs) const;
+    /// Equality operator between nodes. It doesn't compare h_table and goal_sequence.
+    [[nodiscard]] bool operator==(const Node& rhs) const;
+    /// Location getter.
+    [[nodiscard]] const Point& get_location() const;
+    /// Label getter.
+    [[nodiscard]] int get_label() const;
+    /// Increment label value by one.
+    void increment_label();
+    /// Get the f-value of the node, that is, g-value + h-value;
+    [[nodiscard]] int get_f_value() const;
 };
 
 }  // namespace cmapd::multi_a_star

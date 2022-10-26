@@ -6,7 +6,9 @@ add_library(distances STATIC
 target_include_directories(distances PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 add_library(MultiAStar STATIC
-        a_star/Node.cpp)
+        a_star/Node.cpp
+        a_star/Frontier.cpp
+        a_star/multi_a_star.cpp)
 target_include_directories(MultiAStar PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(MultiAStar PRIVATE distances)
 
