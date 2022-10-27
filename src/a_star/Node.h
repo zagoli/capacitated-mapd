@@ -70,9 +70,7 @@ class Node {
      * @return A vector of Points.
      */
     [[nodiscard]] std::vector<Point> get_path() const;
-    /// Comparison between nodes based on their f-value.
-    [[nodiscard]] std::partial_ordering operator<=>(const Node& rhs) const;
-    /// Equality operator between nodes. It doesn't compare h_table and goal_sequence.
+    /// Equality operator between nodes. It compares location and g-value (used as timestep).
     [[nodiscard]] bool operator==(const Node& rhs) const;
     /// Location getter.
     [[nodiscard]] const Point& get_location() const;
