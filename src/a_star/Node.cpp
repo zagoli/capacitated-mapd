@@ -52,6 +52,11 @@ std::vector<Point> Node::get_path() const {
     return path;
 }
 
+std::partial_ordering Node::operator<=>(const Node& rhs) const {
+    if (auto c = get_location() <=> rhs.get_location(); c != nullptr) return c;
+    return m_g <=> rhs.m_g;
+}
+
 bool Node::operator==(const Node& rhs) const {
     return m_location == rhs.m_location && m_g == rhs.m_g;
 }
