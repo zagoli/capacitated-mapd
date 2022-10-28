@@ -5,6 +5,7 @@
 #include "multi_a_star.h"
 
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <set>
 
@@ -16,13 +17,12 @@ std::vector<Point> multi_a_star(int agent,
                                 Point start_location,
                                 const std::vector<Point>& goal_sequence,
                                 const AmbientMapInstance& map_instance,
-                                const std::vector<Constraint>& constraints) {
+                                const std::vector<Constraint>& constraints,
+                                const h_table_t& h_table) {
     // frontier definition
     Frontier frontier;
     // explore set definition
-    std::set<Point> explored;
-    // generation of the h-table
-    h_table_t h_table{compute_h_table(map_instance, manhattan_distance)};
+    std::set<Node> explored;
     // generation of root node in the frontier
     frontier.push(Node{start_location, h_table, goal_sequence});
     // main loop
@@ -38,7 +38,7 @@ std::vector<Point> multi_a_star(int agent,
             return top_node.get_path();
         }
         // Remember that we visited this location
-        explored.insert(top_node.get_location());
+        explored.insert(top_node);
         // Populate queue
         for (const auto& child : top_node.get_children(map_instance)) {
             Constraint check_me{.agent = agent,
@@ -48,11 +48,10 @@ std::vector<Point> multi_a_star(int agent,
             // check if child is constrained
             if (std::find(constraints.cbegin(), constraints.cend(), check_me)
                 == constraints.cend()) {
-                if (!explored.contains(child.get_location())
-                    && !frontier.contains_point(child.get_location())) {
+                if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.push(child);
-                } else if (auto costly_child_opt = frontier.contains_point_more_expensive(
-                               child.get_location(), child.get_f_value())) {
+                } else if (auto costly_child_opt
+                           = frontier.contains_more_expensive(child, child.get_f_value())) {
                     frontier.replace(costly_child_opt.value(), child);
                 }
             }

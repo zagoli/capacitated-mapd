@@ -38,21 +38,19 @@ class Frontier {
      */
     [[nodiscard]] Node pop();
     /**
-     * Test if a Point is present inside a Node of the frontier.
-     * @param point The Point to be searched in the frontier.
-     * @return True if the Point is present, false otherwise.
-     * @throws runtime_error if the frontier is empty.
+     * Test if a Node is present inside the frontier.
+     * @param node The Node to be searched in the frontier.
+     * @return True if the Node is present, false otherwise.
      */
-    [[nodiscard]] bool contains_point(const Point& point) const;
+    [[nodiscard]] bool contains(const Node& node) const;
     /**
-     * Test if a Point is present inside a Node of the frontier, with a f-value greater than
+     * Test if a Node is present inside the frontier, with a f-value greater than
      * the specified cost.
-     * @param point The Point to be searched in the frontier.
+     * @param node The Node to be searched in the frontier.
      * @param cost The f-value to compare with Nodes in the frontier.
      * @return An optional containing a Node if found and nothing otherwise.
-     * @throws runtime_error if the frontier is empty.
      */
-    [[nodiscard]] std::optional<Node> contains_point_more_expensive(const Point& point,
+    [[nodiscard]] std::optional<Node> contains_more_expensive(const Node& node,
                                                                     int cost) const;
     /**
      * Test if the frontier is empty.
