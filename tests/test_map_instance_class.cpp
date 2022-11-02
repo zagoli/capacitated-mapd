@@ -2,7 +2,8 @@
 // Created by dade on 21/10/22.
 //
 
-#include <AmbientMapInstance.h>
+#include <ambient/AmbientMapInstance.h>
+
 #include <catch2/catch_test_macros.hpp>
 
 namespace AmbientMapInstanceTest {
@@ -59,7 +60,7 @@ TEST_CASE("test if a point is valid in a instance", "[is_valid_point_instance]")
     invalid_point.col = 6;
     REQUIRE_FALSE(instance.is_valid_position(invalid_point));
 
-    cmapd::Point valid_point{2, 2};
+    cmapd::Point valid_point{2, 1};
     REQUIRE(instance.is_valid_position(valid_point));
 }
 

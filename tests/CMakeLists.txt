@@ -16,8 +16,10 @@ add_executable(cmapd_tests
         test_map_instance_class.cpp
         test_distances.cpp
         test_multi_a_star.cpp
-        ${CMAKE_SOURCE_DIR}/src/AmbientMap.cpp
-        ${CMAKE_SOURCE_DIR}/src/AmbientMapInstance.cpp)
+        test_generation_instances.cpp
+        ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMap.cpp
+        ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMapInstance.cpp
+        ${CMAKE_SOURCE_DIR}/src/generation/generate_instances.cpp)
 target_include_directories(cmapd_tests
         PRIVATE
         ${CMAKE_SOURCE_DIR}/src)

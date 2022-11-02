@@ -4,44 +4,43 @@
 
 #include "AmbientMap.h"
 
+#include <Point.h>
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "Point.h"
-
-#include <fmt/format.h>
+#include "fmt/format.h"
 
 namespace cmapd {
 
-void validate_char(char c, int row, int col){
+void validate_char(char c, int row, int col) {
     if (c != '#' && c != ' ' && c != 'O') {
-        throw std::runtime_error{fmt::format("character {} in line {}:{} is not a valid character", c, row, col)};
+        throw std::runtime_error{
+            fmt::format("character {} in line {}:{} is not a valid character", c, row, col)};
     }
 }
 
-
 AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
     
-    //std::ifstream map_file{std::filesystem::absolute(path_to_map)};
     std::ifstream map_file{path_to_map};
     if (!map_file) {
-        throw std::runtime_error{path_to_map.string() + ": file does non exist"};
+        throw std::runtime_error{fmt::format("{}: file does non exist", path_to_map.string())};
     }
     
     std::string line {};
     int rows_counter {0};
     while(std::getline(map_file, line)){
-        rows_counter++;
         std::vector<char> char_vec {};
         int cols_counter {0};
         for(char c : line){
-            cols_counter++;
             validate_char(c, rows_counter, cols_counter);
             char_vec.push_back(c);
+            cols_counter++;
         }
+        rows_counter++;
         AmbientMap::m_grid.emplace_back(char_vec);
     }
 }
@@ -63,10 +62,8 @@ int AmbientMap::get_columns_number() const {
 }
 
 bool AmbientMap::is_valid_position(Point p) const {
-    return p.row >= 0 && p.row < this->get_rows_number() 
-           && p.col >= 0 && p.col < this->get_columns_number()
-           && m_grid[p.row][p.col] != '#'
-           && m_grid[p.row][p.col] != ' ';
+    return p.row >= 0 && p.row < this->get_rows_number() && p.col >= 0
+           && p.col < this->get_columns_number() && m_grid[p.row][p.col] == 'O';
 }
 
 std::string AmbientMap::to_string() const {

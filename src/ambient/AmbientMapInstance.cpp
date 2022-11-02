@@ -4,12 +4,14 @@
 
 #include "AmbientMapInstance.h"
 
+#include <Point.h>
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
 
-#include "Point.h"
+#include "fmt/format.h"
 
 namespace cmapd {
 
@@ -19,7 +21,8 @@ AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map_
     // std::ifstream map_file{std::filesystem::absolute(path_to_map)};
     std::ifstream map_instance_file{path_to_map_instance};
     if (!map_instance_file) {
-        throw std::runtime_error{path_to_map_instance.string() + ": file does non exist"};
+        throw std::runtime_error{
+            fmt::format("{}: file does non exist", path_to_map_instance.string())};
     }
 
     int num_agents{0};
@@ -50,6 +53,23 @@ AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map_
         m_grid[row_pos_goal][col_pos_goal] = 't';
         m_tasks.emplace_back(Point{row_pos_start, col_pos_start},
                              Point{row_pos_goal, col_pos_goal});
+    }
+}
+
+AmbientMapInstance::AmbientMapInstance(const AmbientMap& map,
+                                       const std::vector<Point>& a,
+                                       const std::vector<std::pair<Point, Point>>& t)
+    : AmbientMap(map) {
+    m_agents = a;
+    m_tasks = t;
+
+    for (auto agent : m_agents) {
+        m_grid[agent.row][agent.col] = 'a';
+    }
+
+    for (auto task : m_tasks) {
+        m_grid[task.first.row][task.first.col] = 't';
+        m_grid[task.second.row][task.second.col] = 't';
     }
 }
 
