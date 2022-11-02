@@ -25,7 +25,6 @@ void validate_char(char c, int row, int col) {
 
 AmbientMap::AmbientMap(const std::filesystem::path& path_to_map) {
     
-    //std::ifstream map_file{std::filesystem::absolute(path_to_map)};
     std::ifstream map_file{path_to_map};
     if (!map_file) {
         throw std::runtime_error{fmt::format("{}: file does non exist", path_to_map.string())};

@@ -4,12 +4,16 @@
 
 #include "generate_instances.h"
 
+#include <fstream>
 #include <iostream>
 #include <random>
 
+#include "fmt/format.h"
+
 namespace cmapd {
 
-std::vector<AmbientMapInstance> generate_instances(AmbientMap map,
+std::vector<AmbientMapInstance> generate_instances(const AmbientMap& map,
+                                                   std::filesystem::path save_path,
                                                    int n_instances,
                                                    int n_agents,
                                                    int n_tasks) {
@@ -36,15 +40,8 @@ std::vector<AmbientMapInstance> generate_instances(AmbientMap map,
     }
 
     std::random_device seeder;
-    const auto seed{seeder.entropy() ? seeder() : time(nullptr)};
+    const auto seed{static_cast<bool>(seeder.entropy()) ? seeder() : time(nullptr)};
     std::mt19937 engine{static_cast<std::mt19937::result_type>(seed)};
-
-    // std::uniform_int_distribution<int> distribution{
-    //     0, static_cast<int>(possible_positions.size())};
-    //
-    // for (int i=0; i<50; i++){
-    //     std::cout << distribution(engine);
-    // }
 
     for (int i = 0; i < n_instances; i++) {
         std::vector<Point> copy_possible_positions{possible_positions};
@@ -71,9 +68,24 @@ std::vector<AmbientMapInstance> generate_instances(AmbientMap map,
             tasks.emplace_back(std::pair{the_chosen_start, the_chosen_end});
         }
         instances.emplace_back(AmbientMapInstance{map, agents, tasks});
+
+        std::string nome_file = fmt::format("instance_{}.txt", i);
+        std::filesystem::path absolute_path = absolute(std::filesystem::path(save_path));
+        std::filesystem::create_directory(absolute_path);
+
+        std::ofstream out_file{absolute_path.string() + nome_file};
+
+        out_file << agents.size() << " " << tasks.size() << std::endl;
+        for (Point a : agents) out_file << a.row << " " << a.col << std::endl;
+        for (std::pair<Point, Point> t : tasks)
+            out_file << t.first.row << " " << t.first.col << " " << t.second.row << " "
+                     << t.second.col << std::endl;
+
+        out_file.close();
         agents.clear();
         tasks.clear();
     }
+
     return instances;
 }
 }  // namespace cmapd
