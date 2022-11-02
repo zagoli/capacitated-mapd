@@ -11,8 +11,8 @@
 #include <compare>
 #include <vector>
 
-#include "AmbientMap.h"
 #include "Point.h"
+#include "ambient/AmbientMap.h"
 #include "distances/distances.h"
 
 namespace cmapd::multi_a_star {

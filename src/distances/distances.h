@@ -10,8 +10,8 @@
 #pragma once
 #include <map>
 
-#include "AmbientMapInstance.h"
 #include "Point.h"
+#include "ambient/AmbientMapInstance.h"
 
 namespace cmapd {
 /** A type alias for the h-table, provided for ease of use.

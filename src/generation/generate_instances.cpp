@@ -1,0 +1,79 @@
+//
+// Created by dade on 25/10/22.
+//
+
+#include "generate_instances.h"
+
+#include <iostream>
+#include <random>
+
+namespace cmapd {
+
+std::vector<AmbientMapInstance> generate_instances(AmbientMap map,
+                                                   int n_instances,
+                                                   int n_agents,
+                                                   int n_tasks) {
+    if (n_instances <= 0) {
+        throw std::runtime_error("Number of instances to generate must be grater than zero");
+    }
+
+    std::vector<Point> agents{};
+    std::vector<std::pair<Point, Point>> tasks{};
+    std::vector<AmbientMapInstance> instances{};
+
+    std::vector<Point> possible_positions{};
+    auto grid = map.get_map();
+    for (int i = 0; i < static_cast<int>(grid.size()); i++) {
+        for (int j = 0; j < static_cast<int>(grid[i].size()); j++) {
+            if (grid[i][j] == 'O') possible_positions.emplace_back(Point{i, j});
+        }
+    }
+
+    if (static_cast<int>(possible_positions.size()) < n_agents + 2 * n_tasks) {
+        throw std::runtime_error(
+            "Number of agents and tasks are more than possible generation places\n "
+            "try reduce number of agents or task, or increase the number of generation places");
+    }
+
+    std::random_device seeder;
+    const auto seed{seeder.entropy() ? seeder() : time(nullptr)};
+    std::mt19937 engine{static_cast<std::mt19937::result_type>(seed)};
+
+    // std::uniform_int_distribution<int> distribution{
+    //     0, static_cast<int>(possible_positions.size())};
+    //
+    // for (int i=0; i<50; i++){
+    //     std::cout << distribution(engine);
+    // }
+
+    for (int i = 0; i < n_instances; i++) {
+        std::vector<Point> copy_possible_positions{possible_positions};
+        for (int j = 0; j < n_agents; j++) {
+            std::uniform_int_distribution<int> distribution{
+                0, static_cast<int>(copy_possible_positions.size() - 1)};
+            int the_chosen_one = distribution(engine);
+            agents.emplace_back(copy_possible_positions[the_chosen_one]);
+            copy_possible_positions.erase(copy_possible_positions.begin() + the_chosen_one);
+        }
+        for (int j = 0; j < n_tasks; j++) {
+            std::uniform_int_distribution<int> distribution{
+                0, static_cast<int>(copy_possible_positions.size() - 1)};
+            int the_chosen_one = distribution(engine);
+            Point the_chosen_start{copy_possible_positions[the_chosen_one]};
+            copy_possible_positions.erase(copy_possible_positions.begin() + the_chosen_one);
+
+            distribution = std::uniform_int_distribution<int>{
+                0, static_cast<int>(copy_possible_positions.size() - 1)};
+            int the_chosen_two = distribution(engine);
+            Point the_chosen_end{copy_possible_positions[the_chosen_two]};
+            copy_possible_positions.erase(copy_possible_positions.begin() + the_chosen_two);
+
+            tasks.emplace_back(std::pair{the_chosen_start, the_chosen_end});
+        }
+        instances.emplace_back(AmbientMapInstance{map, agents, tasks});
+        agents.clear();
+        tasks.clear();
+    }
+    return instances;
+}
+}  // namespace cmapd

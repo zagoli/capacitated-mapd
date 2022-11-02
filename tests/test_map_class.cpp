@@ -2,17 +2,17 @@
 // Created by dade on 14/10/22.
 //
 
-#include <AmbientMap.h>
+#include <ambient/AmbientMap.h>
+
 #include <catch2/catch_test_macros.hpp>
 
 namespace AmbientMapTest {
 using cmapd::AmbientMap;
 
 TEST_CASE("test assign map", "[instantiation_map]") {
-    
     std::filesystem::path path_to_map{"data/test_maps.txt"};
     REQUIRE_THROWS_AS(AmbientMap(path_to_map), std::runtime_error);
-    
+
     path_to_map = "data/test_wrong_map.txt";
     REQUIRE_THROWS_AS(AmbientMap(path_to_map), std::runtime_error);
     
@@ -43,17 +43,17 @@ TEST_CASE("test if a point is valid in a map", "[is_valid_point_map]") {
     invalid_point.row = -1;
     invalid_point.col = 2;
     REQUIRE_FALSE(map.is_valid_position(invalid_point));
-    invalid_point.row = 6;
+    invalid_point.row = 5;
     invalid_point.col = 3;
     REQUIRE_FALSE(map.is_valid_position(invalid_point));
     invalid_point.row = 3;
-    invalid_point.col = 6;
+    invalid_point.col = 5;
     REQUIRE_FALSE(map.is_valid_position(invalid_point));
-    invalid_point.row = 6;
-    invalid_point.col = 6;
+    invalid_point.row = 5;
+    invalid_point.col = 5;
     REQUIRE_FALSE(map.is_valid_position(invalid_point));
     invalid_point.row = 2;
-    invalid_point.col = 2;
+    invalid_point.col = 1;
     REQUIRE_FALSE(map.is_valid_position(invalid_point));
 
     cmapd::Point valid_point{1, 2};

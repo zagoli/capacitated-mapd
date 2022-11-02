@@ -7,11 +7,11 @@
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
 #pragma once
+#include <Point.h>
+
 #include <filesystem>
 #include <string>
 #include <vector>
-
-#include "Point.h"
 /**
  * @class AmbientMap
  * @brief Represents the ambient where m_agents will move.
@@ -23,7 +23,9 @@ class AmbientMap {
     std::vector<std::vector<char>> m_grid;
 
   public:
-    /// Constructor of Ambient map: take a path to file containing 2 integers representing number of rows and columns of the map and the overall structure of the map ('#' for walls, ' ' for empty spaces, 'O' for possible agent and targets positions)
+    /// Constructor of ambient map: take a path to file containing 2 integers representing number of
+    /// rows and columns of the map and the overall structure of the map ('#' for walls, ' ' for
+    /// empty spaces, 'O' for possible agent and targets positions)
     /// @throw runtime_error if the file in input does not exist
     explicit AmbientMap(const std::filesystem::path& path_to_map);
     /// Method that returns a const reference of the map structure
