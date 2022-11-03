@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "Point.h"
+#include "custom_types.h"
 
 /**
  * @struct CmapdSolution

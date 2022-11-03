@@ -1,6 +1,11 @@
-//
-// Created by Jacopo on 03/11/2022.
-//
+/**
+ * @file custom_types.h
+ * @brief Contains type aliases used by the project.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #pragma once
 #include <map>
@@ -9,6 +14,7 @@
 #include "Point.h"
 
 namespace cmapd {
+/// A type alias for a path, provided for ease of use.
 using path_t = std::vector<Point>;
 /** A type alias for the h-table, provided for ease of use.
  * h_table_t is a map which contains an entry for every non-wall cell 'A' of the instance.
