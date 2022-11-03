@@ -12,16 +12,9 @@
 
 #include "Point.h"
 #include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 
 namespace cmapd {
-/** A type alias for the h-table, provided for ease of use.
- * h_table_t is a map which contains an entry for every non-wall cell 'A' of the instance.
- * Every entry contains a map with an entry for every starting and ending point 'B' of
- * every task. Every entry contains the distance between 'A' and 'B'.
- * For example, to get the distance between point (1,1) and (2,2) you should write
- * h_table.at({1,1}).at({2,2})
- */
-using h_table_t = std::map<Point, std::map<Point, int>>;
 
 /**
  * Computes the h_table for the provided map_instance with the provided distance_function.
@@ -51,8 +44,10 @@ namespace multi_a_star {
  * @return The distance of location to the goals, according to label.
  * @see Lifelong Multi-Agent Path Finding in Large-Scale Warehouses, section 4.1
  */
-int compute_h_value(Point location, int label, const h_table_t& h_table,
-                    const std::vector<Point>& goal_sequence);
+int compute_h_value(Point location,
+                    int label,
+                    const h_table_t& h_table,
+                    const path_t& goal_sequence);
 }  // namespace multi_a_star
 
 }  // namespace cmapd

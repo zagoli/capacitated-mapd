@@ -70,6 +70,11 @@ class AmbientMapInstance final : public AmbientMap {
      */
     [[nodiscard]] std::vector<std::pair<Point, Point>> get_tasks() const;
     /**
+     * Method that returns the list of agents of the instance.
+     * @return the list of agents of the instance.
+     */
+    [[nodiscard]] const std::vector<Point>& get_agents() const;
+    /**
      * Stream operator
      * @param os output stream
      * @param instance instance to send to stream

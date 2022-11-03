@@ -27,7 +27,7 @@ class Node {
    /// A location on the map.
    Point m_location;
    /// The path from root to the current node. For root is root itself.
-   std::vector<Point> m_path;
+   path_t m_path;
    /// The number of goal locations in goal_sequence that the current A* path has already visited.
    int m_label;
    /// The cost of the path until the current Node.
@@ -37,7 +37,7 @@ class Node {
    /// A reference to the h-table, useful for generating other nodes.
    h_table_t m_h_table;
    /// Goal to visit.
-   std::vector<Point> m_goal_sequence;
+   path_t m_goal_sequence;
 
  public:
    /**
@@ -46,7 +46,7 @@ class Node {
     * @param h_table A reference to the h-table for the current map.
     * @param goal_sequence The goals to visit.
     */
-   explicit Node(Point loc, const h_table_t& h_table, const std::vector<Point>& goal_sequence);
+   explicit Node(Point loc, const h_table_t& h_table, const path_t& goal_sequence);
    /**
     * Constructor for a Node with a parent.
     * @param loc Position on the map.
@@ -57,7 +57,7 @@ class Node {
    explicit Node(Point loc,
                  const Node& parent,
                  const h_table_t& h_table,
-                 const std::vector<Point>& goal_sequence);
+                 const path_t& goal_sequence);
    /**
     * This method returns all children in valid positions of a Node with all the parameters set.
     * @param instance The map used to find the path.
@@ -69,7 +69,7 @@ class Node {
     * The parent and the current node are included.
     * @return A vector of Points.
     */
-   [[nodiscard]] std::vector<Point> get_path() const;
+   [[nodiscard]] path_t get_path() const;
    /// Comparison between nodes based on their f-value.
    [[nodiscard]] std::partial_ordering operator<=>(const Node& rhs) const;
    /// Equality operator between nodes. It compares location and g-value (used as timestep).

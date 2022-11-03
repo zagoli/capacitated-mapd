@@ -1,4 +1,4 @@
-message(STATUS "PROCESSING TEST FOLDER")
+message(STATUS "processing test folder")
 
 # --- Copy test data folder into build folder ---
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
@@ -17,6 +17,7 @@ add_executable(cmapd_tests
         test_distances.cpp
         test_multi_a_star.cpp
         test_generation_instances.cpp
+        test_cbs.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMapInstance.cpp
         ${CMAKE_SOURCE_DIR}/src/generation/generate_instances.cpp)
@@ -26,7 +27,8 @@ target_include_directories(cmapd_tests
 target_link_libraries(cmapd_tests
         PRIVATE
         distances
-        MultiAStar
+        multi_a_star
+        path_finders
         Catch2::Catch2WithMain
         fmt::fmt)
 

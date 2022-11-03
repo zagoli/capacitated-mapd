@@ -8,7 +8,7 @@
 
 namespace cmapd::multi_a_star {
 
-Node::Node(const Point loc, const h_table_t& h_table, const std::vector<Point>& goal_sequence)
+Node::Node(const Point loc, const h_table_t& h_table, const path_t& goal_sequence)
     : m_location{loc},
       m_path{{loc}},
       m_label{0},
@@ -20,7 +20,7 @@ Node::Node(const Point loc, const h_table_t& h_table, const std::vector<Point>& 
 Node::Node(const Point loc,
            const Node& parent,
            const h_table_t& h_table,
-           const std::vector<Point>& goal_sequence)
+           const path_t& goal_sequence)
     : m_location{loc},
       m_path{parent.get_path()},
       m_label{parent.m_label},
@@ -44,9 +44,7 @@ std::vector<Node> Node::get_children(const AmbientMapInstance& instance) const {
     return children;
 }
 
-std::vector<Point> Node::get_path() const {
-    return m_path;
-}
+path_t Node::get_path() const { return m_path; }
 
 std::partial_ordering Node::operator<=>(const Node& rhs) const {
     if (auto c = get_location() <=> rhs.get_location(); c != nullptr) return c;

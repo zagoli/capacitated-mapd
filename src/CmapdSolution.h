@@ -19,7 +19,7 @@
 namespace cmapd {
 struct CmapdSolution {
     /// A vector containing a path (vector of points) for every agent.
-    const std::vector<std::vector<Point>> paths;
+    const std::vector<path_t> paths;
     /// The length of the longest path
     const std::size_t makespan;
     /// The sum of all paths lengths

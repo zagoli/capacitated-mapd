@@ -48,18 +48,14 @@ TEST_CASE("Multi A* path", "[multi A*]") {
     cmapd::multi_a_star::Node child4{{2, 3}, child3, h_table, goal_sequence};
     // final path
     auto path = child4.get_path();
+    cmapd::path_t expected_path{{1, 0}, {1, 1}, {1, 2}, {1, 3}, {2, 3}};
     REQUIRE(std::ssize(path) == 5);
-    REQUIRE(path[0] == cmapd::Point{1, 0});
-    REQUIRE(path[1] == cmapd::Point{1, 1});
-    REQUIRE(path[2] == cmapd::Point{1, 2});
-    REQUIRE(path[3] == cmapd::Point{1, 3});
-    REQUIRE(path[4] == cmapd::Point{2, 3});
+    REQUIRE(path == expected_path);
     // intermediate path
     path = child2.get_path();
+    expected_path = {{1, 0}, {1, 1}, {1, 2}};
     REQUIRE(std::ssize(path) == 3);
-    REQUIRE(path[0] == cmapd::Point{1, 0});
-    REQUIRE(path[1] == cmapd::Point{1, 1});
-    REQUIRE(path[2] == cmapd::Point{1, 2});
+    REQUIRE(path == expected_path);
 }
 
 TEST_CASE("Multi A* Frontier", "[multi A*]") {
@@ -131,7 +127,7 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
 }
 
 TEST_CASE("multi A* complete", "[multi A*]") {
-    SECTION("No constraints") {
+    SECTION("No m_constraints") {
         std::vector<cmapd::Point> goals{{1, 2}, {3, 3}};
         auto path{cmapd::multi_a_star::multi_a_star(0, {1, 0}, goals, instance, {}, h_table)};
         REQUIRE(std::ssize(path) == 6);
@@ -154,10 +150,8 @@ TEST_CASE("multi A* complete", "[multi A*]") {
         auto path{
             cmapd::multi_a_star::multi_a_star(0, {1, 4}, goals, instance, constraints, h_table)};
         REQUIRE(std::ssize(path) == 6);
-        std::vector<cmapd::Point> expected_path {{1,4},{1,3},{1,2},{1,1},{2,1},{3,1}};
-        for (int i = 0; i < std::ssize(path); ++i) {
-            REQUIRE(path[i] == expected_path[i]);
-        }
+        cmapd::path_t expected_path{{1, 4}, {1, 3}, {1, 2}, {1, 1}, {2, 1}, {3, 1}};
+        REQUIRE(path == expected_path);
     }
 }
 

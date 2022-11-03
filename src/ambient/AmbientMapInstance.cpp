@@ -109,4 +109,6 @@ std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance) {
     os << instance.to_string();
     return os;
 }
+
+const std::vector<Point>& AmbientMapInstance::get_agents() const { return m_agents; }
 }  // namespace cmapd

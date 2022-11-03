@@ -39,8 +39,7 @@ int manhattan_distance(Point first, Point second) {
 
 namespace multi_a_star {
 
-int compute_h_value(Point x, int label, const h_table_t& h_table,
-                    const std::vector<Point>& goal_sequence) {
+int compute_h_value(Point x, int label, const h_table_t& h_table, const path_t& goal_sequence) {
     int h_value{h_table.at(x).at(goal_sequence[label])};
     for (int j{label + 1}; j < goal_sequence.size(); ++j) {
         h_value += h_table.at(goal_sequence[j - 1]).at(goal_sequence[j]);
