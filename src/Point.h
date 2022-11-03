@@ -8,10 +8,12 @@
 #include <utility>
 
 namespace cmapd {
-/// @struct Point
-/// @brief Struct that represent a point in a Map
-/// @param row The row number of the point
-/// @param col The column number of the point
+/**
+ * @struct Point
+ * @brief Struct that represent a point in a Map
+ * @param row The row number of the point
+ * @param col The column number of the point
+ */
 struct Point {
     int row;
     int col;

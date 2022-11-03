@@ -73,7 +73,7 @@ std::vector<AmbientMapInstance> generate_instances(const AmbientMap& map,
         std::filesystem::path absolute_path = absolute(std::filesystem::path(save_path));
         std::filesystem::create_directory(absolute_path);
 
-        std::ofstream out_file{absolute_path.string() + nome_file};
+        std::ofstream out_file{absolute_path.string() + "/" + nome_file};
 
         out_file << agents.size() << " " << tasks.size() << std::endl;
         for (Point a : agents) out_file << a.row << " " << a.col << std::endl;

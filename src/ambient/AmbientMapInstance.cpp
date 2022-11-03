@@ -105,4 +105,8 @@ std::string AmbientMapInstance::to_string() const {
 }
 
 std::vector<std::pair<Point, Point>> AmbientMapInstance::get_tasks() const { return m_tasks; }
+std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance) {
+    os << instance.to_string();
+    return os;
+}
 }  // namespace cmapd

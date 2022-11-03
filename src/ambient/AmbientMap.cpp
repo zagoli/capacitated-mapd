@@ -76,5 +76,9 @@ std::string AmbientMap::to_string() const {
     }
     return s;
 }
+std::ostream& operator<<(std::ostream& os, const AmbientMap& map) {
+    os << map.to_string();
+    return os;
+}
 
 }  // namespace cmapd
