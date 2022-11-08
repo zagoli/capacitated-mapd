@@ -1,0 +1,12 @@
+prefix=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874
+exec_prefix=${prefix}
+libdir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/lib
+includedir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/include
+
+Name: absl_hashtablez_sampler
+Description: Abseil hashtablez_sampler library
+URL: https://abseil.io/
+Version: 20211102
+Requires: absl_base = 20211102, absl_exponential_biased = 20211102, absl_have_sse = 20211102, absl_sample_recorder = 20211102, absl_synchronization = 20211102
+Libs: -L${libdir}  -labsl_hashtablez_sampler
+Cflags: -I${includedir} -DNOMINMAX

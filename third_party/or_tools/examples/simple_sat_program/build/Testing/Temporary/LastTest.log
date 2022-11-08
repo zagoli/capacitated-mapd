@@ -1,0 +1,22 @@
+Start testing: Nov 04 15:58 CET
+----------------------------------------------------------
+1/1 Testing: test_simple_sat_program
+1/1 Test: test_simple_sat_program
+Command: "/home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/simple_sat_program/build/bin/simple_sat_program"
+Directory: /home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/simple_sat_program/build
+"test_simple_sat_program" start time: Nov 04 15:58 CET
+Output:
+----------------------------------------------------------
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I1104 15:58:16.654464  4973 simple_sat_program.cc:53] x = 1
+I1104 15:58:16.654637  4973 simple_sat_program.cc:54] y = 0
+I1104 15:58:16.654652  4973 simple_sat_program.cc:55] z = 0
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"test_simple_sat_program" end time: Nov 04 15:58 CET
+"test_simple_sat_program" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 04 15:58 CET

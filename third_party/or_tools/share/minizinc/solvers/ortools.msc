@@ -1,0 +1,19 @@
+{
+  "id": "com.google.or-tools",
+  "name": "OR Tools",
+  "description": "Google's Operations Research tools FlatZinc interface",
+  "version": "9.4.1874",
+  "mznlib": "../ortools",
+  "executable": "../../../bin/fzn-ortools",
+  "tags": ["ortools", "cp", "lcg", "float", "int"],
+  "stdFlags": ["-a","-f","-n","-p","-r","-s","-v","-l"],
+  "extraFlags": [
+    ["--cp_model_params", "Provide parameters interpreted as a text SatParameters proto", "string", ""],
+  ],
+  "supportsMzn": false,
+  "supportsFzn": true,
+  "needsSolns2Out": true,
+  "needsMznExecutable": false,
+  "needsStdlibDir": false,
+  "isGUIApplication": false
+}

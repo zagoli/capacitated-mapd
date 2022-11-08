@@ -1,0 +1,12 @@
+prefix=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874
+exec_prefix=${prefix}
+libdir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/lib
+includedir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/include
+
+Name: absl_random_internal_wide_multiply
+Description: Abseil random_internal_wide_multiply library
+URL: https://abseil.io/
+Version: 20211102
+Requires: absl_bits = 20211102, absl_config = 20211102, absl_int128 = 20211102
+Libs: -L${libdir}  
+Cflags: -I${includedir} -DNOMINMAX

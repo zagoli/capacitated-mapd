@@ -1,0 +1,23 @@
+Start testing: Nov 04 15:58 CET
+----------------------------------------------------------
+1/1 Testing: test_simple_knapsack_program
+1/1 Test: test_simple_knapsack_program
+Command: "/home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/simple_knapsack_program/build/bin/simple_knapsack_program"
+Directory: /home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/simple_knapsack_program/build
+"test_simple_knapsack_program" start time: Nov 04 15:58 CET
+Output:
+----------------------------------------------------------
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I1104 15:58:08.011570  4588 simple_knapsack_program.cc:71] Total value: 847
+I1104 15:58:08.011695  4588 simple_knapsack_program.cc:72] Packed items: {2, 3, 6, 13}
+I1104 15:58:08.011708  4588 simple_knapsack_program.cc:73] Total weight: 847
+I1104 15:58:08.011715  4588 simple_knapsack_program.cc:74] Packed weights: {194, 130, 230, 293}
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"test_simple_knapsack_program" end time: Nov 04 15:58 CET
+"test_simple_knapsack_program" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 04 15:58 CET

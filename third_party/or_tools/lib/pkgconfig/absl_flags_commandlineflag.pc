@@ -1,0 +1,12 @@
+prefix=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874
+exec_prefix=${prefix}
+libdir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/lib
+includedir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/include
+
+Name: absl_flags_commandlineflag
+Description: Abseil flags_commandlineflag library
+URL: https://abseil.io/
+Version: 20211102
+Requires: absl_config = 20211102, absl_fast_type_id = 20211102, absl_flags_commandlineflag_internal = 20211102, absl_optional = 20211102, absl_strings = 20211102
+Libs: -L${libdir}  -labsl_flags_commandlineflag
+Cflags: -I${includedir} -DNOMINMAX

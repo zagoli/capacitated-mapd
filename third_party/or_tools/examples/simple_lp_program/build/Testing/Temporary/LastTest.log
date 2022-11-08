@@ -1,0 +1,29 @@
+Start testing: Nov 04 15:58 CET
+----------------------------------------------------------
+1/1 Testing: test_simple_lp_program
+1/1 Test: test_simple_lp_program
+Command: "/home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/simple_lp_program/build/bin/simple_lp_program"
+Directory: /home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/simple_lp_program/build
+"test_simple_lp_program" start time: Nov 04 15:58 CET
+Output:
+----------------------------------------------------------
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I1104 15:58:12.764870  4819 simple_lp_program.cc:36] Number of variables = 2
+I1104 15:58:12.764947  4819 simple_lp_program.cc:50] Number of constraints = 2
+I1104 15:58:12.765250  4819 simple_lp_program.cc:70] Solution:
+I1104 15:58:12.765255  4819 simple_lp_program.cc:71] Objective value = 25
+I1104 15:58:12.765273  4819 simple_lp_program.cc:72] x = 0
+I1104 15:58:12.765276  4819 simple_lp_program.cc:73] y = 2.5
+I1104 15:58:12.765279  4819 simple_lp_program.cc:77] 
+Advanced usage:
+I1104 15:58:12.765282  4819 simple_lp_program.cc:78] Problem solved in 0 milliseconds
+I1104 15:58:12.765286  4819 simple_lp_program.cc:79] Problem solved in 0 iterations
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"test_simple_lp_program" end time: Nov 04 15:58 CET
+"test_simple_lp_program" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 04 15:58 CET

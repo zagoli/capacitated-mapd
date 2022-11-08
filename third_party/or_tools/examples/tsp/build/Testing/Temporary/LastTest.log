@@ -1,0 +1,26 @@
+Start testing: Nov 04 15:58 CET
+----------------------------------------------------------
+1/1 Testing: test_tsp
+1/1 Test: test_tsp
+Command: "/home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/tsp/build/bin/tsp"
+Directory: /home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/tsp/build
+"test_tsp" start time: Nov 04 15:58 CET
+Output:
+----------------------------------------------------------
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I1104 15:58:23.976937  5144 tsp.cc:74] Objective: 4384
+I1104 15:58:23.977079  5144 tsp.cc:77] Route for Vehicle 0:
+I1104 15:58:23.977108  5144 tsp.cc:86] 0 -> 9 -> 5 -> 8 -> 6 -> 2 -> 10 -> 16 -> 14 -> 13 -> 12 -> 11 -> 15 -> 3 -> 4 -> 1 -> 7 -> 0
+I1104 15:58:23.977115  5144 tsp.cc:87] Distance of the route: 4384m
+I1104 15:58:23.977121  5144 tsp.cc:88] 
+I1104 15:58:23.977127  5144 tsp.cc:89] Advanced usage:
+I1104 15:58:23.977133  5144 tsp.cc:90] Problem solved in 6ms
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"test_tsp" end time: Nov 04 15:58 CET
+"test_tsp" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 04 15:58 CET

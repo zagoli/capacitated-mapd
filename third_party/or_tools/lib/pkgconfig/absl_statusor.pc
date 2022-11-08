@@ -1,0 +1,12 @@
+prefix=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874
+exec_prefix=${prefix}
+libdir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/lib
+includedir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/include
+
+Name: absl_statusor
+Description: Abseil statusor library
+URL: https://abseil.io/
+Version: 20211102
+Requires: absl_base = 20211102, absl_status = 20211102, absl_core_headers = 20211102, absl_raw_logging_internal = 20211102, absl_type_traits = 20211102, absl_strings = 20211102, absl_utility = 20211102, absl_variant = 20211102
+Libs: -L${libdir}  -labsl_statusor
+Cflags: -I${includedir} -DNOMINMAX

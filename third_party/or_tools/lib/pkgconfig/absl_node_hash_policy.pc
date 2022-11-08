@@ -1,0 +1,12 @@
+prefix=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874
+exec_prefix=${prefix}
+libdir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/lib
+includedir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/include
+
+Name: absl_node_hash_policy
+Description: Abseil node_hash_policy library
+URL: https://abseil.io/
+Version: 20211102
+Requires: absl_config = 20211102
+Libs: -L${libdir}  
+Cflags: -I${includedir} -DNOMINMAX

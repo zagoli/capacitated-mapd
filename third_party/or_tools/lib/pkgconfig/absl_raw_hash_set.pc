@@ -1,0 +1,12 @@
+prefix=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874
+exec_prefix=${prefix}
+libdir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/lib
+includedir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/include
+
+Name: absl_raw_hash_set
+Description: Abseil raw_hash_set library
+URL: https://abseil.io/
+Version: 20211102
+Requires: absl_bits = 20211102, absl_compressed_tuple = 20211102, absl_config = 20211102, absl_container_common = 20211102, absl_container_memory = 20211102, absl_core_headers = 20211102, absl_endian = 20211102, absl_hash_policy_traits = 20211102, absl_hashtable_debug_hooks = 20211102, absl_have_sse = 20211102, absl_memory = 20211102, absl_meta = 20211102, absl_optional = 20211102, absl_utility = 20211102, absl_hashtablez_sampler = 20211102
+Libs: -L${libdir}  -labsl_raw_hash_set
+Cflags: -I${includedir} -DNOMINMAX

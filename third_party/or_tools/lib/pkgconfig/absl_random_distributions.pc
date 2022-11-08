@@ -1,0 +1,12 @@
+prefix=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874
+exec_prefix=${prefix}
+libdir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/lib
+includedir=/root/or-tools/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/include
+
+Name: absl_random_distributions
+Description: Abseil random_distributions library
+URL: https://abseil.io/
+Version: 20211102
+Requires: absl_base_internal = 20211102, absl_config = 20211102, absl_core_headers = 20211102, absl_random_internal_generate_real = 20211102, absl_random_internal_distribution_caller = 20211102, absl_random_internal_fast_uniform_bits = 20211102, absl_random_internal_fastmath = 20211102, absl_random_internal_iostream_state_saver = 20211102, absl_random_internal_traits = 20211102, absl_random_internal_uniform_helper = 20211102, absl_random_internal_wide_multiply = 20211102, absl_strings = 20211102, absl_type_traits = 20211102
+Libs: -L${libdir}  -labsl_random_distributions
+Cflags: -I${includedir} -DNOMINMAX

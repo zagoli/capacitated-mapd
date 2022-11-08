@@ -1,0 +1,25 @@
+Start testing: Nov 04 15:58 CET
+----------------------------------------------------------
+1/1 Testing: test_basic_example
+1/1 Test: test_basic_example
+Command: "/home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/basic_example/build/bin/basic_example"
+Directory: /home/dade/Desktop/capacitated-mapd/third_party/or-tools_cpp_Ubuntu-22.04-64bit_v9.4.1874/examples/basic_example/build
+"test_basic_example" start time: Nov 04 15:58 CET
+Output:
+----------------------------------------------------------
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+I1104 15:58:00.588891  4341 basic_example.cc:32] Number of variables = 2
+I1104 15:58:00.588982  4341 basic_example.cc:41] Number of constraints = 1
+I1104 15:58:00.589431  4341 basic_example.cc:57] Solution:
+I1104 15:58:00.589439  4341 basic_example.cc:58] Objective value = 4
+I1104 15:58:00.589457  4341 basic_example.cc:59] x = 1
+I1104 15:58:00.589462  4341 basic_example.cc:60] y = 1
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"test_basic_example" end time: Nov 04 15:58 CET
+"test_basic_example" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Nov 04 15:58 CET
