@@ -11,7 +11,7 @@ namespace GenerateInstances {
 using cmapd::generate_instances;
 
 TEST_CASE("test generation instances", "[generate_instances]") {
-    std::filesystem::path path_to_map{"data/test_map.txt"};
+    std::filesystem::path path_to_map{"data/map_1.txt"};
     std::filesystem::path save_path{"data/instance/"};
     cmapd::AmbientMap map{path_to_map};
 

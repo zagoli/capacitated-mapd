@@ -61,9 +61,36 @@ int AmbientMap::get_columns_number() const {
     return static_cast<int>(m_grid[0].size());
 }
 
-bool AmbientMap::is_valid_position(Point p) const {
+bool AmbientMap::is_inside_position(Point p) const {
     return p.row >= 0 && p.row < this->get_rows_number() && p.col >= 0
-           && p.col < this->get_columns_number() && m_grid[p.row][p.col] == 'O';
+           && p.col < this->get_columns_number();
+}
+
+bool AmbientMap::is_valid_position(Point p) const {
+    return this->is_inside_position(p) && m_grid[p.row][p.col] == 'O';
+}
+
+int64_t AmbientMap::ravel(Point p) const {
+    if (!is_inside_position(p))
+        throw std::runtime_error(fmt::format(
+            "The point [{},{}] is outside the map and cannot be raveled", p.row, p.col));
+
+    return p.row * this->get_columns_number() + p.col;
+}
+
+Point AmbientMap::unravel(int64_t i) const {
+    int r = static_cast<int>(i) / this->get_columns_number();
+    int c = static_cast<int>(i) % this->get_columns_number();
+    Point p{r, c};
+
+    if (!is_inside_position(p))
+        throw std::runtime_error(fmt::format(
+            "The index {} correspond to [{},{}] a point outside the map and cannot be unraveled",
+            i,
+            p.row,
+            p.col));
+
+    return p;
 }
 
 std::string AmbientMap::to_string() const {

@@ -13,6 +13,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 # find custom scripts
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/third_party/or_tools")
 # testing
 enable_testing()
 
@@ -48,6 +49,8 @@ CPMAddPackage(
         GITHUB_REPOSITORY fmtlib/fmt
         GIT_TAG 9.1.0
 )
+# ortools - BINARIES FOR UBUNTU 22.04 INCLUDED
+find_package(ortools REQUIRED CONFIG)
 
 # --- Add source files ---
 add_subdirectory(src)

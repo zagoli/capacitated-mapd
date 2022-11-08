@@ -22,6 +22,11 @@ h_table_t compute_h_table(const AmbientMapInstance& map_instance, auto distance_
                     // compute distance from current cell to the task ending point
                     hTable[current_cell][goal] = distance_function(current_cell, goal);
                 }
+                // iterate over every agent to compute the distance
+                for (const auto& agent : map_instance.get_agents()) {
+                    // compute distance from current cell to the agent point
+                    hTable[current_cell][agent] = distance_function(current_cell, agent);
+                }
             }
         }
     }

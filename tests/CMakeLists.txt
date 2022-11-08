@@ -18,6 +18,7 @@ add_executable(cmapd_tests
         test_multi_a_star.cpp
         test_generation_instances.cpp
         test_cbs.cpp
+        test_ortools.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMapInstance.cpp
         ${CMAKE_SOURCE_DIR}/src/generation/generate_instances.cpp)
@@ -29,6 +30,7 @@ target_link_libraries(cmapd_tests
         distances
         multi_a_star
         path_finders
+        task_assigner
         Catch2::Catch2WithMain
         fmt::fmt)
 

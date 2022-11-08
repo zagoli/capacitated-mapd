@@ -22,11 +22,11 @@ TEST_CASE("manhattan distance", "[distances]") {
 }
 
 TEST_CASE("compute h-table", "[distances]") {
-    cmapd::AmbientMapInstance instance{"data/test_instance.txt", "data/test_map.txt"};
+    cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
     cmapd::h_table_t h_table = cmapd::compute_h_table(instance, cmapd::manhattan_distance);
     // check h-table has all the correct entries
     REQUIRE(std::ssize(h_table) == 12);
-    REQUIRE(std::ssize(h_table.at({1, 0})) == 4);
+    REQUIRE(std::ssize(h_table.at({1, 0})) == 6);
     // distance from (1,0) to (1,2)
     REQUIRE(h_table.at({1, 0}).at({1, 2}) == 2);
     // distance from (1,4) to (3,1)
@@ -44,7 +44,7 @@ TEST_CASE("compute h-table", "[distances]") {
 }
 
 TEST_CASE("compute h-distance", "[distances]") {
-    cmapd::AmbientMapInstance instance{"data/test_instance.txt", "data/test_map.txt"};
+    cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
     cmapd::h_table_t h_table = cmapd::compute_h_table(instance, cmapd::manhattan_distance);
 
     cmapd::Point location{1, 1};

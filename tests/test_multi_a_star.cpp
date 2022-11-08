@@ -11,7 +11,7 @@
 namespace multi_a_star_test {
 
 const std::vector<cmapd::Point> goal_sequence = {{1, 2}, {3, 2}, {3, 1}, {3, 3}};
-const cmapd::AmbientMapInstance instance{"data/test_instance.txt", "data/test_map.txt"};
+const cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
 const cmapd::h_table_t h_table{cmapd::compute_h_table(instance, cmapd::manhattan_distance)};
 
 TEST_CASE("Multi A* node equality", "[multi A*]") {

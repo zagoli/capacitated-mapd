@@ -50,11 +50,30 @@ class AmbientMap {
      */
     [[nodiscard]] int get_columns_number() const;
     /**
-     * Checks if a position is valid in the map
-     * @param p The point to check
-     * @return True if the given Point is a valid position inside the map, false otherwise
+     * Checks if a position is inside in the map
+     * @param p the point to check
+     * @return true if the given Point is inside the map, false otherwise
+     */
+    [[nodiscard]] bool is_inside_position(Point p) const;
+    /**
+     * Checks if a position is valid to generate agents or tasks in the map
+     * @param p the point to check
+     * @return true if the given Point is a possible generation position inside the map, false
+     * otherwise
      */
     [[nodiscard]] virtual bool is_valid_position(Point p) const;
+    /**
+     * method that return the linearized index of the Point
+     * @param p the point to linearize
+     * @return the linearized index
+     */
+    [[nodiscard]] int64_t ravel(Point point) const;
+    /**
+     * method that takes a linearized index and return the corresponding Point
+     * @param p the linearized index
+     * @return the corresponding Point
+     */
+    [[nodiscard]] Point unravel(int64_t index) const;
     /**
      * Method that return a string representing the structure of the map
      * @return a string representing the structure of the map

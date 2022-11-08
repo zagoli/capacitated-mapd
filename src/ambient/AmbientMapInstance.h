@@ -54,9 +54,9 @@ class AmbientMapInstance final : public AmbientMap {
      */
     [[nodiscard]] int get_num_tasks() const;
     /**
-     * Checks if a position is valid in the map
+     * Checks if a position can be a valid move position in the map
      * @param[in] p The point to check
-     * @returns True if the given Point is a valid position inside the map, false otherwise
+     * @returns True if the given Point is inside the map and it's not a wall, false otherwise
      */
     [[nodiscard]] bool is_valid_position(Point p) const override;
     /**
