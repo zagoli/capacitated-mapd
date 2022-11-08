@@ -7,10 +7,13 @@
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
+#include <fmt/format.h>
+
 #include <argparse/argparse.hpp>
 #include <filesystem>
 #include <string>
 
+#include "ambient/AmbientMap.h"
 #include "generation/generate_instances.h"
 
 int main(int argc, char* argv[]) {
@@ -84,23 +87,36 @@ int main(int argc, char* argv[]) {
         std::exit(EXIT_FAILURE);
     }
     auto map_path = std::filesystem::path{parser.get("map_path")};
+    
     if (parser["--generate"] == true) {
         auto instances_out_path = std::filesystem::path{parser.get("--instances-output")};
         auto n_agents_opt = parser.present<int>("--m_agents");
         auto n_tasks_opt = parser.present<int>("--m_tasks");
         auto n_instances_opt = parser.present<int>("--instances");
         if (n_agents_opt && n_tasks_opt && n_instances_opt) {
-            // TODO: replace print with call to generate instances.
-            std::cout << "Generating " << n_instances_opt.value() << " instances with "
-                      << n_agents_opt.value() << " m_agents and " << n_tasks_opt.value()
-                      << " m_tasks on map " << map_path << " and saving them in "
-                      << instances_out_path << std::endl;
+            std::cout << fmt::format(
+                "Trying to generate {} instances with {} agents "
+                "and {} tasks on map {} and saving them in {}...",
+                n_agents_opt.value(),
+                n_agents_opt.value(),
+                n_tasks_opt.value(),
+                map_path.string(),
+                instances_out_path.string());
+
+            cmapd::AmbientMap map{map_path};
+            cmapd::generate_instances(map,
+                                      instances_out_path,
+                                      n_instances_opt.value(),
+                                      n_agents_opt.value(),
+                                      n_tasks_opt.value());
+            std::cout << "Done." << std::endl;
         } else {
             std::cerr << "If you want to generate instances, you must provide the number "
                          "of instances, m_agents and m_tasks!\n";
             std::exit(EXIT_FAILURE);
         }
     }
+
     if (auto instances_in_path_opt = parser.present("--evaluate")) {
         auto instances_in_path = std::filesystem::path{instances_in_path_opt.value()};
         const std::string& solver = parser.get("--solver");
@@ -113,7 +129,9 @@ int main(int argc, char* argv[]) {
             std::cout << "Solving instances in " << instances_in_path << ", capacity " << capacity
                       << " with PBS solver.\n";
         } else {
-            std::cerr << solver << " is not a known solver. Possible solver are: CBS, PBS (case sensitive).\n";
+            std::cerr
+                << solver
+                << " is not a known solver. Possible solver are: CBS, PBS (case sensitive).\n";
             std::exit(EXIT_FAILURE);
         }
     }
