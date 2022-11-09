@@ -131,7 +131,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance,
     const Assignment* solution{routing.SolveWithParameters(search_parameters)};
 
     if (solution == nullptr) {
-        throw std::runtime_error("No solution found");
+        throw std::runtime_error("OR-Tools can't find a solution.");
     }
 
     // =============== CONSTRUCTING THE GOAL SEQUENCES FROM THE SOLUTION ===========================

@@ -24,4 +24,6 @@ using path_t = std::vector<Point>;
  * h_table.at({1,1}).at({2,2})
  */
 using h_table_t = std::map<Point, std::map<Point, int>>;
+
+using moves_t = std::vector<std::pair<int, int>>;
 }  // namespace cmapd

@@ -1,2 +1,0 @@
-test_nurses_sat 1 0.0177877
----

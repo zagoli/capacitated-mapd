@@ -4,6 +4,7 @@
 
 #include "Node.h"
 
+#include <iostream>
 #include <stdexcept>
 
 #include "a_star/multi_a_star.h"
@@ -24,18 +25,19 @@ Point get_position(const path_t& path, int timestep) {
 
 Node::Node(const AmbientMapInstance& instance,
            std::vector<path_t> goal_sequences,
-           const std::vector<Constraint>& constraints) {
+           std::vector<Constraint>&& constraints)
+    : m_constraints{std::move(constraints)} {
     for (int i = 0; i < std::ssize(goal_sequences); ++i) {
         auto start_location = goal_sequences.at(i).at(0);
         // remove start location from goal_sequence
         goal_sequences.at(i).erase(goal_sequences.at(i).cbegin());
         auto h_table = cmapd::compute_h_table(instance, cmapd::manhattan_distance);
         m_paths.push_back(cmapd::multi_a_star::multi_a_star(
-            i, start_location, goal_sequences.at(i), instance, constraints, h_table));
+            i, start_location, goal_sequences.at(i), instance, m_constraints, h_table));
     }
 }
 
-std::vector<int> Node::get_lengths() {
+std::vector<int> Node::lengths() const {
     std::vector<int> lengths;
     for (const auto& path : m_paths) {
         lengths.emplace_back(std::ssize(path));
@@ -43,7 +45,7 @@ std::vector<int> Node::get_lengths() {
     return lengths;
 }
 
-int Node::get_makespan() {
+int Node::makespan() const {
     int makespan = std::numeric_limits<int>::min();
     for (const auto& path : m_paths) {
         int size = static_cast<int>(std::ssize(path));
@@ -52,7 +54,7 @@ int Node::get_makespan() {
     return makespan;
 }
 
-std::optional<Conflict> Node::get_first_conflict() {
+std::optional<Conflict> Node::first_conflict() const {
     auto n_paths = std::ssize(m_paths);
     for (int i = 0; i < n_paths; ++i) {
         for (int j = i + 1; j < n_paths; ++j) {
@@ -96,6 +98,29 @@ std::optional<Conflict> Node::detect_conflict(int first_agent,
     return {};
 }
 
-const std::vector<path_t>& Node::get_paths() const { return m_paths; }
+std::vector<path_t> Node::get_paths() const { return m_paths; }
+
+int Node::cost() const {
+    int cost = 0;
+    for (const auto& path : m_paths) {
+        cost += static_cast<int>(std::ssize(path));
+    }
+    return cost;
+}
+
+int Node::num_conflicts() const {
+    auto n_paths = std::ssize(m_paths);
+    int num_conflicts = 0;
+    for (int i = 0; i < n_paths; ++i) {
+        for (int j = i + 1; j < n_paths; ++j) {
+            if (detect_conflict(i, j, m_paths.at(i), m_paths.at(j))) {
+                ++num_conflicts;
+            }
+        }
+    }
+    return num_conflicts;
+}
+
+std::vector<Constraint> Node::get_constraints() const { return m_constraints; }
 
 }  // namespace cmapd::cbs
