@@ -21,6 +21,7 @@
 #include "generation/generate_instances.h"
 #include "ortools/ortools.h"
 #include "path_finders/cbs.h"
+#include "path_finders/pbs.h"
 
 /**
  * Solves an instance, printing the solutions and execution times.
@@ -210,9 +211,12 @@ void solver(const std::filesystem::path& instances_path,
                     print_solution(solution);
                 } else if (solver == "PBS") {
                     time_before = high_resolution_clock::now();
+                    CmapdSolution solution{pbs::pbs(instance, goal_sequences)};
                     time_after = high_resolution_clock::now();
                     path_finder_time
                         = std::chrono::duration_cast<seconds>(time_before - time_after).count();
+
+                    print_solution(solution);
                 }
 
                 std::cout << fmt::format(

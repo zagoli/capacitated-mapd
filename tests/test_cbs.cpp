@@ -8,6 +8,7 @@
 #include "distances/distances.h"
 #include "path_finders/Node.h"
 #include "path_finders/cbs.h"
+#include "path_finders_utils.h"
 
 namespace cbs_test {
 
@@ -79,6 +80,8 @@ TEST_CASE("medium cbs search", "[cbs]") {
     REQUIRE(*path_2.cbegin() == Point{1, 3});
     REQUIRE(path_2.back() == Point{3, 3});
     REQUIRE(std::find(path_2.cbegin(), path_2.cend(), Point{3, 1}) != path_2.cend());
+
+    REQUIRE_NOTHROW(solution.paths);
 }
 
 TEST_CASE("advanced cbs search", "[cbs]") {
@@ -104,6 +107,8 @@ TEST_CASE("advanced cbs search", "[cbs]") {
 
     REQUIRE(*solution.paths[3].cbegin() == Point{19, 33});
     REQUIRE(solution.paths[3].back() == Point{9, 4});
+
+    REQUIRE_NOTHROW(are_valid_routes(solution.paths));
 }
 
 }  // namespace cbs_test
