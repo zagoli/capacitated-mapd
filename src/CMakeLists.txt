@@ -29,7 +29,12 @@ target_include_directories(task_assigner PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(task_assigner PRIVATE ortools::ortools)
 
 # program
-add_executable(cmapd main.cpp)
+add_executable(cmapd
+        main.cpp
+        ambient/AmbientMap.cpp
+        ambient/AmbientMapInstance.cpp
+        generation/generate_instances.cpp)
+target_include_directories(cmapd PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(cmapd PRIVATE
         task_assigner
         path_finders

@@ -22,6 +22,13 @@
 #include "ortools/ortools.h"
 #include "path_finders/cbs.h"
 
+/**
+ * Solves an instance, printing the solutions and execution times.
+ * @param instances_path The path where the instance files are.
+ * @param map_path The path to the map.
+ * @param capacity The capacity of the agents.
+ * @param solver The solver type, CBS or PBS.
+ */
 void solver(const std::filesystem::path& instances_path,
             const std::filesystem::path& map_path,
             int capacity,
@@ -150,6 +157,10 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+/**
+ * Prints a solution.
+ * @param solution The solution to be printed.
+ */
 void print_solution(const cmapd::CmapdSolution& solution) {
     std::cout << fmt::format("makespan:{:7}, cost:{:7}\n", solution.makespan, solution.cost);
     for (const auto& path : solution.paths) {
