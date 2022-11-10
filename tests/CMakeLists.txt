@@ -18,6 +18,7 @@ add_executable(cmapd_tests
         test_multi_a_star.cpp
         test_generation_instances.cpp
         test_cbs.cpp
+        test_pbs.cpp
         test_ortools.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMapInstance.cpp

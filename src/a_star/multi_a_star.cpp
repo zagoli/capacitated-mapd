@@ -58,7 +58,7 @@ path_t multi_a_star(int agent,
         }
     }
     // No solution is found
-    throw std::runtime_error("No solution found.");
+    throw std::runtime_error("[multiastar] No solution found.");
 }
 
 }  // namespace cmapd::multi_a_star
