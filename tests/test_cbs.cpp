@@ -83,7 +83,7 @@ TEST_CASE("medium cbs search", "[cbs]") {
 
 TEST_CASE("advanced cbs search", "[cbs]") {
     using namespace cmapd;
-    AmbientMapInstance instance{"data/instance_4.txt", "data/map_4.txt"};
+    AmbientMapInstance instance{"data/instance_5.txt", "data/map_5.txt"};
     std::vector<path_t> goal_sequences{{{1, 1}, {1, 2}, {17, 5}, {15, 5}, {7, 19}},
                                        {{19, 1}, {13, 29}, {15, 22}, {9, 8}, {9, 16}},
                                        {{1, 33}, {5, 13}, {15, 32}, {11, 11}, {15, 19}},
