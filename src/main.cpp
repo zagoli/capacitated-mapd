@@ -45,46 +45,46 @@ int main(int argc, char* argv[]) {
     parser.add_argument("map_path")
         .help("The path pointing to the map file. For example, /home/map.txt");
 
-    parser.add_argument("--generate")
+    parser.add_argument("-g", "--generate")
         .help(
             "Flag used to specify you want to generate instances. "
-            "If set you must provide the number of instances, m_agents and m_tasks.")
+            "If set you must provide the number of instances, agents and tasks.")
         .implicit_value(true)
         .default_value(false);
 
-    parser.add_argument("--m_agents")
-        .help("Specify the positive number of m_agents in the generated instances.")
+    parser.add_argument("-na", "--agents")
+        .help("Specify the positive number of agents in the generated instances.")
         .metavar("N_AGENTS")
         .scan<'i', int>();
 
-    parser.add_argument("--m_tasks")
-        .help("Specify the positive number of m_tasks in the generated instances.")
+    parser.add_argument("-nt", "--tasks")
+        .help("Specify the positive number of tasks in the generated instances.")
         .metavar("N_TASKS")
         .scan<'i', int>();
 
-    parser.add_argument("--instances")
+    parser.add_argument("-ni", "--instances")
         .help("Specify the positive number of instances to generate.")
         .metavar("N_INSTANCES")
         .scan<'i', int>();
 
-    parser.add_argument("--instances-output")
+    parser.add_argument("-o", "--instances-output")
         .help("Specify the path in which the output instances will be saved.")
         .metavar("OUT_PATH")
         .default_value("output"s);
 
-    parser.add_argument("--evaluate")
+    parser.add_argument("-e", "--evaluate")
         .help(
             "Specify the path pointing to a directory containing the generated instances "
             "and evaluate them.")
         .metavar("INSTANCES_PATH");
 
-    parser.add_argument("--capacity")
+    parser.add_argument("-c", "--capacity")
         .help("The maximum number of task an agent can simultaneously carry.")
         .metavar("CAPACITY")
         .default_value(1)
         .scan<'i', int>();
 
-    parser.add_argument("--solver")
+    parser.add_argument("-s", "--solver")
         .help(
             "Specify the type of solver to use when evaluating the instances. "
             "Could be CBS or PBS.")
@@ -109,8 +109,8 @@ int main(int argc, char* argv[]) {
 
     if (parser["--generate"] == true) {
         auto instances_out_path = std::filesystem::path{parser.get("--instances-output")};
-        auto n_agents_opt = parser.present<int>("--m_agents");
-        auto n_tasks_opt = parser.present<int>("--m_tasks");
+        auto n_agents_opt = parser.present<int>("--agents");
+        auto n_tasks_opt = parser.present<int>("--tasks");
         auto n_instances_opt = parser.present<int>("--instances");
         if (n_agents_opt && n_tasks_opt && n_instances_opt) {
             std::cout << fmt::format(
@@ -131,7 +131,7 @@ int main(int argc, char* argv[]) {
             std::cout << "Done." << std::endl;
         } else {
             std::cerr << "If you want to generate instances, you must provide the number "
-                         "of instances, m_agents and m_tasks!\n";
+                         "of instances, agents and tasks!\n";
             std::exit(EXIT_FAILURE);
         }
     }
