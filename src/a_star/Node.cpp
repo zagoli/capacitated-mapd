@@ -32,7 +32,6 @@ Node::Node(const Point loc,
 }
 
 std::vector<Node> Node::get_children(const AmbientMapInstance& instance) const {
-    using moves_t = std::vector<std::pair<int, int>>;
     std::vector<Node> children;
     for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
         Point new_position = m_location + move;

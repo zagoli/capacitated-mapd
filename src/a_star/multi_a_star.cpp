@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <iostream>
-#include <queue>
 #include <set>
 
 #include "Frontier.h"
@@ -39,13 +38,13 @@ path_t multi_a_star(int agent,
         }
         // Remember that we visited this location
         explored.insert(top_node);
-        // Populate queue
+        // Populate frontier
         for (const auto& child : top_node.get_children(map_instance)) {
             Constraint check_me{.agent = agent,
                                 .timestep = child.get_g_value(),
                                 .from_position = top_node.get_location(),
                                 .to_position = child.get_location()};
-            // check if child is constrained
+            // Check if child is constrained
             if (std::find(constraints.cbegin(), constraints.cend(), check_me)
                 == constraints.cend()) {
                 if (!explored.contains(child) && !frontier.contains(child)) {
@@ -58,7 +57,7 @@ path_t multi_a_star(int agent,
         }
     }
     // No solution is found
-    throw std::runtime_error("[multiastar] No solution found.");
+    throw std::runtime_error("[multiastar] No solution  for agent " + std::to_string(agent));
 }
 
 }  // namespace cmapd::multi_a_star

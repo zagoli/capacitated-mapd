@@ -378,15 +378,15 @@
         </g>
         <g fill="rgb(0, 0, 0)" font-family="Helvetica" pointer-events="none" clip-path="url(#mx-clip-436-754-372-26-0)"
            font-size="12px">
-            <text x="437.5" y="766.5">+ get_lengths() : Vector&lt;int&gt;</text>
+            <text x="437.5" y="766.5">+ lengths() : Vector&lt;int&gt;</text>
         </g>
         <g fill="rgb(0, 0, 0)" font-family="Helvetica" pointer-events="none" clip-path="url(#mx-clip-436-780-372-26-0)"
            font-size="12px">
-            <text x="437.5" y="792.5">+ get_makespan() : int</text>
+            <text x="437.5" y="792.5">+ makespan() : int</text>
         </g>
         <g fill="rgb(0, 0, 0)" font-family="Helvetica" pointer-events="none" clip-path="url(#mx-clip-436-806-372-26-0)"
            font-size="12px">
-            <text x="437.5" y="818.5">+ get_first_conflict() : Optional&lt;Pair&lt;Constraint, Constraint&gt;&gt;</text>
+            <text x="437.5" y="818.5">+ first_conflict() : Optional&lt;Pair&lt;Constraint, Constraint&gt;&gt;</text>
         </g>
         <path d="M 47 684 L 7 684 L 7 282 L 20.63 282" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10"
               pointer-events="none"/>

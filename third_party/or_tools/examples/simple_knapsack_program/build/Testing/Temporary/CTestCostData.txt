@@ -1,2 +1,0 @@
-test_simple_knapsack_program 1 0.0128225
----
