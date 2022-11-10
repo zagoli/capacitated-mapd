@@ -10,11 +10,22 @@
 #include <fmt/format.h>
 
 #include <argparse/argparse.hpp>
+#include <chrono>
 #include <filesystem>
+#include <regex>
 #include <string>
 
+#include "CmapdSolution.h"
 #include "ambient/AmbientMap.h"
+#include "custom_types.h"
 #include "generation/generate_instances.h"
+#include "ortools/ortools.h"
+#include "path_finders/cbs.h"
+
+void solver(const std::filesystem::path& instances_path,
+            const std::filesystem::path& map_path,
+            int capacity,
+            std::string_view solver);
 
 int main(int argc, char* argv[]) {
     using namespace std::string_literals;
@@ -87,7 +98,7 @@ int main(int argc, char* argv[]) {
         std::exit(EXIT_FAILURE);
     }
     auto map_path = std::filesystem::path{parser.get("map_path")};
-    
+
     if (parser["--generate"] == true) {
         auto instances_out_path = std::filesystem::path{parser.get("--instances-output")};
         auto n_agents_opt = parser.present<int>("--m_agents");
@@ -96,7 +107,7 @@ int main(int argc, char* argv[]) {
         if (n_agents_opt && n_tasks_opt && n_instances_opt) {
             std::cout << fmt::format(
                 "Trying to generate {} instances with {} agents "
-                "and {} tasks on map {} and saving them in {}...",
+                "and {} tasks on map {} and saving them in {}...\n",
                 n_agents_opt.value(),
                 n_agents_opt.value(),
                 n_tasks_opt.value(),
@@ -119,22 +130,91 @@ int main(int argc, char* argv[]) {
 
     if (auto instances_in_path_opt = parser.present("--evaluate")) {
         auto instances_in_path = std::filesystem::path{instances_in_path_opt.value()};
-        const std::string& solver = parser.get("--solver");
+        const std::string& solver_type = parser.get("--solver_type");
         const int capacity = parser.get<int>("--capacity");
-        // TODO: replace print with call to solver
-        if (solver == "CBS") {
-            std::cout << "Solving instances in " << instances_in_path << ", capacity " << capacity
-                      << " with CBS solver.\n";
-        } else if (solver == "PBS") {
-            std::cout << "Solving instances in " << instances_in_path << ", capacity " << capacity
-                      << " with PBS solver.\n";
+        if (solver_type == "CBS" || solver_type == "PBS") {
+            std::cout << fmt::format(
+                "Solving instances in {} , capacity set to {}  with {} solver_type.\n",
+                instances_in_path.string(),
+                capacity,
+                solver_type);
+            solver(instances_in_path, map_path, capacity, solver_type);
         } else {
-            std::cerr
-                << solver
-                << " is not a known solver. Possible solver are: CBS, PBS (case sensitive).\n";
+            std::cerr << solver_type
+                      << " is not a known solver_type. Possible solver_type are: CBS, PBS (case "
+                         "sensitive).\n";
             std::exit(EXIT_FAILURE);
         }
     }
 
     return 0;
+}
+
+void print_solution(const cmapd::CmapdSolution& solution) {
+    std::cout << fmt::format("makespan:{:7}, cost:{:7}\n", solution.makespan, solution.cost);
+    for (const auto& path : solution.paths) {
+        const char* padding = "";
+        for (const auto& point : path) {
+            std::cout << padding << point;
+            padding = ", ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void solver(const std::filesystem::path& instances_path,
+            const std::filesystem::path& map_path,
+            int capacity,
+            std::string_view solver) {
+    using namespace cmapd;
+    using std::chrono::high_resolution_clock;
+    using std::chrono::seconds;
+    for (const auto& entry : std::filesystem::directory_iterator(instances_path)) {
+        const auto filename = entry.path().filename().string();
+        if (std::regex_match(filename, std::regex{"instance_[0-9]+\\.txt"})) {
+            std::cout << "Solving " << filename << std::endl;
+            try {
+                auto time_before = high_resolution_clock::now();
+                AmbientMapInstance instance{entry.path(), map_path};
+                auto time_after = high_resolution_clock::now();
+                auto h_table_time{
+                    std::chrono::duration_cast<seconds>(time_before - time_after).count()};
+
+                // Task assignment
+                time_before = high_resolution_clock::now();
+                std::vector<path_t> goal_sequences{assign_tasks(instance, capacity)};
+                time_after = high_resolution_clock::now();
+                auto task_assignment_time{
+                    std::chrono::duration_cast<seconds>(time_before - time_after).count()};
+
+                // Path finding
+                long path_finder_time;
+                if (solver == "CBS") {
+                    time_before = high_resolution_clock::now();
+                    CmapdSolution solution{cbs::cbs(instance, goal_sequences)};
+                    time_after = high_resolution_clock::now();
+                    path_finder_time
+                        = std::chrono::duration_cast<seconds>(time_before - time_after).count();
+
+                    print_solution(solution);
+                } else if (solver == "PBS") {
+                    time_before = high_resolution_clock::now();
+                    time_after = high_resolution_clock::now();
+                    path_finder_time
+                        = std::chrono::duration_cast<seconds>(time_before - time_after).count();
+                }
+
+                std::cout << fmt::format(
+                    "H-table computing time:{:10}\n"
+                    "Task assignment time:{:12}\n"
+                    "Path finding time:{:15}\n",
+                    h_table_time,
+                    task_assignment_time,
+                    path_finder_time);
+
+            } catch (const std::exception& ex) {
+                std::cerr << "Instance skipped: " << ex.what() << std::endl;
+            }
+        }
+    }
 }

@@ -30,4 +30,8 @@ target_link_libraries(task_assigner PRIVATE ortools::ortools)
 
 # program
 add_executable(cmapd main.cpp)
-target_link_libraries(cmapd PRIVATE argparse::argparse fmt::fmt)
+target_link_libraries(cmapd PRIVATE
+        task_assigner
+        path_finders
+        argparse::argparse
+        fmt::fmt)

@@ -21,5 +21,5 @@ namespace cmapd {
  * @return A vector of goal sequences, one for every agent.
  * @throws runtime_error if no solution is found.
  */
-std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacity);
+[[nodiscard]] std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacity);
 }  // namespace cmapd

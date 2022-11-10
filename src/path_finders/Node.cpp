@@ -4,7 +4,6 @@
 
 #include "Node.h"
 
-#include <iostream>
 #include <stdexcept>
 
 #include "a_star/multi_a_star.h"
@@ -98,6 +97,29 @@ std::optional<Conflict> Node::detect_conflict(int first_agent,
     return {};
 }
 
-const std::vector<path_t>& Node::get_paths() const { return m_paths; }
+std::vector<path_t> Node::get_paths() const { return m_paths; }
+
+int Node::cost() const {
+    int cost = 0;
+    for (const auto& path : m_paths) {
+        cost += static_cast<int>(std::ssize(path));
+    }
+    return cost;
+}
+
+int Node::num_conflicts() const {
+    auto n_paths = std::ssize(m_paths);
+    int num_conflicts = 0;
+    for (int i = 0; i < n_paths; ++i) {
+        for (int j = i + 1; j < n_paths; ++j) {
+            if (detect_conflict(i, j, m_paths.at(i), m_paths.at(j))) {
+                ++num_conflicts;
+            }
+        }
+    }
+    return num_conflicts;
+}
+
+std::vector<Constraint> Node::get_constraints() const { return m_constraints; }
 
 }  // namespace cmapd::cbs
