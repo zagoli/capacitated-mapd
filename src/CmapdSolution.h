@@ -15,17 +15,15 @@
 
 /**
  * @struct CmapdSolution
- * @brief Represents a solution to a CMAP instance.
+ * @brief Represents a solution to a CMAPD instance.
  */
 namespace cmapd {
 struct CmapdSolution {
     /// A vector containing a path (vector of points) for every agent.
     const std::vector<path_t> paths;
     /// The length of the longest path
-    const std::size_t makespan;
+    const int makespan;
     /// The sum of all paths lengths
-    const std::size_t cost;
-    /// Number of resolved conflicts
-    const int conflicts;
+    const int cost;
 };
 }  // namespace cmapd

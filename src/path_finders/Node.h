@@ -27,6 +27,8 @@ class Node {
   private:
     /// the paths of the current node, one for every agent.
     std::vector<path_t> m_paths;
+    /// the constraints of the current node
+    std::vector<Constraint> m_constraints;
     /**
      * Detect the first conflict in the provided paths, if present.
      * @param first_agent The number of the first agent.
@@ -46,30 +48,46 @@ class Node {
      * @param instance The map instance on which we are operating.
      * @param goal_sequences The goal sequences for every agent.
      * @param constraints The constraints to take into account when computing paths.
+     * @throws runtime_error if multi_a_star can't find a path for one agent.
      */
     explicit Node(const AmbientMapInstance& instance,
                   std::vector<path_t> goal_sequences,
-                  const std::vector<Constraint>& constraints = {});
+                  std::vector<Constraint>&& constraints = {});
     /**
      * Get the lengths of every path.
      * @return a vector containing the length of every computed path.
      */
-    [[nodiscard]] std::vector<int> get_lengths();
+    [[nodiscard]] std::vector<int> lengths() const;
     /**
      * Get the maximum length of paths.
      * @return the maximum length of paths.
      */
-    [[nodiscard]] int get_makespan();
+    [[nodiscard]] int makespan() const;
+    /**
+     * Get the sum of all the paths lengths.
+     * @return the sum of all the paths lengths.
+     */
+    [[nodiscard]] int cost() const;
     /**
      * Get the first conflict between every path, if found.
      * @return an optional containing the first conflict, if found, otherwise an empty optional.
      */
-    [[nodiscard]] std::optional<Conflict> get_first_conflict();
+    [[nodiscard]] std::optional<Conflict> first_conflict() const;
+    /**
+     * Get the number of conflicts in the calculated paths.
+     * @return the number of conflicts in the calculated paths.
+     */
+    [[nodiscard]] int num_conflicts() const;
     /**
      * Get the computed paths.
      * @return the computed paths, one for every agent.
      */
-    [[nodiscard]] const std::vector<path_t>& get_paths() const;
+    [[nodiscard]] std::vector<path_t> get_paths() const;
+    /**
+     * Get the constraints of the current node.
+     * @return the constraints of the current node.
+     */
+    [[nodiscard]] std::vector<Constraint> get_constraints() const;
 };
 
 }  // namespace cmapd::cbs

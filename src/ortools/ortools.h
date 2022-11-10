@@ -19,6 +19,7 @@ namespace cmapd {
  * @param capacity The maximum number of tasks an agent is able to carry.
  * @param h_table The h-table with the precomputed distances for the map.
  * @return A vector of goal sequences, one for every agent.
+ * @throws runtime_error if no solution is found.
  */
 std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacity);
 }  // namespace cmapd
