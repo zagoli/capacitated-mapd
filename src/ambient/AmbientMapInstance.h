@@ -16,6 +16,7 @@
 #include <vector>
 
 #include "AmbientMap.h"
+#include "custom_types.h"
 /**
  * @class AmbientMapInstance
  * @brief Represents the Instance of a map to solve.
@@ -25,6 +26,7 @@ class AmbientMapInstance final : public AmbientMap {
   private:
     std::vector<Point> m_agents;
     std::vector<std::pair<Point, Point>> m_tasks;
+    h_table_t h_table;
 
   public:
     /**
@@ -74,6 +76,11 @@ class AmbientMapInstance final : public AmbientMap {
      * @return the list of agents of the instance.
      */
     [[nodiscard]] const std::vector<Point>& get_agents() const;
+    /**
+     * Method that returns the h_table of the instance.
+     * @return the h_table
+     */
+    [[nodiscard]] const h_table_t& get_h_table() const;
     /**
      * Stream operator
      * @param os output stream

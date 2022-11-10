@@ -22,7 +22,6 @@ namespace cmapd::multi_a_star {
  * @param goal_sequence The sequence of goals to be visited.
  * @param map_instance The AmbientMapInstance on which the agents are moving.
  * @param constraints A vector of m_constraints to be respected when computing the path.
- * @param h_table Distance table used as heuristic when computing the path.
  * @return A vector of Point representing the found path.
  * @throws runtime_error if no path is found.
  * @see Lifelong Multi-Agent Path Finding in Large-Scale Warehouses.
@@ -32,7 +31,6 @@ path_t multi_a_star(int agent,
                     Point start_location,
                     const path_t& goal_sequence,
                     const AmbientMapInstance& map_instance,
-                    const std::vector<Constraint>& constraints,
-                    const h_table_t& h_table);
+                    const std::vector<Constraint>& constraints);
 
 }  // namespace cmapd::multi_a_star

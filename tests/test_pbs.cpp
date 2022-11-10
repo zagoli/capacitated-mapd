@@ -55,25 +55,25 @@ void are_valid_routes(const std::vector<path_t>& routes) {
 TEST_CASE("pbs", "[pbs]") {
     const AmbientMapInstance instance{"data/instance_2.txt", "data/map_2.txt"};
     const h_table_t h_table{compute_h_table(instance, manhattan_distance)};
-    std::vector<path_t> goal_sequences = assign_tasks(instance, 1, h_table);
+    std::vector<path_t> goal_sequences = assign_tasks(instance, 1);
 
-    std::vector<path_t> final_temp_paths = pbs(instance, goal_sequences, h_table);
+    std::vector<path_t> final_temp_paths = pbs(instance, goal_sequences);
 }
 
 TEST_CASE("pbs_2", "[pbs]") {
     const AmbientMapInstance instance{"data/instance_3.txt", "data/map_3.txt"};
     const h_table_t h_table{compute_h_table(instance, manhattan_distance)};
-    std::vector<path_t> goal_sequences = assign_tasks(instance, 2, h_table);
+    std::vector<path_t> goal_sequences = assign_tasks(instance, 2);
 
-    std::vector<path_t> final_temp_paths = pbs(instance, goal_sequences, h_table);
+    std::vector<path_t> final_temp_paths = pbs(instance, goal_sequences);
 }
 
 TEST_CASE("pbs_4", "[pbs]") {
     const AmbientMapInstance instance{"data/instance_4.txt", "data/map_4.txt"};
     const h_table_t h_table{compute_h_table(instance, manhattan_distance)};
-    std::vector<path_t> goal_sequences = assign_tasks(instance, 1, h_table);
+    std::vector<path_t> goal_sequences = assign_tasks(instance, 1);
 
-    std::vector<path_t> final_temp_paths = pbs(instance, goal_sequences, h_table);
+    std::vector<path_t> final_temp_paths = pbs(instance, goal_sequences);
     REQUIRE_NOTHROW(are_valid_routes(final_temp_paths));
 }
 }  // namespace pbs_test

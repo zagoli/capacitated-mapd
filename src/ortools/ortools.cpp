@@ -11,9 +11,7 @@
 
 namespace cmapd {
 
-std::vector<path_t> assign_tasks(const AmbientMapInstance& instance,
-                                 int capacity,
-                                 const h_table_t& h_table) {
+std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacity) {
     using namespace operations_research;
 
     // =============== SETTING STARTING AND ENDING NODES ===========================================
@@ -75,7 +73,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance,
 
     // =============== DISTANCE CALLBACK ===========================================================
 
-    auto distance_callback = [&h_table, &manager, &depot, &instance, &node_to_ravel_point](
+    auto distance_callback = [&manager, &depot, &instance, &node_to_ravel_point](
                                  int64_t from_index, int64_t to_index) -> int64_t {
         auto from_node = manager.IndexToNode(from_index);
         auto to_node = manager.IndexToNode(to_index);
@@ -85,7 +83,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance,
         }
         auto from_point = instance.unravel(node_to_ravel_point.at(from_node));
         auto to_point = instance.unravel(node_to_ravel_point.at(to_node));
-        return h_table.at(from_point).at(to_point);
+        return instance.get_h_table().at(from_point).at(to_point);
     };
 
     auto transit_callback_index{routing.RegisterTransitCallback(distance_callback)};

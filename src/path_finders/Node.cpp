@@ -31,7 +31,7 @@ Node::Node(const AmbientMapInstance& instance,
         goal_sequences.at(i).erase(goal_sequences.at(i).cbegin());
         auto h_table = cmapd::compute_h_table(instance, cmapd::manhattan_distance);
         m_paths.push_back(cmapd::multi_a_star::multi_a_star(
-            i, start_location, goal_sequences.at(i), instance, constraints, h_table));
+            i, start_location, goal_sequences.at(i), instance, constraints));
     }
 }
 

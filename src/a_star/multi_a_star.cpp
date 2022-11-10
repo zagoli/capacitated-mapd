@@ -17,14 +17,13 @@ path_t multi_a_star(int agent,
                     Point start_location,
                     const path_t& goal_sequence,
                     const AmbientMapInstance& map_instance,
-                    const std::vector<Constraint>& constraints,
-                    const h_table_t& h_table) {
+                    const std::vector<Constraint>& constraints) {
     // frontier definition
     Frontier frontier;
     // explore set definition
     std::set<Node> explored;
     // generation of root node in the frontier
-    frontier.push(Node{start_location, h_table, goal_sequence});
+    frontier.push(Node{start_location, map_instance.get_h_table(), goal_sequence});
     // main loop
     while (!frontier.empty()) {
         // get top node

@@ -12,9 +12,8 @@ using namespace cmapd;
 
 TEST_CASE("simple ortools test", "[ortools]") {
     const AmbientMapInstance instance{"data/instance_2.txt", "data/map_2.txt"};
-    const h_table_t h_table{compute_h_table(instance, manhattan_distance)};
 
-    std::vector<path_t> goal_sequences = assign_tasks(instance, 1, h_table);
+    std::vector<path_t> goal_sequences = assign_tasks(instance, 1);
     REQUIRE(goal_sequences.size() == 1);
     std::vector valid_path{Point{1, 1}, Point{2, 2}, Point{3, 1}};
     REQUIRE(goal_sequences.at(0) == valid_path);
@@ -22,9 +21,8 @@ TEST_CASE("simple ortools test", "[ortools]") {
 
 TEST_CASE("medium ortools test", "[ortools]") {
     const AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
-    const h_table_t h_table{compute_h_table(instance, manhattan_distance)};
 
-    std::vector<path_t> goal_sequences = assign_tasks(instance, 1, h_table);
+    std::vector<path_t> goal_sequences = assign_tasks(instance, 1);
 
     REQUIRE(goal_sequences.size() == 2);
     std::vector valid_path_0{Point{1, 1}, Point{3, 1}, Point{3, 3}};
@@ -35,9 +33,8 @@ TEST_CASE("medium ortools test", "[ortools]") {
 
 TEST_CASE("advancred ortools test", "[ortools]") {
     const AmbientMapInstance instance{"data/instance_3.txt", "data/map_3.txt"};
-    const h_table_t h_table{compute_h_table(instance, manhattan_distance)};
 
-    std::vector<path_t> goal_sequences = assign_tasks(instance, 2, h_table);
+    std::vector<path_t> goal_sequences = assign_tasks(instance, 2);
 
     REQUIRE(goal_sequences.size() == 3);
     std::vector valid_path_0{Point{0, 0},

@@ -12,7 +12,6 @@ const std::vector<cmapd::path_t> goal_sequences_1
     = {{{1, 1}, {1, 2}, {3, 2}}, {{1, 3}, {3, 1}, {3, 3}}};
 const std::vector<cmapd::path_t> goal_sequences_2 = {{{3, 0}, {3, 3}}, {{3, 3}, {3, 1}}};
 const cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
-const cmapd::h_table_t h_table{cmapd::compute_h_table(instance, cmapd::manhattan_distance)};
 
 TEST_CASE("cbs node", "[cbs]") {
     cmapd::cbs::Node node1{instance, goal_sequences_1};

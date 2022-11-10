@@ -20,7 +20,5 @@ namespace cmapd {
  * @param h_table The h-table with the precomputed distances for the map.
  * @return A vector of goal sequences, one for every agent.
  */
-std::vector<path_t> assign_tasks(const AmbientMapInstance& instance,
-                                 int capacity,
-                                 const h_table_t& h_table);
+std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacity);
 }  // namespace cmapd

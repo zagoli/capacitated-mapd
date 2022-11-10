@@ -1,7 +1,11 @@
-//
-// Created by dade on 08/11/22.
-//
-
+/**
+ * @file pbs.h
+ * @brief Contains the pbs solver function.
+ * @author Davide Furlani
+ * @version 1.0
+ * @date November, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 #pragma once
 
 #include "a_star/multi_a_star.h"
@@ -10,17 +14,24 @@
 
 namespace cmapd {
 
-std::vector<path_t> pbs(AmbientMapInstance instance,
-                        std::vector<path_t> ot_paths,
-                        h_table_t h_table) {
+/**
+ * Calculate path for each agent given the sequence of goal assigned by the ortools library
+ * @param instance the instance to solve
+ * @param ot_paths the sequence of goals for each agent
+ * @param h_table the distance matrix
+ * @return the detailed path for each agent
+ */
+std::vector<path_t> pbs(const AmbientMapInstance& instance, std::vector<path_t> ot_paths) {
     std::vector<Constraint> constraints{};
     std::vector<path_t> paths{};
 
-    for (int i = 0; static_cast<size_t>(i) < ot_paths.size(); ++i) {
+    for (int i = 0; static_cast<size_t>(i) < ot_paths.size();
+         ++i) {  // per ogni sequenza di goal (una per agente) calcolo il percorso con multi A*
         path_t path = multi_a_star::multi_a_star(
-            i, instance.get_agents().at(i), ot_paths.at(i), instance, constraints, h_table);
+            i, instance.get_agents().at(i), ot_paths.at(i), instance, constraints);
         paths.push_back(path);
-        for (int t = 0; static_cast<size_t>(t) < path.size(); ++t) {
+        for (int t = 0; static_cast<size_t>(t) < path.size();
+             ++t) {  // una volta calcolato il percorso aggiungo i constraint per ogni altro agente
             Point p{path.at(t)};
             for (int a = i + 1; a < instance.get_num_agents(); ++a) {
                 constraints.emplace_back(Constraint{a, t, p, p});
