@@ -116,4 +116,7 @@ std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance) {
     os << instance.to_string();
     return os;
 }
+void AmbientMapInstance::wall(Point p) {
+    if (is_valid_position(p)) m_grid.at(p.row).at(p.col) = '#';
+}
 }  // namespace cmapd

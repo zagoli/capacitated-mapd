@@ -1,34 +1,21 @@
-/**
- * @file pbs.h
- * @brief Contains the pbs solver function.
- * @author Davide Furlani
- * @version 1.0
- * @date November, 2022
- * @copyright 2022 Jacopo Zagoli, Davide Furlani
- */
-#pragma once
+//
+// Created by dade on 10/11/22.
+//
+#include "pbs.h"
 
+#include "Constraint.h"
 #include "a_star/multi_a_star.h"
-#include "ambient/AmbientMapInstance.h"
-#include "custom_types.h"
 
-namespace cmapd {
+namespace cmapd::pbs {
 
-/**
- * Calculate path for each agent given the sequence of goal assigned by the ortools library
- * @param instance the instance to solve
- * @param ot_paths the sequence of goals for each agent
- * @param h_table the distance matrix
- * @return the detailed path for each agent
- */
-std::vector<path_t> pbs(const AmbientMapInstance& instance, std::vector<path_t> ot_paths) {
+CmapdSolution pbs(AmbientMapInstance instance, const std::vector<path_t>& goal_sequences) {
     std::vector<Constraint> constraints{};
     std::vector<path_t> paths{};
 
-    for (int i = 0; static_cast<size_t>(i) < ot_paths.size();
+    for (int i = 0; static_cast<size_t>(i) < goal_sequences.size();
          ++i) {  // per ogni sequenza di goal (una per agente) calcolo il percorso con multi A*
         path_t path = multi_a_star::multi_a_star(
-            i, instance.get_agents().at(i), ot_paths.at(i), instance, constraints);
+            i, instance.get_agents().at(i), goal_sequences.at(i), instance, constraints);
         paths.push_back(path);
         for (int t = 0; static_cast<size_t>(t) < path.size();
              ++t) {  // una volta calcolato il percorso aggiungo i constraint per ogni altro agente
@@ -52,9 +39,16 @@ std::vector<path_t> pbs(const AmbientMapInstance& instance, std::vector<path_t> 
                 if (instance.is_valid_position(left))
                     constraints.emplace_back(Constraint{a, t, left, p});
             }
-        };
+            instance.wall(path.back());
+        }
     }
-    return paths;
-}
+    int makespan{0};
+    int cost{0};
+    for (const path_t& p : paths) {
+        if (static_cast<int>(p.size()) > makespan) makespan = static_cast<int>(p.size());
+        cost += static_cast<int>(p.size());
+    }
 
-}  // namespace cmapd
+    return {paths, makespan, cost};
+}
+}  // namespace cmapd::pbs

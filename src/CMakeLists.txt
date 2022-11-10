@@ -18,7 +18,8 @@ target_link_libraries(multi_a_star PRIVATE distances)
 # cbs and pbs library
 add_library(path_finders STATIC
         path_finders/Node.cpp
-        path_finders/cbs.cpp)
+        path_finders/cbs.cpp
+        path_finders/pbs.cpp)
 target_include_directories(path_finders PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(path_finders PRIVATE multi_a_star)
 

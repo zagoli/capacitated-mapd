@@ -30,7 +30,7 @@ class AmbientMapInstance final : public AmbientMap {
 
   public:
     /**
-     * Constructor of an already genetrated ambient map instace: takes two paths, one to
+     * Constructor of an already generated ambient map instance: takes two paths, one to
      * auto-generated file containing the instance info and the other to the map file use to
      * generate the previous one
      * @throw runtime_error if any of the required files do not exist
@@ -38,7 +38,7 @@ class AmbientMapInstance final : public AmbientMap {
     explicit AmbientMapInstance(const std::filesystem::path& path_to_map_instance,
                                 const std::filesystem::path& path_to_map);
     /**
-     * Constructor of ambient map instace: takes a map, a reference to a vector of agents
+     * Constructor of ambient map instance: takes a map, a reference to a vector of agents
      * [std::vector<Point>] and a reference to a vector of tasks [std::vector<std::pair<Point,
      * Point>>]
      */
@@ -88,6 +88,11 @@ class AmbientMapInstance final : public AmbientMap {
      * @return stream
      */
     friend std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance);
+    /**
+     * Method that modify the map to add a wall in a given point in the map
+     * @param p the point to tranform to a wall
+     */
+    void wall(Point p);
 };
 }  // namespace cmapd
 

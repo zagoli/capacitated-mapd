@@ -13,7 +13,7 @@
 namespace cmapd {
 
 std::vector<AmbientMapInstance> generate_instances(const AmbientMap& map,
-                                                   std::filesystem::path save_path,
+                                                   const std::filesystem::path& save_path,
                                                    int n_instances,
                                                    int n_agents,
                                                    int n_tasks) {
