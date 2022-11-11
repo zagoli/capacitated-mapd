@@ -11,6 +11,9 @@
 #include <ambient/AmbientMap.h>
 #include <ambient/AmbientMapInstance.h>
 
+#include <filesystem>
+#include <vector>
+
 namespace cmapd {
 /**
  * Randomly generates a vector of AmbientMapInstance from a given AmbientMap

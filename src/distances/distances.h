@@ -8,7 +8,6 @@
  */
 
 #pragma once
-#include <map>
 
 #include "Point.h"
 #include "ambient/AmbientMapInstance.h"

@@ -4,15 +4,14 @@
 
 #include "AmbientMapInstance.h"
 
-#include <Point.h>
+#include <fmt/format.h>
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
-#include <string>
+#include <vector>
 
+#include "Point.h"
 #include "distances/distances.h"
-#include "fmt/format.h"
 
 namespace cmapd {
 

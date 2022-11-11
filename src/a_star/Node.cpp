@@ -2,8 +2,11 @@
 // Created by Jacopo on 18/10/2022.
 //
 
-#include "Node.h"
+#include "a_star/Node.h"
 
+#include "Point.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 #include "distances/distances.h"
 
 namespace cmapd::multi_a_star {

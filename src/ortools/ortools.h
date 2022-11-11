@@ -8,6 +8,8 @@
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
 #pragma once
+#include <vector>
+
 #include "ambient/AmbientMapInstance.h"
 #include "custom_types.h"
 

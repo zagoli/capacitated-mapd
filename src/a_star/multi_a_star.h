@@ -9,7 +9,9 @@
 
 #pragma once
 #include "Constraint.h"
-#include "Node.h"
+#include "Point.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 
 namespace cmapd::multi_a_star {
 

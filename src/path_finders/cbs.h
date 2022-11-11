@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "CmapdSolution.h"
 #include "ambient/AmbientMapInstance.h"
 #include "custom_types.h"

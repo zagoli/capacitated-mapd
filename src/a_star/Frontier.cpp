@@ -2,7 +2,12 @@
 // Created by Jacopo on 25/10/2022.
 //
 
-#include "Frontier.h"
+#include "a_star/Frontier.h"
+
+#include <optional>
+#include <stdexcept>
+
+#include "a_star/Node.h"
 
 namespace cmapd::multi_a_star {
 

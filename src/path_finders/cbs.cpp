@@ -2,16 +2,19 @@
 // Created by Jacopo on 08/11/2022.
 //
 
-#include "cbs.h"
-
-#include <iostream>
 #include <optional>
 #include <queue>
+#include <stdexcept>
+#include <vector>
 
+#include "CmapdSolution.h"
 #include "Conflict.h"
 #include "ConflictType.h"
 #include "Constraint.h"
-#include "Node.h"
+#include "Point.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
+#include "path_finders/Node.h"
 
 namespace cmapd::cbs {
 

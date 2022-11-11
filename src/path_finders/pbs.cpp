@@ -1,10 +1,14 @@
 //
 // Created by dade on 10/11/22.
 //
-#include "pbs.h"
+#include <vector>
 
+#include "CmapdSolution.h"
 #include "Constraint.h"
+#include "Point.h"
 #include "a_star/multi_a_star.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 
 namespace cmapd::pbs {
 

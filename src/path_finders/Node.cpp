@@ -2,12 +2,20 @@
 // Created by Jacopo on 02/11/2022.
 //
 
-#include "Node.h"
+#include "path_finders/Node.h"
 
+#include <limits>
+#include <optional>
 #include <stdexcept>
+#include <vector>
 
+#include "Conflict.h"
+#include "ConflictType.h"
+#include "Constraint.h"
+#include "Point.h"
 #include "a_star/multi_a_star.h"
-#include "distances/distances.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 
 namespace cmapd::cbs {
 

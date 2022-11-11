@@ -1,30 +1,30 @@
 /**
-* @file Node.h
-* @brief Contains the class Node in namespace multi_a_star.
-* @author Jacopo Zagoli
-* @version 1.0
-* @date October, 2022
-* @copyright 2022 Jacopo Zagoli, Davide Furlani
-*/
+ * @file Node.h
+ * @brief Contains the class Node in namespace multi_a_star.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #pragma once
 #include <compare>
 #include <vector>
 
 #include "Point.h"
-#include "ambient/AmbientMap.h"
-#include "distances/distances.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 
 namespace cmapd::multi_a_star {
 
 /**
-* @class Node
-* @brief This class represents a Node that is used in the multi A* search algorithm.
-* @see Lifelong Multi-Agent Path Finding in Large-Scale Warehouses.
-*/
+ * @class Node
+ * @brief This class represents a Node that is used in the multi A* search algorithm.
+ * @see Lifelong Multi-Agent Path Finding in Large-Scale Warehouses.
+ */
 class Node {
- private:
-   /// A location on the map.
+  private:
+    /// A location on the map.
    Point m_location;
    /// The path from root to the current node. For root is root itself.
    path_t m_path;

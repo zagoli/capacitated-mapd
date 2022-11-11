@@ -11,7 +11,7 @@
 #include <forward_list>
 #include <optional>
 
-#include "Node.h"
+#include "a_star/Node.h"
 
 namespace cmapd::multi_a_star {
 

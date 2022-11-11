@@ -4,11 +4,16 @@
 
 #include "generate_instances.h"
 
-#include <fstream>
-#include <iostream>
-#include <random>
+#include <fmt/format.h>
 
-#include "fmt/format.h"
+#include <filesystem>
+#include <fstream>
+#include <random>
+#include <vector>
+
+#include "Point.h"
+#include "ambient/AmbientMap.h"
+#include "ambient/AmbientMapInstance.h"
 
 namespace cmapd {
 

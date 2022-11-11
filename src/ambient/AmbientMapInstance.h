@@ -8,14 +8,14 @@
  */
 
 #pragma once
-#include <Point.h>
-
 #include <filesystem>
 #include <ostream>
 #include <string>
+#include <utility>
 #include <vector>
 
-#include "AmbientMap.h"
+#include "Point.h"
+#include "ambient/AmbientMap.h"
 #include "custom_types.h"
 /**
  * @class AmbientMapInstance

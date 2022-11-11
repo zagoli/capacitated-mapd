@@ -2,16 +2,15 @@
 // Created by dade on 12/10/22.
 //
 
-#include "AmbientMap.h"
+#include "ambient/AmbientMap.h"
 
-#include <Point.h>
+#include <fmt/format.h>
 
 #include <filesystem>
 #include <fstream>
-#include <string>
 #include <vector>
 
-#include "fmt/format.h"
+#include "Point.h"
 
 namespace cmapd {
 

@@ -3,7 +3,11 @@
 //
 #include "distances.h"
 
-#include <functional>
+#include <cmath>
+
+#include "Point.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 
 namespace cmapd {
 

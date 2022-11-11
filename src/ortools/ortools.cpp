@@ -4,6 +4,11 @@
 
 #include "ortools.h"
 
+#include <vector>
+
+#include "Point.h"
+#include "ambient/AmbientMapInstance.h"
+#include "custom_types.h"
 #include "ortools/constraint_solver/routing.h"
 #include "ortools/constraint_solver/routing_enums.pb.h"
 #include "ortools/constraint_solver/routing_index_manager.h"

@@ -2,13 +2,15 @@
 // Created by Jacopo on 25/10/2022.
 //
 
-#include "multi_a_star.h"
+#include "a_star/multi_a_star.h"
 
-#include <algorithm>
-#include <iostream>
 #include <set>
 
-#include "Frontier.h"
+#include "Constraint.h"
+#include "Point.h"
+#include "a_star/Frontier.h"
+#include "a_star/Node.h"
+#include "custom_types.h"
 
 namespace cmapd::multi_a_star {
 
