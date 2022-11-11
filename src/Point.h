@@ -18,9 +18,7 @@ namespace cmapd {
 struct Point {
     int row;
     int col;
-    // no empty Point allowed
-    Point() = delete;
-    inline Point(int r, int c)
+    explicit inline Point(int r, int c)
         : row{r},
           col{c} {}
     // needed for h_table_t to work properly

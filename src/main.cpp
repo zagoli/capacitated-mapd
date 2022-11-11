@@ -185,8 +185,8 @@ void solver(const std::filesystem::path& instances_path,
     using std::chrono::high_resolution_clock;
     using std::chrono::seconds;
 
-    long total_time = 0;
-    long real_instances_number = 0;
+    int64_t total_time{};
+    int64_t real_instances_number{};
 
     for (const auto& entry : std::filesystem::directory_iterator(instances_path)) {
         const auto filename = entry.path().filename().string();
@@ -207,7 +207,7 @@ void solver(const std::filesystem::path& instances_path,
                     std::chrono::duration_cast<seconds>(time_after - time_before).count()};
 
                 // Path finding
-                long path_finder_time{};
+                int64_t path_finder_time{};
                 if (solver == "CBS") {
                     time_before = high_resolution_clock::now();
                     CmapdSolution solution{cbs::cbs(instance, goal_sequences)};
