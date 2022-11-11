@@ -21,7 +21,7 @@ using path_t = std::vector<Point>;
  * Every entry contains a map with an entry for every starting and ending point 'B' of
  * every task. Every entry contains the distance between 'A' and 'B'.
  * For example, to get the distance between point (1,1) and (2,2) you should write
- * h_table.at({1,1}).at({2,2})
+ * m_h_table.at({1,1}).at({2,2})
  */
 using h_table_t = std::map<Point, std::map<Point, int>>;
 

@@ -17,6 +17,10 @@ path_t multi_a_star(int agent,
                     const path_t& goal_sequence,
                     const AmbientMapInstance& map_instance,
                     const std::vector<Constraint>& constraints) {
+    // if the goal sequence is empty, the path is the starting point
+    if (goal_sequence.empty()) {
+        return path_t{start_location};
+    }
     // frontier definition
     Frontier frontier;
     // explore set definition

@@ -17,11 +17,11 @@
 namespace cmapd {
 
 /**
- * Computes the h_table for the provided map_instance with the provided distance_function.
+ * Computes the m_h_table for the provided map_instance with the provided distance_function.
  * Contains the distance from every non-wall cell to every task and agent.
- * @param map_instance The AmbientMapInstance for which the h_table is calculated.
+ * @param map_instance The AmbientMapInstance for which the m_h_table is calculated.
  * @param distance_function This function should provide a distance between two Points.
- * @return The computed h_table.
+ * @return The computed m_h_table.
  */
 [[nodiscard]] h_table_t compute_h_table(const AmbientMapInstance& map_instance,
                                         auto distance_function);

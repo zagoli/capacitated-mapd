@@ -318,12 +318,12 @@
         <path d="M 47 727 L 407 727" fill="none" stroke="rgb(0, 0, 0)" stroke-miterlimit="10" pointer-events="none"/>
         <g fill="rgb(0, 0, 0)" font-family="Helvetica" pointer-events="none" clip-path="url(#mx-clip-51-736-352-36-0)"
            font-size="12px">
-            <text x="52.5" y="748.5">+ Node(loc: Point, parent: Node*, h_table: h_table_t,</text>
+            <text x="52.5" y="748.5">+ Node(loc: Point, parent: Node*, m_h_table: h_table_t,</text>
             <text x="52.5" y="762.5">            vector&lt;Point&gt; goal_sequence)</text>
         </g>
         <g fill="rgb(0, 0, 0)" font-family="Helvetica" pointer-events="none" clip-path="url(#mx-clip-51-772-352-30-0)"
            font-size="12px">
-            <text x="52.5" y="784.5">+ Node(loc: Point, h_table: h_table_t, vector&lt;Point&gt; goal_sequence)</text>
+            <text x="52.5" y="784.5">+ Node(loc: Point, m_h_table: h_table_t, vector&lt;Point&gt; goal_sequence)</text>
         </g>
         <g fill="rgb(0, 0, 0)" font-family="Helvetica" pointer-events="none" clip-path="url(#mx-clip-51-802-352-26-0)"
            font-size="12px">

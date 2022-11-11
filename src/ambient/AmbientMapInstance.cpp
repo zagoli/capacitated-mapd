@@ -19,7 +19,6 @@ namespace cmapd {
 AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map_instance,
                                        const std::filesystem::path& path_to_map)
     : AmbientMap(path_to_map) {
-    // std::ifstream map_file{std::filesystem::absolute(path_to_map)};
     std::ifstream map_instance_file{path_to_map_instance};
     if (!map_instance_file) {
         throw std::runtime_error{
@@ -56,7 +55,7 @@ AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map_
                              Point{row_pos_goal, col_pos_goal});
     }
 
-    h_table = compute_h_table(*this, manhattan_distance);
+    m_h_table = compute_h_table(*this, manhattan_distance);
 }
 
 AmbientMapInstance::AmbientMapInstance(const AmbientMap& map,
@@ -75,7 +74,7 @@ AmbientMapInstance::AmbientMapInstance(const AmbientMap& map,
         m_grid[task.second.row][task.second.col] = 't';
     }
 
-    h_table = compute_h_table(*this, manhattan_distance);
+    m_h_table = compute_h_table(*this, manhattan_distance);
 }
 
 int AmbientMapInstance::get_num_agents() const {
@@ -110,13 +109,18 @@ std::string AmbientMapInstance::to_string() const {
 }
 
 std::vector<std::pair<Point, Point>> AmbientMapInstance::get_tasks() const { return m_tasks; }
+
 const std::vector<Point>& AmbientMapInstance::get_agents() const { return m_agents; }
-const h_table_t& AmbientMapInstance::get_h_table() const { return h_table; }
+
+const h_table_t& AmbientMapInstance::get_h_table() const { return m_h_table; }
+
 std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance) {
     os << instance.to_string();
     return os;
 }
+
 void AmbientMapInstance::wall(Point p) {
     if (is_valid_position(p)) m_grid.at(p.row).at(p.col) = '#';
 }
+
 }  // namespace cmapd

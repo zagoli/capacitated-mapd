@@ -7,6 +7,7 @@
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
+#include <fmt/color.h>
 #include <fmt/format.h>
 
 #include <argparse/argparse.hpp>
@@ -116,7 +117,7 @@ int main(int argc, char* argv[]) {
             std::cout << fmt::format(
                 "Trying to generate {} instances with {} agents "
                 "and {} tasks on map {} and saving them in {}...\n",
-                n_agents_opt.value(),
+                n_instances_opt.value(),
                 n_agents_opt.value(),
                 n_tasks_opt.value(),
                 map_path.string(),
@@ -138,11 +139,11 @@ int main(int argc, char* argv[]) {
 
     if (auto instances_in_path_opt = parser.present("--evaluate")) {
         auto instances_in_path = std::filesystem::path{instances_in_path_opt.value()};
-        const std::string& solver_type = parser.get("--solver_type");
+        const std::string& solver_type = parser.get("--solver");
         const int capacity = parser.get<int>("--capacity");
         if (solver_type == "CBS" || solver_type == "PBS") {
             std::cout << fmt::format(
-                "Solving instances in {} , capacity set to {}  with {} solver_type.\n",
+                "Solving instances in {}, capacity set to {} with {} solver.\n",
                 instances_in_path.string(),
                 capacity,
                 solver_type);
@@ -163,15 +164,17 @@ int main(int argc, char* argv[]) {
  * @param solution The solution to be printed.
  */
 void print_solution(const cmapd::CmapdSolution& solution) {
-    std::cout << fmt::format("makespan:{:7}, cost:{:7}\n", solution.makespan, solution.cost);
-    for (const auto& path : solution.paths) {
+    for (int i = 0; i < solution.paths.size(); ++i) {
+        std::cout << "Agent " << i << ": [";
         const char* padding = "";
-        for (const auto& point : path) {
+        for (const auto& point : solution.paths[i]) {
             std::cout << padding << point;
             padding = ", ";
         }
-        std::cout << std::endl;
+        std::cout << "]" << std::endl;
     }
+    fmt::print(
+        fmt::emphasis::bold, "makespan:{:6}\ncost:{:10}\n", solution.makespan, solution.cost);
 }
 
 void solver(const std::filesystem::path& instances_path,
@@ -181,32 +184,36 @@ void solver(const std::filesystem::path& instances_path,
     using namespace cmapd;
     using std::chrono::high_resolution_clock;
     using std::chrono::seconds;
+
+    long total_time = 0;
+    long real_instances_number = 0;
+
     for (const auto& entry : std::filesystem::directory_iterator(instances_path)) {
         const auto filename = entry.path().filename().string();
         if (std::regex_match(filename, std::regex{"instance_[0-9]+\\.txt"})) {
-            std::cout << "Solving " << filename << std::endl;
+            fmt::print(fmt::fg(fmt::color::light_green), "\nSolving {}\n", filename);
             try {
                 auto time_before = high_resolution_clock::now();
                 AmbientMapInstance instance{entry.path(), map_path};
                 auto time_after = high_resolution_clock::now();
                 auto h_table_time{
-                    std::chrono::duration_cast<seconds>(time_before - time_after).count()};
+                    std::chrono::duration_cast<seconds>(time_after - time_before).count()};
 
                 // Task assignment
                 time_before = high_resolution_clock::now();
                 std::vector<path_t> goal_sequences{assign_tasks(instance, capacity)};
                 time_after = high_resolution_clock::now();
                 auto task_assignment_time{
-                    std::chrono::duration_cast<seconds>(time_before - time_after).count()};
+                    std::chrono::duration_cast<seconds>(time_after - time_before).count()};
 
                 // Path finding
-                long path_finder_time;
+                long path_finder_time{};
                 if (solver == "CBS") {
                     time_before = high_resolution_clock::now();
                     CmapdSolution solution{cbs::cbs(instance, goal_sequences)};
                     time_after = high_resolution_clock::now();
                     path_finder_time
-                        = std::chrono::duration_cast<seconds>(time_before - time_after).count();
+                        = std::chrono::duration_cast<seconds>(time_after - time_before).count();
 
                     print_solution(solution);
                 } else if (solver == "PBS") {
@@ -214,22 +221,30 @@ void solver(const std::filesystem::path& instances_path,
                     CmapdSolution solution{pbs::pbs(instance, goal_sequences)};
                     time_after = high_resolution_clock::now();
                     path_finder_time
-                        = std::chrono::duration_cast<seconds>(time_before - time_after).count();
+                        = std::chrono::duration_cast<seconds>(time_after - time_before).count();
 
                     print_solution(solution);
                 }
 
-                std::cout << fmt::format(
-                    "H-table computing time:{:10}\n"
-                    "Task assignment time:{:12}\n"
-                    "Path finding time:{:15}\n",
-                    h_table_time,
-                    task_assignment_time,
-                    path_finder_time);
+                fmt::print(fmt::emphasis::bold,
+                           "H-table computing time:{:10}'\n"
+                           "Task assignment time:{:12}'\n"
+                           "Path finding time:{:15}'\n",
+                           h_table_time,
+                           task_assignment_time,
+                           path_finder_time);
+
+                total_time += h_table_time + task_assignment_time + path_finder_time;
+                ++real_instances_number;
 
             } catch (const std::exception& ex) {
                 std::cerr << "Instance skipped: " << ex.what() << std::endl;
             }
         }
     }
+
+    fmt::print(fmt::fg(fmt::color::light_golden_rod_yellow),
+               "\nTOTAL TIME:{:10} seconds\nMEAN TIME:{:11} seconds\n",
+               total_time,
+               total_time / real_instances_number);
 }
