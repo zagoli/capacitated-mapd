@@ -24,8 +24,8 @@ TEST_CASE("test get number of rows and columns of a instance", "[rows_and_column
     std::filesystem::path path_to_instance{"data/instance_1.txt"};
     AmbientMapInstance instance{path_to_instance, path_to_map};
 
-    REQUIRE(instance.get_rows_number() == 5);
-    REQUIRE(instance.get_columns_number() == 5);
+    REQUIRE(instance.rows_number() == 5);
+    REQUIRE(instance.columns_number() == 5);
 }
 
 TEST_CASE("test get number of agents and tasks of a instance", "[agents_and_tasks_instance]") {
@@ -33,8 +33,8 @@ TEST_CASE("test get number of agents and tasks of a instance", "[agents_and_task
     std::filesystem::path path_to_instance{"data/instance_1.txt"};
     AmbientMapInstance instance{path_to_instance, path_to_map};
 
-    REQUIRE(instance.get_num_agents() == 2);
-    REQUIRE(instance.get_num_tasks() == 2);
+    REQUIRE(instance.num_agents() == 2);
+    REQUIRE(instance.num_tasks() == 2);
 }
 
 TEST_CASE("test if a point is valid in a instance", "[is_valid_point_instance]") {
@@ -43,25 +43,25 @@ TEST_CASE("test if a point is valid in a instance", "[is_valid_point_instance]")
     AmbientMapInstance instance{path_to_instance, path_to_map};
 
     cmapd::Point invalid_point{-1, -1};
-    REQUIRE_FALSE(instance.is_valid_position(invalid_point));
+    REQUIRE_FALSE(instance.is_valid(invalid_point));
     invalid_point.row = 2;
     invalid_point.col = -1;
-    REQUIRE_FALSE(instance.is_valid_position(invalid_point));
+    REQUIRE_FALSE(instance.is_valid(invalid_point));
     invalid_point.row = -1;
     invalid_point.col = 2;
-    REQUIRE_FALSE(instance.is_valid_position(invalid_point));
+    REQUIRE_FALSE(instance.is_valid(invalid_point));
     invalid_point.row = 6;
     invalid_point.col = 3;
-    REQUIRE_FALSE(instance.is_valid_position(invalid_point));
+    REQUIRE_FALSE(instance.is_valid(invalid_point));
     invalid_point.row = 3;
     invalid_point.col = 6;
-    REQUIRE_FALSE(instance.is_valid_position(invalid_point));
+    REQUIRE_FALSE(instance.is_valid(invalid_point));
     invalid_point.row = 6;
     invalid_point.col = 6;
-    REQUIRE_FALSE(instance.is_valid_position(invalid_point));
+    REQUIRE_FALSE(instance.is_valid(invalid_point));
 
     cmapd::Point valid_point{2, 1};
-    REQUIRE(instance.is_valid_position(valid_point));
+    REQUIRE(instance.is_valid(valid_point));
 }
 
 TEST_CASE("test get list of all tasks of a instance", "[tasks_instance]") {
@@ -73,7 +73,7 @@ TEST_CASE("test get list of all tasks of a instance", "[tasks_instance]") {
     expected_tasks.emplace_back(cmapd::Point{1, 2}, cmapd::Point{3, 2});
     expected_tasks.emplace_back(cmapd::Point{3, 1}, cmapd::Point{3, 3});
 
-    REQUIRE(expected_tasks == instance.get_tasks());
+    REQUIRE(expected_tasks == instance.tasks());
 }
 
 TEST_CASE("test if to_string return the correct instance string", "[to_string_method_instance]") {

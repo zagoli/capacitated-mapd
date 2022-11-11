@@ -35,9 +35,8 @@ std::vector<Node> Node::get_children(const AmbientMapInstance& instance) const {
     std::vector<Node> children;
     for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
         Point new_position = m_location + move;
-        if (instance.is_valid_position(new_position)) {
-            children.emplace_back(
-                new_position, *this, m_h_table, m_goal_sequence);
+        if (instance.is_valid(new_position)) {
+            children.emplace_back(new_position, *this, m_h_table, m_goal_sequence);
         }
     }
     return children;

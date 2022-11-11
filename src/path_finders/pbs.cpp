@@ -15,29 +15,25 @@ CmapdSolution pbs(AmbientMapInstance instance, const std::vector<path_t>& goal_s
     for (int i = 0; static_cast<size_t>(i) < goal_sequences.size();
          ++i) {  // per ogni sequenza di goal (una per agente) calcolo il percorso con multi A*
         path_t path = multi_a_star::multi_a_star(
-            i, instance.get_agents().at(i), goal_sequences.at(i), instance, constraints);
+            i, instance.agents().at(i), goal_sequences.at(i), instance, constraints);
         paths.push_back(path);
         for (int t = 0; static_cast<size_t>(t) < path.size();
              ++t) {  // una volta calcolato il percorso aggiungo i constraint per ogni altro agente
             Point p{path.at(t)};
-            for (int a = i + 1; a < instance.get_num_agents(); ++a) {
+            for (int a = i + 1; a < instance.num_agents(); ++a) {
                 constraints.emplace_back(Constraint{a, t, p, p});
 
                 Point up{p.row - 1, p.col};
-                if (instance.is_valid_position(up))
-                    constraints.emplace_back(Constraint{a, t, up, p});
+                if (instance.is_valid(up)) constraints.emplace_back(Constraint{a, t, up, p});
 
                 Point down{p.row + 1, p.col};
-                if (instance.is_valid_position(down))
-                    constraints.emplace_back(Constraint{a, t, down, p});
+                if (instance.is_valid(down)) constraints.emplace_back(Constraint{a, t, down, p});
 
                 Point right{p.row, p.col + 1};
-                if (instance.is_valid_position(right))
-                    constraints.emplace_back(Constraint{a, t, right, p});
+                if (instance.is_valid(right)) constraints.emplace_back(Constraint{a, t, right, p});
 
                 Point left{p.row, p.col - 1};
-                if (instance.is_valid_position(left))
-                    constraints.emplace_back(Constraint{a, t, left, p});
+                if (instance.is_valid(left)) constraints.emplace_back(Constraint{a, t, left, p});
             }
             instance.wall(path.back());
         }

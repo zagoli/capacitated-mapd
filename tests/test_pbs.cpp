@@ -20,7 +20,7 @@ TEST_CASE("pbs", "[pbs]") {
     std::vector<path_t> final_temp_paths = pbs::pbs(instance, goal_sequences).paths;
 }
 
-TEST_CASE("pbs_2", "[pbs]") {
+TEST_CASE("pbs_3", "[pbs]") {
     const AmbientMapInstance instance{"data/instance_3.txt", "data/map_3.txt"};
     std::vector<path_t> goal_sequences = assign_tasks(instance, 2);
 
@@ -29,7 +29,7 @@ TEST_CASE("pbs_2", "[pbs]") {
 
 TEST_CASE("pbs_4", "[pbs]") {
     const AmbientMapInstance instance{"data/instance_4.txt", "data/map_4.txt"};
-    std::vector<path_t> goal_sequences = assign_tasks(instance, 1);
+    std::vector<path_t> goal_sequences = assign_tasks(instance, 4);
 
     std::vector<path_t> final_temp_paths = pbs::pbs(instance, goal_sequences).paths;
     REQUIRE_NOTHROW(are_valid_routes(final_temp_paths));

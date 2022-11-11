@@ -38,30 +38,30 @@ class AmbientMap {
      * Method that returns a const reference of the map structure
      * @return const reference of the map structure
      */
-    [[nodiscard]] const std::vector<std::vector<char>>& get_map() const;
+    [[nodiscard]] const std::vector<std::vector<char>>& map() const;
     /**
      * Method that return an int representing the number of rows of the map
      * @return the number of rows of the map
      */
-    [[nodiscard]] int get_rows_number() const;
+    [[nodiscard]] int rows_number() const;
     /**
      * Method that return an int representing the number of columns of the map
      * @return the number of columns of the map
      */
-    [[nodiscard]] int get_columns_number() const;
+    [[nodiscard]] int columns_number() const;
     /**
      * Checks if a position is inside in the map
      * @param p the point to check
      * @return true if the given Point is inside the map, false otherwise
      */
-    [[nodiscard]] bool is_inside_position(Point p) const;
+    [[nodiscard]] bool is_inside(Point p) const;
     /**
      * Checks if a position is valid to generate agents or tasks in the map
      * @param p the point to check
      * @return true if the given Point is a possible generation position inside the map, false
      * otherwise
      */
-    [[nodiscard]] virtual bool is_valid_position(Point p) const;
+    [[nodiscard]] virtual bool is_valid(Point p) const;
     /**
      * method that return the linearized index of the Point
      * @param p the point to linearize

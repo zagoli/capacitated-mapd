@@ -46,8 +46,8 @@ TEST_CASE("test generation instances", "[generate_instances]") {
         = generate_instances(map, save_path, n_instances, n_agents, n_tasks);
 
     REQUIRE(static_cast<int>(instances.size()) == n_instances);
-    REQUIRE(instances[0].get_num_agents() == 2);
-    REQUIRE(instances[0].get_num_tasks() == 2);
+    REQUIRE(instances[0].num_agents() == 2);
+    REQUIRE(instances[0].num_tasks() == 2);
 }
 
 }  // namespace GenerateInstances

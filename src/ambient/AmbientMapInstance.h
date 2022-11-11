@@ -49,18 +49,18 @@ class AmbientMapInstance final : public AmbientMap {
      * Method that return the number of agents in the map
      * @returns the number of agents in the map
      */
-    [[nodiscard]] int get_num_agents() const;
+    [[nodiscard]] int num_agents() const;
     /**
      * Method that return the number of tasks in the map
      * @returns the number of tasks in the map
      */
-    [[nodiscard]] int get_num_tasks() const;
+    [[nodiscard]] int num_tasks() const;
     /**
      * Checks if a position can be a valid move position in the map
      * @param[in] p The point to check
      * @returns True if the given Point is inside the map and it's not a wall, false otherwise
      */
-    [[nodiscard]] bool is_valid_position(Point p) const override;
+    [[nodiscard]] bool is_valid(Point p) const override;
     /**
      * Method that return a string representing the structure of the map
      * @returns a string representing the structure of the map
@@ -70,17 +70,17 @@ class AmbientMapInstance final : public AmbientMap {
      * Method that return the list of tasks of the instance
      * @returns the list of tasks of the instance
      */
-    [[nodiscard]] std::vector<std::pair<Point, Point>> get_tasks() const;
+    [[nodiscard]] std::vector<std::pair<Point, Point>> tasks() const;
     /**
      * Method that returns the list of agents of the instance.
      * @return the list of agents of the instance.
      */
-    [[nodiscard]] const std::vector<Point>& get_agents() const;
+    [[nodiscard]] const std::vector<Point>& agents() const;
     /**
      * Method that returns the m_h_table of the instance.
      * @return the m_h_table
      */
-    [[nodiscard]] const h_table_t& get_h_table() const;
+    [[nodiscard]] const h_table_t& h_table() const;
     /**
      * Stream operator
      * @param os output stream

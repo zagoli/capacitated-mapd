@@ -14,11 +14,11 @@ const std::vector<cmapd::Point> goal_sequence = {{1, 2}, {3, 2}, {3, 1}, {3, 3}}
 const cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
 
 TEST_CASE("Multi A* node equality", "[multi A*]") {
-    cmapd::multi_a_star::Node node{{1, 0}, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node node1{{1, 0}, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node node2{{1, 0}, node, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node node3{{1, 1}, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node node4{{1, 1}, node, instance.get_h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node{{1, 0}, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node1{{1, 0}, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node2{{1, 0}, node, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node3{{1, 1}, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node4{{1, 1}, node, instance.h_table(), goal_sequence};
     REQUIRE(node == node1);
     REQUIRE(node != node2);
     REQUIRE(node != node3);
@@ -26,25 +26,25 @@ TEST_CASE("Multi A* node equality", "[multi A*]") {
 }
 
 TEST_CASE("Multi A* node children", "[multi A*]") {
-    cmapd::multi_a_star::Node node{{1, 0}, instance.get_h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node{{1, 0}, instance.h_table(), goal_sequence};
     std::vector<cmapd::multi_a_star::Node> children{node.get_children(instance)};
     REQUIRE(std::ssize(children) == 2l);
 
-    cmapd::multi_a_star::Node node1{{1, 1}, instance.get_h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node1{{1, 1}, instance.h_table(), goal_sequence};
     children = node1.get_children(instance);
     REQUIRE(std::ssize(children) == 4l);
 
-    cmapd::multi_a_star::Node node2{{2, 1}, instance.get_h_table(), goal_sequence};
+    cmapd::multi_a_star::Node node2{{2, 1}, instance.h_table(), goal_sequence};
     children = node2.get_children(instance);
     REQUIRE(std::ssize(children) == 3l);
 }
 
 TEST_CASE("Multi A* path", "[multi A*]") {
-    cmapd::multi_a_star::Node parent{{1, 0}, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node child1{{1, 1}, parent, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node child2{{1, 2}, child1, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node child3{{1, 3}, child2, instance.get_h_table(), goal_sequence};
-    cmapd::multi_a_star::Node child4{{2, 3}, child3, instance.get_h_table(), goal_sequence};
+    cmapd::multi_a_star::Node parent{{1, 0}, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node child1{{1, 1}, parent, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node child2{{1, 2}, child1, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node child3{{1, 3}, child2, instance.h_table(), goal_sequence};
+    cmapd::multi_a_star::Node child4{{2, 3}, child3, instance.h_table(), goal_sequence};
     // final path
     auto path = child4.get_path();
     cmapd::path_t expected_path{{1, 0}, {1, 1}, {1, 2}, {1, 3}, {2, 3}};
@@ -61,7 +61,7 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
     SECTION("Empty frontier, push and pop") {
         cmapd::multi_a_star::Frontier frontier{};
         REQUIRE(frontier.empty());
-        cmapd::multi_a_star::Node node{{1, 0}, instance.get_h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node{{1, 0}, instance.h_table(), goal_sequence};
         frontier.push(node);
         cmapd::multi_a_star::Node node1{frontier.pop()};
         REQUIRE(frontier.empty());
@@ -69,9 +69,9 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
     }
     SECTION("Pop node with smaller f-value") {
         cmapd::multi_a_star::Frontier frontier{};
-        cmapd::multi_a_star::Node node{{1, 0}, instance.get_h_table(), goal_sequence};
-        cmapd::multi_a_star::Node node1{{1, 1}, instance.get_h_table(), goal_sequence};
-        cmapd::multi_a_star::Node node2{{1, 2}, instance.get_h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node{{1, 0}, instance.h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node1{{1, 1}, instance.h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node2{{1, 2}, instance.h_table(), goal_sequence};
         REQUIRE(node.get_f_value() > node1.get_f_value());
         REQUIRE(node1.get_f_value() > node2.get_f_value());
         frontier.push(node);
@@ -83,16 +83,16 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
     }
     SECTION("Contains Point") {
         cmapd::multi_a_star::Frontier frontier{};
-        cmapd::multi_a_star::Node node{{1, 0}, instance.get_h_table(), goal_sequence};
-        cmapd::multi_a_star::Node node1{{1, 1}, instance.get_h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node{{1, 0}, instance.h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node1{{1, 1}, instance.h_table(), goal_sequence};
         frontier.push(node);
         REQUIRE(frontier.contains(node));
         REQUIRE_FALSE(frontier.contains(node1));
     }
     SECTION("Contains Point more expensive") {
         cmapd::multi_a_star::Frontier frontier{};
-        cmapd::multi_a_star::Node node{{1, 0}, instance.get_h_table(), goal_sequence};
-        cmapd::multi_a_star::Node node1{{1, 1}, instance.get_h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node{{1, 0}, instance.h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node1{{1, 1}, instance.h_table(), goal_sequence};
         frontier.push(node);
         // doesn't contain Node
         REQUIRE_FALSE(frontier.contains_more_expensive(node1, 0));
@@ -103,8 +103,8 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
     }
     SECTION("Replace a Node") {
         cmapd::multi_a_star::Frontier frontier{};
-        cmapd::multi_a_star::Node node{{1, 0}, instance.get_h_table(), goal_sequence};
-        cmapd::multi_a_star::Node node1{{1, 1}, instance.get_h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node{{1, 0}, instance.h_table(), goal_sequence};
+        cmapd::multi_a_star::Node node1{{1, 1}, instance.h_table(), goal_sequence};
         // Replace node that's not in the frontier
         REQUIRE_THROWS(frontier.replace(node, node));
         // Simple replace

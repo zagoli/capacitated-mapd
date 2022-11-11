@@ -26,7 +26,7 @@ path_t multi_a_star(int agent,
     // explore set definition
     std::set<Node> explored;
     // generation of root node in the frontier
-    frontier.push(Node{start_location, map_instance.get_h_table(), goal_sequence});
+    frontier.push(Node{start_location, map_instance.h_table(), goal_sequence});
     // main loop
     while (!frontier.empty()) {
         // get top node

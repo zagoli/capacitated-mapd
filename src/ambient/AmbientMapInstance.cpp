@@ -77,27 +77,27 @@ AmbientMapInstance::AmbientMapInstance(const AmbientMap& map,
     m_h_table = compute_h_table(*this, manhattan_distance);
 }
 
-int AmbientMapInstance::get_num_agents() const {
+int AmbientMapInstance::num_agents() const {
     if (m_agents.size() > std::numeric_limits<int>::max())
         throw std::overflow_error("The number of m_agents is larger than a int.");
     return static_cast<int>(m_agents.size());
 }
 
-int AmbientMapInstance::get_num_tasks() const {
+int AmbientMapInstance::num_tasks() const {
     if (m_tasks.size() > std::numeric_limits<int>::max())
         throw std::overflow_error("The number of m_tasks is larger than a int.");
     return static_cast<int>(m_tasks.size());
 }
 
-bool AmbientMapInstance::is_valid_position(Point p) const {
-    return p.row >= 0 && p.row < this->get_rows_number() && p.col >= 0
-           && p.col < this->get_columns_number() && m_grid[p.row][p.col] != '#';
+bool AmbientMapInstance::is_valid(Point p) const {
+    return p.row >= 0 && p.row < this->rows_number() && p.col >= 0 && p.col < this->columns_number()
+           && m_grid[p.row][p.col] != '#';
 }
 
 std::string AmbientMapInstance::to_string() const {
     std::string s;
-    for (int r = 0; r < this->get_rows_number(); r++) {
-        for (int c = 0; c < this->get_columns_number(); c++) {
+    for (int r = 0; r < this->rows_number(); r++) {
+        for (int c = 0; c < this->columns_number(); c++) {
             if (m_grid[r][c] == 'O')
                 s += ' ';
             else
@@ -108,19 +108,16 @@ std::string AmbientMapInstance::to_string() const {
     return s;
 }
 
-std::vector<std::pair<Point, Point>> AmbientMapInstance::get_tasks() const { return m_tasks; }
-
-const std::vector<Point>& AmbientMapInstance::get_agents() const { return m_agents; }
-
-const h_table_t& AmbientMapInstance::get_h_table() const { return m_h_table; }
-
+std::vector<std::pair<Point, Point>> AmbientMapInstance::tasks() const { return m_tasks; }
+const std::vector<Point>& AmbientMapInstance::agents() const { return m_agents; }
+const h_table_t& AmbientMapInstance::h_table() const { return m_h_table; }
 std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance) {
     os << instance.to_string();
     return os;
 }
 
 void AmbientMapInstance::wall(Point p) {
-    if (is_valid_position(p)) m_grid.at(p.row).at(p.col) = '#';
+    if (is_valid(p)) m_grid.at(p.row).at(p.col) = '#';
 }
 
 }  // namespace cmapd

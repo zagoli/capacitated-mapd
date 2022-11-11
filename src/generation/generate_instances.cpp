@@ -26,7 +26,7 @@ std::vector<AmbientMapInstance> generate_instances(const AmbientMap& map,
     std::vector<AmbientMapInstance> instances{};
 
     std::vector<Point> possible_positions{};
-    auto grid = map.get_map();
+    auto grid = map.map();
     for (int i = 0; i < static_cast<int>(grid.size()); i++) {
         for (int j = 0; j < static_cast<int>(grid[i].size()); j++) {
             if (grid[i][j] == 'O') possible_positions.emplace_back(Point{i, j});

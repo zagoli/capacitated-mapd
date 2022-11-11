@@ -18,16 +18,16 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
 
     // Defining the depot: every agent ends his route at this node.
     // Its internal value must be greater than all the other nodes in order to avoid conflicts
-    const int depot_value{instance.get_num_agents() + instance.get_num_tasks() * 2};
+    const int depot_value{instance.num_agents() + instance.num_tasks() * 2};
     const RoutingIndexManager::NodeIndex depot{depot_value};
 
     // starting nodes of the agents
     std::vector<RoutingIndexManager::NodeIndex> starts{};
-    for (int i = 0; i < instance.get_num_agents(); ++i) {
+    for (int i = 0; i < instance.num_agents(); ++i) {
         starts.emplace_back(i);
     }
     // ending nodes of the agents: every agent ends at the depot
-    std::vector<RoutingIndexManager::NodeIndex> ends{static_cast<size_t>(instance.get_num_agents()),
+    std::vector<RoutingIndexManager::NodeIndex> ends{static_cast<size_t>(instance.num_agents()),
                                                      depot};
 
     // In the OR-Tools library, Nodes and indices don't correspond to real point on the map.
@@ -35,12 +35,12 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
     std::map<RoutingIndexManager::NodeIndex, int64_t> node_to_ravel_point{};
     std::map<Point, RoutingIndexManager::NodeIndex> point_to_node{};
     int counter = 0;
-    for (const auto& agent : instance.get_agents()) {
+    for (const auto& agent : instance.agents()) {
         node_to_ravel_point[RoutingIndexManager::NodeIndex{counter}] = instance.ravel(agent);
         point_to_node[agent] = RoutingIndexManager::NodeIndex{counter};
         ++counter;
     }
-    for (const auto& [start, end] : instance.get_tasks()) {
+    for (const auto& [start, end] : instance.tasks()) {
         node_to_ravel_point[RoutingIndexManager::NodeIndex{counter}] = instance.ravel(start);
         point_to_node[start] = RoutingIndexManager::NodeIndex{counter};
         ++counter;
@@ -55,19 +55,19 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
     // This vector associates every node with the weight picking up (or delivering) the task at that
     // node. The value is zero for the agents starting point, one for starting point of tasks, minus
     // one for ending point of tasks and zero for the depot.
-    std::vector<int> demands(instance.get_num_agents() + 2 * instance.get_num_tasks() + 1, 0);
-    for (int i = 0; i < instance.get_num_tasks(); ++i) {
-        demands[instance.get_num_agents() + 2 * i] = 1;
-        demands[instance.get_num_agents() + 2 * i + 1] = -1;
+    std::vector<int> demands(instance.num_agents() + 2 * instance.num_tasks() + 1, 0);
+    for (int i = 0; i < instance.num_tasks(); ++i) {
+        demands[instance.num_agents() + 2 * i] = 1;
+        demands[instance.num_agents() + 2 * i + 1] = -1;
     }
 
     // =============== ROUTING OBJECTS =============================================================
 
-    RoutingIndexManager manager{instance.get_num_agents() + instance.get_num_tasks() * 2
+    RoutingIndexManager manager{instance.num_agents() + instance.num_tasks() * 2
                                     + 1,  // the number of nodes: agents + tasks + depot
-                                instance.get_num_agents(),  // the number of agents
-                                starts,                     // starting nodes
-                                ends};                      // ending nodes
+                                instance.num_agents(),  // the number of agents
+                                starts,                 // starting nodes
+                                ends};                  // ending nodes
 
     RoutingModel routing{manager};
 
@@ -83,7 +83,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
         }
         auto from_point = instance.unravel(node_to_ravel_point.at(from_node));
         auto to_point = instance.unravel(node_to_ravel_point.at(to_node));
-        return instance.get_h_table().at(from_point).at(to_point);
+        return instance.h_table().at(from_point).at(to_point);
     };
 
     auto transit_callback_index{routing.RegisterTransitCallback(distance_callback)};
@@ -109,7 +109,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
 
     Solver* const solver = routing.solver();
 
-    for (const auto& [start, end] : instance.get_tasks()) {
+    for (const auto& [start, end] : instance.tasks()) {
         int64_t pickup_index = manager.NodeToIndex(point_to_node.at(start));
         int64_t delivery_index = manager.NodeToIndex(point_to_node.at(end));
         routing.AddPickupAndDelivery(pickup_index, delivery_index);
@@ -135,7 +135,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
     // =============== CONSTRUCTING THE GOAL SEQUENCES FROM THE SOLUTION ===========================
 
     std::vector<path_t> goal_sequences{};
-    for (int agent = 0; agent < instance.get_num_agents(); ++agent) {
+    for (int agent = 0; agent < instance.num_agents(); ++agent) {
         auto index{routing.Start(agent)};
         path_t path{};
         while (!routing.IsEnd(index)) {
