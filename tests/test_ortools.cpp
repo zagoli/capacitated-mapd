@@ -31,7 +31,7 @@ TEST_CASE("medium ortools test", "[ortools]") {
     REQUIRE(goal_sequences.at(1) == valid_path_1);
 }
 
-TEST_CASE("advancred ortools test", "[ortools]") {
+TEST_CASE("advanced ortools test", "[ortools]") {
     const AmbientMapInstance instance{"data/instance_3.txt", "data/map_3.txt"};
 
     std::vector<path_t> goal_sequences = assign_tasks(instance, 2);

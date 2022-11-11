@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
  * @param solution The solution to be printed.
  */
 void print_solution(const cmapd::CmapdSolution& solution) {
-    for (int i = 0; i < solution.paths.size(); ++i) {
+    for (int i = 0; i < std::ssize(solution.paths); ++i) {
         std::cout << "Agent " << i << ": [";
         const char* padding = "";
         for (const auto& point : solution.paths[i]) {

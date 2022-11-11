@@ -10,7 +10,7 @@ list(APPEND CMAKE_MODULE_PATH ${Catch2_SOURCE_DIR}/extras)
 include(CTest)
 include(Catch)
 
-# --- Create binary ---
+# --- Create test binary ---
 add_executable(cmapd_tests
         test_map_class.cpp
         test_map_instance_class.cpp
@@ -35,11 +35,36 @@ target_link_libraries(cmapd_tests
         Catch2::Catch2WithMain
         fmt::fmt)
 
+# --- unit tests ---
 catch_discover_tests(cmapd_tests)
+
+# --- integration tests ---
+add_test(NAME generate_instances_integration
+        COMMAND cmapd --generate -na 2 -nt 2 -ni 3 --instances-output instances data/map_5.txt)
+set_tests_properties(generate_instances_integration PROPERTIES
+        PASS_REGULAR_EXPRESSION
+        ".*\nDone"
+        FIXTURE_SETUP integration)
+
+add_test(NAME pbs_test_integration
+        COMMAND cmapd --evaluate instances -c 1 -s PBS data/map_5.txt)
+set_tests_properties(pbs_test_integration PROPERTIES
+        FIXTURE_REQUIRED integration)
+
+add_test(NAME cbs_test_integration
+        COMMAND cmapd --evaluate instances -c 1 -s CBS data/map_5.txt)
+set_tests_properties(cbs_test_integration PROPERTIES
+        FIXTURE_REQUIRED integration)
+
+add_test(NAME cleanup
+        COMMAND rm -r instances)
+set_tests_properties(cleanup PROPERTIES
+        FIXTURE_CLEANUP integration)
 
 # enable compiler warnings
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_compile_options(cmapd PUBLIC -Wall -Wpedantic -Wextra -Werror)
     target_compile_options(cmapd_tests PUBLIC -Wall -Wpedantic -Wextra -Werror)
 endif ()
 
