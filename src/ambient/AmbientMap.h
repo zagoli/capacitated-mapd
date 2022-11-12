@@ -63,18 +63,6 @@ class AmbientMap {
      */
     [[nodiscard]] virtual bool is_valid(Point p) const;
     /**
-     * method that return the linearized index of the Point
-     * @param p the point to linearize
-     * @return the linearized index
-     */
-    [[nodiscard]] int64_t ravel(Point point) const;
-    /**
-     * method that takes a linearized index and return the corresponding Point
-     * @param p the linearized index
-     * @return the corresponding Point
-     */
-    [[nodiscard]] Point unravel(int64_t index) const;
-    /**
      * Method that return a string representing the structure of the map
      * @return a string representing the structure of the map
      */

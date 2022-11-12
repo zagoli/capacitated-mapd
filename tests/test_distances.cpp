@@ -5,24 +5,27 @@
 #include "distances/distances.h"
 
 namespace distance_test {
+
+using namespace cmapd;
+
 TEST_CASE("manhattan distance", "[distances]") {
     // diagonal distance
-    cmapd::Point first{0, 0}, second{1, 1};
-    REQUIRE(cmapd::manhattan_distance(first, second) == 2);
+    Point first{0, 0}, second{1, 1};
+    REQUIRE(manhattan_distance(first, second) == 2);
     // distance from self
-    REQUIRE(cmapd::manhattan_distance(second, second) == 0);
+    REQUIRE(manhattan_distance(second, second) == 0);
     // vertical distance
     first = {0, 0};
     second = {10, 0};
-    REQUIRE(cmapd::manhattan_distance(first, second) == 10);
+    REQUIRE(manhattan_distance(first, second) == 10);
     // horizontal distance
     first = {0, 0};
     second = {0, 10};
-    REQUIRE(cmapd::manhattan_distance(first, second) == 10);
+    REQUIRE(manhattan_distance(first, second) == 10);
 }
 
 TEST_CASE("compute h-table", "[distances]") {
-    cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
+    AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
     // check h-table has all the correct entries
     REQUIRE(std::ssize(instance.h_table()) == 12);
     REQUIRE(std::ssize(instance.h_table().at({1, 0})) == 6);
@@ -43,22 +46,21 @@ TEST_CASE("compute h-table", "[distances]") {
 }
 
 TEST_CASE("compute h-distance", "[distances]") {
-    cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
+    AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
 
-    cmapd::Point location{1, 1};
-    std::vector<cmapd::Point> goal_sequence = {{1, 2}, {3, 2}, {3, 1}, {3, 3}};
-    int h_value
-        = cmapd::multi_a_star::compute_h_value(location, 0, instance.h_table(), goal_sequence);
+    Point location{1, 1};
+    std::vector<Point> goal_sequence = {{1, 2}, {3, 2}, {3, 1}, {3, 3}};
+    int h_value = multi_a_star::compute_h_value(location, 0, instance.h_table(), goal_sequence);
     REQUIRE(h_value == 6);
 
-    h_value = cmapd::multi_a_star::compute_h_value(location, 1, instance.h_table(), goal_sequence);
+    h_value = multi_a_star::compute_h_value(location, 1, instance.h_table(), goal_sequence);
     REQUIRE(h_value == 6);
 
     location = {2, 1};
-    h_value = cmapd::multi_a_star::compute_h_value(location, 0, instance.h_table(), goal_sequence);
+    h_value = multi_a_star::compute_h_value(location, 0, instance.h_table(), goal_sequence);
     REQUIRE(h_value == 7);
 
-    h_value = cmapd::multi_a_star::compute_h_value(location, 1, instance.h_table(), goal_sequence);
+    h_value = multi_a_star::compute_h_value(location, 1, instance.h_table(), goal_sequence);
     REQUIRE(h_value == 5);
 }
 

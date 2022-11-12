@@ -243,7 +243,7 @@ void solver(const std::filesystem::path& instances_path,
         }
     }
 
-    fmt::print(fmt::fg(fmt::color::light_golden_rod_yellow),
+    fmt::print(fmt::fg(fmt::color::light_green),
                "\nTOTAL TIME:{:10} seconds\nMEAN TIME:{:11} seconds\n",
                total_time,
                total_time / real_instances_number);

@@ -37,21 +37,23 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
 
     // In the OR-Tools library, Nodes and indices don't correspond to real point on the map.
     // Therefore, we need to associate nodes with their real location.
-    std::map<RoutingIndexManager::NodeIndex, int64_t> node_to_ravel_point{};
+    std::map<RoutingIndexManager::NodeIndex, Point> node_to_point{};
     std::map<Point, RoutingIndexManager::NodeIndex> point_to_node{};
     int counter = 0;
+    // Can't use square brackets syntax for node_to_point since Point doesn't have default
+    // constructor
     for (const auto& agent : instance.agents()) {
-        node_to_ravel_point[RoutingIndexManager::NodeIndex{counter}] = instance.ravel(agent);
-        point_to_node[agent] = RoutingIndexManager::NodeIndex{counter};
+        node_to_point.emplace(RoutingIndexManager::NodeIndex{counter}, agent);
+        point_to_node.emplace(agent, RoutingIndexManager::NodeIndex{counter});
         ++counter;
     }
     for (const auto& [start, end] : instance.tasks()) {
-        node_to_ravel_point[RoutingIndexManager::NodeIndex{counter}] = instance.ravel(start);
-        point_to_node[start] = RoutingIndexManager::NodeIndex{counter};
+        node_to_point.emplace(RoutingIndexManager::NodeIndex{counter}, start);
+        point_to_node.emplace(start, RoutingIndexManager::NodeIndex{counter});
         ++counter;
 
-        node_to_ravel_point[RoutingIndexManager::NodeIndex{counter}] = instance.ravel(end);
-        point_to_node[end] = RoutingIndexManager::NodeIndex{counter};
+        node_to_point.emplace(RoutingIndexManager::NodeIndex{counter}, end);
+        point_to_node.emplace(end, RoutingIndexManager::NodeIndex{counter});
         ++counter;
     }
 
@@ -78,7 +80,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
 
     // =============== DISTANCE CALLBACK ===========================================================
 
-    auto distance_callback = [&manager, &depot, &instance, &node_to_ravel_point](
+    auto distance_callback = [&manager, &depot, &instance, &node_to_point](
                                  int64_t from_index, int64_t to_index) -> int64_t {
         auto from_node = manager.IndexToNode(from_index);
         auto to_node = manager.IndexToNode(to_index);
@@ -86,8 +88,8 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
         if (to_node == depot) {
             return 0;
         }
-        auto from_point = instance.unravel(node_to_ravel_point.at(from_node));
-        auto to_point = instance.unravel(node_to_ravel_point.at(to_node));
+        auto from_point = node_to_point.at(from_node);
+        auto to_point = node_to_point.at(to_node);
         return instance.h_table().at(from_point).at(to_point);
     };
 
@@ -144,7 +146,7 @@ std::vector<path_t> assign_tasks(const AmbientMapInstance& instance, int capacit
         auto index{routing.Start(agent)};
         path_t path{};
         while (!routing.IsEnd(index)) {
-            path.emplace_back(instance.unravel(node_to_ravel_point.at(manager.IndexToNode(index))));
+            path.emplace_back(node_to_point.at(manager.IndexToNode(index)));
             index = solution->Value(routing.NextVar(index));
         }
         goal_sequences.push_back(path);
