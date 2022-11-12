@@ -23,7 +23,7 @@ CmapdSolution pbs(AmbientMapInstance instance, const std::vector<path_t>& goal_s
         for (int t = 0; static_cast<size_t>(t) < path.size(); ++t) {
             Point p{path.at(t)};
             for (int a = i + 1; a < instance.num_agents(); ++a) {
-                for (moves_t moves{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
+                for (moves_t moves{{0,0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
                     Point from_where = p + move;
                     if (instance.is_valid(from_where)) {
                         constraints.emplace_back(Constraint{a, t, from_where, p});
