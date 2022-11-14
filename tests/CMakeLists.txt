@@ -39,25 +39,26 @@ target_link_libraries(cmapd_tests
 catch_discover_tests(cmapd_tests)
 
 # --- integration tests ---
+SET(instances_out_dir instances)
 add_test(NAME generate_instances_integration
-        COMMAND cmapd --generate -na 2 -nt 2 -ni 3 --instances-output instances data/map_5.txt)
+        COMMAND cmapd --generate -na 2 -nt 2 -ni 3 --instances-output ${instances_out_dir} data/map_5.txt)
 set_tests_properties(generate_instances_integration PROPERTIES
         PASS_REGULAR_EXPRESSION
         ".*\nDone"
         FIXTURE_SETUP integration)
 
 add_test(NAME pbs_test_integration
-        COMMAND cmapd --evaluate instances -c 1 -s PBS data/map_5.txt)
+        COMMAND cmapd --evaluate ${instances_out_dir} -c 1 -s PBS data/map_5.txt)
 set_tests_properties(pbs_test_integration PROPERTIES
         FIXTURE_REQUIRED integration)
 
 add_test(NAME cbs_test_integration
-        COMMAND cmapd --evaluate instances -c 1 -s CBS data/map_5.txt)
+        COMMAND cmapd --evaluate ${instances_out_dir} -c 1 -s CBS data/map_5.txt)
 set_tests_properties(cbs_test_integration PROPERTIES
         FIXTURE_REQUIRED integration)
 
 add_test(NAME cleanup
-        COMMAND rm -r instances)
+        COMMAND ${CMAKE_COMMAND} -E remove_directory ${instances_out_dir})
 set_tests_properties(cleanup PROPERTIES
         FIXTURE_CLEANUP integration)
 
