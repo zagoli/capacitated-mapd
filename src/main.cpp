@@ -1,7 +1,6 @@
 /**
  * @file main.cpp
- * @brief The program entry point. It mainly parses arguments and prints results. Speak, friend, and
- * enter.
+ * @brief The program entry point. It parses arguments and prints results. Speak, friend, and enter.
  * @author Jacopo Zagoli
  * @version 1.0
  * @date October, 2022
@@ -17,6 +16,7 @@
 #include <string>
 
 #include "CmapdSolution.h"
+#include "Timer.hpp"
 #include "ambient/AmbientMap.h"
 #include "custom_types.h"
 #include "generation/generate_instances.h"
@@ -182,60 +182,44 @@ void solver(const std::filesystem::path& instances_path,
             int capacity,
             std::string_view solver) {
     using namespace cmapd;
-    using std::chrono::high_resolution_clock;
-    using std::chrono::seconds;
+    using namespace timer;
 
-    int64_t total_time{};
-    int64_t real_instances_number{};
+    Timer<HOST, seconds> T_HT;
+    Timer<HOST, seconds> T_TA;
+    Timer<HOST, seconds> T_PF;
 
     for (const auto& entry : std::filesystem::directory_iterator(instances_path)) {
         const auto filename = entry.path().filename().string();
         if (std::regex_match(filename, std::regex{"instance_[0-9]+\\.txt"})) {
             fmt::print(fmt::fg(fmt::color::light_green), "\nSolving {}\n", filename);
             try {
-                auto time_before = high_resolution_clock::now();
+                T_HT.start();
                 AmbientMapInstance instance{entry.path(), map_path};
-                auto time_after = high_resolution_clock::now();
-                auto h_table_time{
-                    std::chrono::duration_cast<seconds>(time_after - time_before).count()};
+                T_HT.stop();
 
                 // Task assignment
-                time_before = high_resolution_clock::now();
+                T_TA.start();
                 std::vector<path_t> goal_sequences{assign_tasks(instance, capacity)};
-                time_after = high_resolution_clock::now();
-                auto task_assignment_time{
-                    std::chrono::duration_cast<seconds>(time_after - time_before).count()};
+                T_TA.stop();
 
                 // Path finding
-                int64_t path_finder_time{};
+                CmapdSolution solution;
+                T_PF.start();
                 if (solver == "CBS") {
-                    time_before = high_resolution_clock::now();
-                    CmapdSolution solution{cbs::cbs(instance, goal_sequences)};
-                    time_after = high_resolution_clock::now();
-                    path_finder_time
-                        = std::chrono::duration_cast<seconds>(time_after - time_before).count();
-
-                    print_solution(solution);
+                    solution = cbs::cbs(instance, goal_sequences);
                 } else if (solver == "PBS") {
-                    time_before = high_resolution_clock::now();
-                    CmapdSolution solution{pbs::pbs(instance, goal_sequences)};
-                    time_after = high_resolution_clock::now();
-                    path_finder_time
-                        = std::chrono::duration_cast<seconds>(time_after - time_before).count();
-
-                    print_solution(solution);
+                    solution = pbs::pbs(instance, goal_sequences);
                 }
+                T_PF.stop();
+                print_solution(solution);
 
                 fmt::print(fmt::emphasis::bold,
                            "H-table computing time:{:10}'\n"
                            "Task assignment time:{:12}'\n"
                            "Path finding time:{:15}'\n",
-                           h_table_time,
-                           task_assignment_time,
-                           path_finder_time);
-
-                total_time += h_table_time + task_assignment_time + path_finder_time;
-                ++real_instances_number;
+                           T_HT.duration(),
+                           T_TA.duration(),
+                           T_PF.duration());
 
             } catch (const std::exception& ex) {
                 std::cerr << "Instance skipped: " << ex.what() << std::endl;
@@ -243,8 +227,10 @@ void solver(const std::filesystem::path& instances_path,
         }
     }
 
+    auto total_time{T_HT.total_duration() + T_TA.total_duration() + T_PF.total_duration()};
+    auto avg_time{T_HT.average() + T_TA.average() + T_PF.average()};
     fmt::print(fmt::fg(fmt::color::light_green),
                "\nTOTAL TIME:{:10} seconds\nMEAN TIME:{:11} seconds\n",
                total_time,
-               total_time / real_instances_number);
+               avg_time);
 }

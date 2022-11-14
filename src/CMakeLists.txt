@@ -35,7 +35,9 @@ add_executable(cmapd
         ambient/AmbientMap.cpp
         ambient/AmbientMapInstance.cpp
         generation/generate_instances.cpp)
-target_include_directories(cmapd PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(cmapd PRIVATE
+        ${CMAKE_SOURCE_DIR}/src
+        ${CMAKE_SOURCE_DIR}/third_party/timer)
 target_link_libraries(cmapd PRIVATE
         task_assigner
         path_finders
