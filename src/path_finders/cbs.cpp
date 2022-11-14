@@ -98,7 +98,7 @@ std::vector<Constraint> generate_constraints(const Conflict& conflict,
         } else {
             agent = conflict.second_agent;
         }
-        for (moves_t moves{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
+        for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
             Point from_where = conflict.first_position + move;
             if (instance.is_valid(from_where)) {
                 constraints.emplace_back(
