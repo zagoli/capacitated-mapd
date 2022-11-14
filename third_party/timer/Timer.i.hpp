@@ -45,7 +45,7 @@
 
 namespace timer {
 
-inline std::ostream& operator<<(std::ostream& os, const xlib::Color& mod) noexcept { return os; }
+inline std::ostream& operator<<(std::ostream& os, [[maybe_unused]]const xlib::Color& mod) noexcept { return os; }
 
 template <class Rep, std::intmax_t Num, std::intmax_t Denom>
 std::ostream& operator<<(std::ostream& os,
@@ -125,7 +125,6 @@ void TimerBase<type, ChronoPrecision>::register_time() noexcept {
 template <timer_type type, typename ChronoPrecision>
 void TimerBase<type, ChronoPrecision>::print(const std::string& str)  // NOLINT
     const noexcept {
-    xlib::IosFlagSaver tmp;
     std::cout << _default_color << std::fixed << std::setprecision(_decimals) << std::right
               << std::setw(_space - 2) << str << "  " << duration() << ChronoPrecision()
               << xlib::Color::FG_DEFAULT << std::endl;
@@ -134,7 +133,6 @@ void TimerBase<type, ChronoPrecision>::print(const std::string& str)  // NOLINT
 template <timer_type type, typename ChronoPrecision>
 void TimerBase<type, ChronoPrecision>::printAll(const std::string& str)  // NOLINT
     const noexcept {
-    xlib::IosFlagSaver tmp;
     std::cout << _default_color << std::right << std::setw(_space - 2) << str << ":" << std::fixed
               << std::setprecision(_decimals) << "\n  min: " << min() << ChronoPrecision()
               << "\n  max: " << max() << ChronoPrecision() << "\n  avg: " << average()
@@ -211,7 +209,6 @@ template <typename ChronoPrecision> void Timer<SYS, ChronoPrecision>::stop() noe
 template <typename ChronoPrecision>
 void Timer<SYS, ChronoPrecision>::print(const std::string& str)  // NOLINT
     const noexcept {
-    xlib::IosFlagSaver tmp;
     auto wall_time_ms
         = std::chrono::duration_cast<ChronoPrecision>(_stop_time - _start_time).count();
 

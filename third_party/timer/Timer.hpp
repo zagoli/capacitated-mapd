@@ -37,10 +37,10 @@
  */
 #pragma once
 
-#include <chrono>               //std::chrono::duration
-#include <string>               //std::string
+#include <chrono>  //std::chrono::duration
+#include <string>  //std::string
 #if defined(__linux__)
-    #include <sys/times.h>      //::tms
+#    include <sys/times.h>  //::tms
 #endif
 
 #define COLOR
@@ -50,39 +50,40 @@
 // #else
 
 namespace xlib {
-    enum class Color { FG_DEFAULT };
-    struct IosFlagSaver {};
-} // namespace xlib
+enum class Color { FG_DEFAULT };
+struct IosFlagSaver {};
+}  // namespace xlib
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const xlib::Color& mod) noexcept {
-    return os;
-}
+inline std::ostream& operator<<(std::ostream& os, const xlib::Color& mod);
 
-//#endif
+// #endif
 
 namespace timer {
 
 /// @brief chrono precision : microseconds
-using micro   = typename std::chrono::duration<float, std::micro>;
+using micro = typename std::chrono::duration<float, std::micro>;
 /// @brief default chrono precision (milliseconds)
-using milli   = typename std::chrono::duration<float, std::milli>;
+using milli = typename std::chrono::duration<float, std::milli>;
 /// @brief chrono precision : seconds
 using seconds = typename std::chrono::duration<float, std::ratio<1>>;
 /// @brief chrono precision : minutes
 using minutes = typename std::chrono::duration<float, std::ratio<60>>;
 /// @brief chrono precision : minutes
-using hours   = typename std::chrono::duration<float, std::ratio<3600>>;
+using hours = typename std::chrono::duration<float, std::ratio<3600>>;
 
 /**
  * @brief timer types
  */
-enum timer_type {  HOST = 0       /// Wall (real) clock host time
-                 , CPU  = 1       /// CPU User time
-            #if defined(__linux__)
-                 , SYS  = 2       /// User/Kernel/System time
-            #endif
-                 , DEVICE = 3     /// GPU device time
+enum timer_type {
+    HOST = 0  /// Wall (real) clock host time
+    ,
+    CPU = 1  /// CPU User time
+#if defined(__linux__)
+    ,
+    SYS = 2  /// User/Kernel/System time
+#endif
+    ,
+    DEVICE = 3  /// GPU device time
 };
 
 namespace detail {
@@ -92,17 +93,16 @@ namespace detail {
  * @tparam type Timer type (default = HOST)
  * @tparam ChronoPrecision time precision
  */
-template<timer_type type, typename ChronoPrecision>
-class TimerBase {
-    template<typename>
-    struct is_duration : std::false_type {};
+template <timer_type type, typename ChronoPrecision> class TimerBase {
+    template <typename> struct is_duration : std::false_type {};
 
-    template<typename T, typename R>
-    struct is_duration<std::chrono::duration<T, R>> : std::true_type {};
+    template <typename T, typename R> struct is_duration<std::chrono::duration<T, R>>
+        : std::true_type {};
 
     static_assert(is_duration<ChronoPrecision>::value,
                   "Wrong type : typename is not std::chrono::duration");
-public:
+
+  public:
     /**
      * @brief Default costructor
      * @param[in] decimals precision to print the time elapsed
@@ -175,72 +175,71 @@ public:
 
     virtual void printAll(const std::string& str) const noexcept;
 
-protected:
-    ChronoPrecision   _time_elapsed  {};
-    const int         _space         { 0 };
-    const int         _decimals      { 0 };
-    const xlib::Color _default_color { xlib::Color::FG_DEFAULT };
-    bool              _start_flag    { false };
+  protected:
+    ChronoPrecision _time_elapsed{};
+    const int _space{0};
+    const int _decimals{0};
+    const xlib::Color _default_color{xlib::Color::FG_DEFAULT};
+    bool _start_flag{false};
 
     /**
      *
      */
     virtual void register_time() noexcept final;
 
-private:
-    ChronoPrecision   _time_squared       {};
-    ChronoPrecision   _total_time_elapsed {};
-    ChronoPrecision   _time_min           {};
-    ChronoPrecision   _time_max           {};
-    int               _num_executions     { 0 };
+  private:
+    ChronoPrecision _time_squared{};
+    ChronoPrecision _total_time_elapsed{};
+    ChronoPrecision _time_min{};
+    ChronoPrecision _time_max{};
+    int _num_executions{0};
 };
 
-} // namespace detail
+}  // namespace detail
 //------------------------------------------------------------------------------
 
-template<timer_type type, typename ChronoPrecision = milli>
-class Timer;
+template <timer_type type, typename ChronoPrecision = milli> class Timer;
 
-template<typename ChronoPrecision>
-class Timer<HOST, ChronoPrecision> final :
-            public timer::detail::TimerBase<HOST, ChronoPrecision> {
-public:
-    explicit Timer(int decimals = 1, int space = 15,
+template <typename ChronoPrecision> class Timer<HOST, ChronoPrecision> final
+    : public timer::detail::TimerBase<HOST, ChronoPrecision> {
+  public:
+    explicit Timer(int decimals = 1,
+                   int space = 15,
                    xlib::Color color = xlib::Color::FG_DEFAULT) noexcept;
 
     void start() noexcept override;
 
-    void stop()  noexcept override;
+    void stop() noexcept override;
 
-private:
+  private:
     using timer::detail::TimerBase<HOST, ChronoPrecision>::_time_elapsed;
     using timer::detail::TimerBase<HOST, ChronoPrecision>::_start_flag;
 
-    std::chrono::system_clock::time_point _start_time {};
-    std::chrono::system_clock::time_point _stop_time  {};
+    std::chrono::system_clock::time_point _start_time{};
+    std::chrono::system_clock::time_point _stop_time{};
 
     using timer::detail::TimerBase<HOST, ChronoPrecision>::register_time;
 };
 
 //------------------------------------------------------------------------------
 
-template<typename ChronoPrecision>
-class Timer<CPU, ChronoPrecision> final :
-            public timer::detail::TimerBase<CPU, ChronoPrecision> {
-public:
-    explicit Timer(int decimals = 1, int space = 15,
+template <typename ChronoPrecision> class Timer<CPU, ChronoPrecision> final
+    : public timer::detail::TimerBase<CPU, ChronoPrecision> {
+  public:
+    explicit Timer(int decimals = 1,
+                   int space = 15,
                    xlib::Color color = xlib::Color::FG_DEFAULT) noexcept;
 
     void start() noexcept override;
 
-    void stop()  noexcept override;
+    void stop() noexcept override;
 
-private:
+  private:
     using timer::detail::TimerBase<CPU, ChronoPrecision>::_time_elapsed;
     using timer::detail::TimerBase<CPU, ChronoPrecision>::_start_flag;
 
-    std::clock_t _start_clock { 0 };
-    std::clock_t _stop_clock  { 0 };
+    std::clock_t _start_clock{0};
+    std::clock_t _stop_clock{0};
 
     using timer::detail::TimerBase<CPU, ChronoPrecision>::register_time;
 };
@@ -249,20 +248,20 @@ private:
 
 #if defined(__linux__)
 
-template<typename ChronoPrecision>
-class Timer<SYS, ChronoPrecision> final :
-            public timer::detail::TimerBase<SYS, ChronoPrecision> {
-public:
-    explicit Timer(int decimals = 1, int space = 15,
+template <typename ChronoPrecision> class Timer<SYS, ChronoPrecision> final
+    : public timer::detail::TimerBase<SYS, ChronoPrecision> {
+  public:
+    explicit Timer(int decimals = 1,
+                   int space = 15,
                    xlib::Color color = xlib::Color::FG_DEFAULT) noexcept;
 
     void start() noexcept override;
 
-    void stop()  noexcept override;
+    void stop() noexcept override;
 
     void print(const std::string& str = "") const noexcept override;
 
-private:
+  private:
     using timer::detail::TimerBase<SYS, ChronoPrecision>::_start_flag;
     using timer::detail::TimerBase<SYS, ChronoPrecision>::_start_time;
     using timer::detail::TimerBase<SYS, ChronoPrecision>::_stop_time;
@@ -271,11 +270,11 @@ private:
     using timer::detail::TimerBase<SYS, ChronoPrecision>::_decimals;
 
     struct ::tms _start_TMS {};
-    struct ::tms _end_TMS   {};
+    struct ::tms _end_TMS {};
 };
 
 #endif
 
-} // namespace timer
+}  // namespace timer
 
 #include "Timer.i.hpp"

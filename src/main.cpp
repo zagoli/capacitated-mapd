@@ -214,9 +214,9 @@ void solver(const std::filesystem::path& instances_path,
                 print_solution(solution);
 
                 fmt::print(fmt::emphasis::bold,
-                           "H-table computing time:{:10}'\n"
-                           "Task assignment time:{:12}'\n"
-                           "Path finding time:{:15}'\n",
+                           "H-table computing time:{:20}'\n"
+                           "Task assignment time:{:22}'\n"
+                           "Path finding time:{:25}'\n",
                            T_HT.duration(),
                            T_TA.duration(),
                            T_PF.duration());
@@ -230,7 +230,7 @@ void solver(const std::filesystem::path& instances_path,
     auto total_time{T_HT.total_duration() + T_TA.total_duration() + T_PF.total_duration()};
     auto avg_time{T_HT.average() + T_TA.average() + T_PF.average()};
     fmt::print(fmt::fg(fmt::color::light_green),
-               "\nTOTAL TIME:{:10} seconds\nMEAN TIME:{:11} seconds\n",
+               "\nTOTAL TIME:{:20} seconds\nMEAN TIME:{:21} seconds\n",
                total_time,
                avg_time);
 }
