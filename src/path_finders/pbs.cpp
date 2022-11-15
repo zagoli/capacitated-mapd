@@ -1,6 +1,12 @@
-//
-// Created by dade on 10/11/22.
-//
+/**
+ * @file
+ * @brief Contains the pbs method implementation.
+ * @author Davide Furlani
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
+
 #include <vector>
 
 #include "CmapdSolution.h"

@@ -1,5 +1,5 @@
 /**
- * @file pbs.h
+ * @file
  * @brief Contains the pbs solver function.
  * @author Davide Furlani
  * @version 1.0

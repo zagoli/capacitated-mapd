@@ -1,5 +1,5 @@
 /**
- * @file Node.h
+ * @file
  * @brief declaration of multi_a_star function.
  * @author Jacopo Zagoli
  * @version 1.0

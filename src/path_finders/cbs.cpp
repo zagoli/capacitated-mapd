@@ -1,6 +1,11 @@
-//
-// Created by Jacopo on 08/11/2022.
-//
+/**
+ * @file
+ * @brief Contains the implementation of cbs methods.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #include <optional>
 #include <queue>
@@ -73,6 +78,13 @@ CmapdSolution cbs(const AmbientMapInstance& instance, const std::vector<path_t>&
     throw std::runtime_error{"Cbs didn't find a solution."};
 }
 
+/**
+ * Generate constraints for a Conflict.
+ * @param conflict The conflict for which the constraints are generated.
+ * @param agent_num The involved agent.
+ * @param instance The AmbientMapInstance for which we generate constraints.
+ * @return a vector of generated constraints.
+ */
 std::vector<Constraint> generate_constraints(const Conflict& conflict,
                                              int agent_num,
                                              const AmbientMapInstance& instance) {

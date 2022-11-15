@@ -1,4 +1,4 @@
-message(STATUS "processing test folder")
+message(DEBUG "processing test folder")
 
 # --- Copy test data folder into build folder ---
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

@@ -1,5 +1,5 @@
 /**
- * @file custom_types.h
+ * @file
  * @brief Contains type aliases used by the project.
  * @author Jacopo Zagoli
  * @version 1.0
@@ -25,6 +25,6 @@ using path_t = std::vector<Point>;
  * m_h_table.at({1,1}).at({2,2})
  */
 using h_table_t = std::map<Point, std::map<Point, int>>;
-
+/// A type alias for a vector of "moves", or offset to a Point
 using moves_t = std::vector<std::pair<int, int>>;
 }  // namespace cmapd

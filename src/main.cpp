@@ -1,5 +1,5 @@
 /**
- * @file main.cpp
+ * @file
  * @brief The program entry point. It parses arguments and prints results. Speak, friend, and enter.
  * @author Jacopo Zagoli
  * @version 1.0
@@ -36,6 +36,9 @@ void solver(const std::filesystem::path& instances_path,
             int capacity,
             std::string_view solver);
 
+/**
+ * @brief The program entry point.
+ */
 int main(int argc, char* argv[]) {
     using namespace std::string_literals;
     argparse::ArgumentParser parser{"cmapd"};

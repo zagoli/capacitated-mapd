@@ -1,6 +1,12 @@
-//
-// Created by dade on 04/11/22.
-//
+/**
+ * @file
+ * @brief Contains the implementation of assign_tasks.
+ * @author Davide Furlani
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #include "ortools.h"
 

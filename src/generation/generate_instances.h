@@ -1,6 +1,6 @@
 /**
- * @file generate_instances.h
- * @brief Contains a function to generate ramdom instances of the map.
+ * @file
+ * @brief Contains a function to generate random instances of the map.
  * @author Davide Furlani
  * @version 1.0
  * @date October, 2022

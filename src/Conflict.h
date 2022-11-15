@@ -1,5 +1,5 @@
 /**
- * @file Conflict.h
+ * @file
  * @brief Contains the struct conflict.
  * @author Jacopo Zagoli
  * @version 1.0

@@ -1,5 +1,5 @@
 /**
- * @file AmbientMap.h
+ * @file
  * @brief Contains the class AmbientMap.
  * @author Davide Furlani
  * @version 1.0
@@ -13,11 +13,12 @@
 #include <vector>
 
 #include "Point.h"
+
+namespace cmapd {
 /**
  * @class AmbientMap
- * @brief Represents the ambient where m_agents will move.
+ * @brief This class represents a grid, on which agents and tasks move.
  */
-namespace cmapd {
 class AmbientMap {
   protected:
     /**

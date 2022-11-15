@@ -33,6 +33,8 @@ set(CPM_SOURCE_CACHE
         FORCE)
 # Include dependency manager
 include(CPM)
+# Include additional tools
+include(tools)
 # Catch2 dependency
 CPMAddPackage(
         NAME Catch2
@@ -57,3 +59,6 @@ add_subdirectory(src)
 
 # --- Add tests ---
 add_subdirectory(tests)
+
+# --- Add documentation ---
+add_subdirectory(doc)

@@ -1,5 +1,5 @@
 /**
- * @file Node.h
+ * @file
  * @brief Contains the class Node used by cbs algorithm.
  * @author Jacopo Zagoli
  * @version 1.0

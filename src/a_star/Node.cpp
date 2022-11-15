@@ -1,6 +1,11 @@
-//
-// Created by Jacopo on 18/10/2022.
-//
+/**
+ * @file
+ * @brief Contains the implementation of the multi A* Node.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #include "a_star/Node.h"
 

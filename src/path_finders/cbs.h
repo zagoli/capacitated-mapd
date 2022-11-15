@@ -1,6 +1,11 @@
-//
-// Created by Jacopo on 08/11/2022.
-//
+/**
+ * @file
+ * @brief Contains the cbs method.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #pragma once
 

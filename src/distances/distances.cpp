@@ -1,6 +1,12 @@
-//
-// Created by Jacopo on 18/10/2022.
-//
+/**
+ * @file
+ * @brief Contains the implementation of distances methods.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
+
 #include "distances.h"
 
 #include <cmath>
@@ -37,8 +43,7 @@ h_table_t compute_h_table(const AmbientMapInstance& map_instance, auto distance_
     return hTable;
 }
 
-// explicit template instantiation for usage with manhattan_distance
-// in other translation units
+/// Explicit template instantiation for usage in other translation units.
 template h_table_t compute_h_table<decltype(&manhattan_distance)>(const AmbientMapInstance&,
                                                                   decltype(&manhattan_distance));
 

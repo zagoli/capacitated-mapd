@@ -1,6 +1,11 @@
-//
-// Created by dade on 25/10/22.
-//
+/**
+ * @file
+ * @brief Contains the implementation of generate_instances.
+ * @author Davide Furlani
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #include "generate_instances.h"
 

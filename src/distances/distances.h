@@ -1,5 +1,5 @@
 /**
- * @file distances.h
+ * @file
  * @brief Contains various functions related to distances between cells of the map.
  * @author Jacopo Zagoli
  * @version 1.0

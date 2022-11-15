@@ -11,11 +11,11 @@
 #include <vector>
 #include "custom_types.h"
 
+namespace cmapd {
 /**
  * @struct CmapdSolution
  * @brief Represents a solution to a CMAPD instance.
  */
-namespace cmapd {
 struct CmapdSolution {
     /// A vector containing a path (vector of points) for every agent.
     std::vector<path_t> paths;

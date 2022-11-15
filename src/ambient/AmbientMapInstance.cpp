@@ -1,6 +1,11 @@
-//
-// Created by dade on 20/10/22.
-//
+/**
+ * @file
+ * @brief Contains the implementation of class AmbientMapInstance.
+ * @author Davide Furlani
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #include "AmbientMapInstance.h"
 

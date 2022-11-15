@@ -1,7 +1,11 @@
-//
-// Created by Jacopo on 25/10/2022.
-//
-
+/**
+ * @file
+ * @brief Contains the implementation of the class Frontier.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 #include "a_star/Frontier.h"
 
 #include <optional>

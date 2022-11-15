@@ -1,4 +1,4 @@
-message(STATUS "processing src folder")
+message(DEBUG "processing src folder")
 
 # --- Source code ----
 

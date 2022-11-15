@@ -1,6 +1,11 @@
-//
-// Created by dade on 12/10/22.
-//
+/**
+ * @file
+ * @brief Contains the implementation of class AmbientMap.
+ * @author Davide Furlani
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #include "ambient/AmbientMap.h"
 
@@ -14,6 +19,12 @@
 
 namespace cmapd {
 
+/**
+ * Checks if a char is valid or not.
+ * @param c The char to be checked.
+ * @param row The row of the char.
+ * @param col The column of the char.
+ */
 void validate_char(char c, int row, int col) {
     if (c != '#' && c != ' ' && c != 'O') {
         throw std::runtime_error{

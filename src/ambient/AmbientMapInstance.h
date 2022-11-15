@@ -1,6 +1,6 @@
 /**
- * @file AmbientMap.h
- * @brief Contains the class AmbientMap.
+ * @file
+ * @brief Contains the class AmbientMapInstance.
  * @author Davide Furlani
  * @version 1.0
  * @date October, 2022
@@ -17,11 +17,13 @@
 #include "Point.h"
 #include "ambient/AmbientMap.h"
 #include "custom_types.h"
+
+namespace cmapd {
 /**
  * @class AmbientMapInstance
- * @brief Represents the Instance of a map to solve.
+ * @brief This class extends AmbientMap with the initial position of agents and tasks, and
+ * with a distance matrix.
  */
-namespace cmapd {
 class AmbientMapInstance final : public AmbientMap {
   private:
     std::vector<Point> m_agents;

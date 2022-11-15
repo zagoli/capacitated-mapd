@@ -1,6 +1,11 @@
-//
-// Created by Jacopo on 02/11/2022.
-//
+/**
+ * @file
+ * @brief Contains the cbs Node implementation.
+ * @author Jacopo Zagoli
+ * @version 1.0
+ * @date October, 2022
+ * @copyright 2022 Jacopo Zagoli, Davide Furlani
+ */
 
 #include "path_finders/Node.h"
 
@@ -19,6 +24,13 @@
 
 namespace cmapd::cbs {
 
+/**
+ * Get a Point in a path at a given timestamp.
+ * @param path The path to be analyzed.
+ * @param timestep The timestep at which we request a Point.
+ * @return the Point at the given timestep. If the timestep is longer than the path, returns the
+ * last point.
+ */
 Point get_position(const path_t& path, int timestep) {
     if (timestep < 0) {
         throw std::invalid_argument{"timestep must be greater than zero."};

@@ -1,5 +1,5 @@
 /**
- * @file Constraint.h
+ * @file
  * @brief Contains the struct Constraint.
  * @author Jacopo Zagoli
  * @version 1.0
@@ -27,4 +27,4 @@ struct Constraint {
     [[nodiscard]] bool operator==(const Constraint& rhs) const = default;
 };
 
-}
+}  // namespace cmapd

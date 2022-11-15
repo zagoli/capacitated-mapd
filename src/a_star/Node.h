@@ -1,5 +1,5 @@
 /**
- * @file Node.h
+ * @file
  * @brief Contains the class Node in namespace multi_a_star.
  * @author Jacopo Zagoli
  * @version 1.0
