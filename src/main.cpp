@@ -10,7 +10,6 @@
 #include <fmt/format.h>
 
 #include <argparse/argparse.hpp>
-#include <chrono>
 #include <filesystem>
 #include <regex>
 #include <string>
