@@ -67,6 +67,8 @@ add_test(NAME cleanup
 set_tests_properties(cleanup PROPERTIES
         FIXTURE_CLEANUP integration)
 
+# target "test" for automated tests automatically added by cmake
+
 # enable compiler warnings
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")

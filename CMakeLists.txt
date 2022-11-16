@@ -14,6 +14,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 # find custom scripts
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/third_party/or_tools")
+
 # testing
 enable_testing()
 
@@ -39,18 +40,19 @@ include(tools)
 CPMAddPackage(
         NAME Catch2
         GITHUB_REPOSITORY catchorg/Catch2
-        VERSION 3.0.1)
+        VERSION 3.0.1
+        EXCLUDE_FROM_ALL TRUE)
 # argparse dependency
 CPMAddPackage(
         NAME argparse
         GITHUB_REPOSITORY p-ranav/argparse
-        VERSION 2.9)
+        VERSION 2.9
+        EXCLUDE_FROM_ALL TRUE)
 # fmt dependency
 CPMAddPackage(
         NAME fmt
         GITHUB_REPOSITORY fmtlib/fmt
-        GIT_TAG 9.1.0
-)
+        GIT_TAG 9.1.0)
 # ortools - BINARIES FOR UBUNTU 22.04 INCLUDED
 find_package(ortools REQUIRED CONFIG)
 
@@ -62,3 +64,11 @@ add_subdirectory(tests)
 
 # --- Add documentation ---
 add_subdirectory(doc)
+
+# --- Install custom target ---
+# get sure the copied target finds shared libraries
+set_target_properties(cmapd PROPERTIES INSTALL_RPATH ${PROJECT_SOURCE_DIR}/third_party/or_tools/lib)
+
+set(INSTALL_DIR ${PROJECT_SOURCE_DIR}/bin)
+install(TARGETS cmapd
+        RUNTIME DESTINATION ${INSTALL_DIR})
