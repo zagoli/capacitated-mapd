@@ -41,6 +41,9 @@ You can download the binaries and see the needed requirements on the
 **Note:** The included OR-Tools is a built as a shared library. The installed binary will search for the library in
 its [current location](third_party/or_tools/lib).
 
+**Note:** You will need an internet connection to build the project, because some dependencies are downloaded
+on the fly.
+
 ---
 
 ### Build the documentation
@@ -53,6 +56,7 @@ $ make doc
 ```
 
 This will create a [doc/html]() folder with the documentation.  
+**Note:** You need Doxygen in order to generate the documentation.  
 Take also a look at the UML diagram for this project:  
 ![UML SCHEMA](doc/cmapd_uml.drawio.svg)
 
@@ -106,3 +110,81 @@ $ scan-build make
 ```
 
 **Note:** you must have these analyzers installed to be able to run them.
+
+---
+
+## Usage
+
+With this program, you can:
+
+- generate instances for a map
+- evaluate those instances
+- combine the two previous functions.
+
+Type `cmapd -h` to see all available options.
+
+### Generation of instances
+
+To generate instances, you must provide a map in the format specified below. You also need to specify
+the number of agents and tasks in each instance, and the number of instances to be generated. For example:
+
+```
+$ cmapd --generate --agents 5 --tasks 5 --instances 20 path/to/map.txt
+```
+
+The previous command will generate 20 instances in the `output` directory next to the executable. It is
+possible to change the output directory with the option `--instances-output`.
+
+### Evaluation of instances
+
+To solve some already generated instances, you must say where those instances are, which map they are
+referring to, the capacity of the agents and the type of conflict solver you want to use. For example:
+
+```
+$ cmapd --evaluate path/to/instances --capacity 2 --solver PBS path/to/map.txt
+```
+
+### Map format
+
+The map is saved as a txt file. The map must be rectangular, with `#` indicating a wall, ` ` (a whitespace)
+indicating a free cell and `O` (big o) indicating a possible starting point for agents, or starting/ending
+point for tasks. For example a possible map is:
+
+```
+                                   
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO ########## ########## OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO                       OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO ########## ########## OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO                       OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO ########## ########## OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO                       OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO ########## ########## OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO                       OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+ OO OO ########## ########## OO OO 
+ OO OO OOOOOOOOOO OOOOOOOOOO OO OO 
+                                   
+```
+
+### Generated instance format
+
+The first row contains the number of agents, followed by the number of tasks.
+Then there is a row for every agent with its starting point written as row and column indexes.
+Finally, a row for every task with its starting and ending points written as row and column indexes.
+Instances are automatically generated, but here's and example anyway:
+
+```
+1 1         # one agent and one task
+0 0         # the agent is in position {0,0}
+1 1 3 3     # the tasks starting point is at {1,1} and its ending point is at {3,3}
+```
+
+**Note:** no comments are allowed in an instance file!
