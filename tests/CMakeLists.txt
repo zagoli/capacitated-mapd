@@ -71,14 +71,24 @@ set_tests_properties(cleanup PROPERTIES
 
 # enable compiler warnings
 
-if (CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-    target_compile_options(cmapd PUBLIC -Wall -Wpedantic -Wextra -Werror)
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options(cmapd_tests PUBLIC -Wall -Wpedantic -Wextra -Werror)
 endif ()
 
 # --- code coverage ---
 
-if (ENABLE_TEST_COVERAGE)
-    target_compile_options(cmapd_tests PUBLIC -O0 -g -fprofile-arcs -ftest-coverage)
-    target_link_options(cmapd_tests PUBLIC -fprofile-arcs -ftest-coverage)
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+    target_compile_options(cmapd_tests PUBLIC -g --coverage -O0)
+    target_link_options(cmapd_tests PUBLIC --coverage)
+    target_compile_options(distances PUBLIC -g --coverage -O0)
+    target_link_options(distances PUBLIC --coverage)
+    target_compile_options(multi_a_star PUBLIC -g --coverage -O0)
+    target_link_options(multi_a_star PUBLIC --coverage)
+    target_compile_options(path_finders PUBLIC -g --coverage -O0)
+    target_link_options(path_finders PUBLIC --coverage)
+    target_compile_options(task_assigner PUBLIC -g --coverage -O0)
+    target_link_options(task_assigner PUBLIC --coverage)
+    target_compile_options(cmapd PUBLIC -g --coverage -O0)
+    target_link_options(cmapd PUBLIC --coverage)
 endif ()
