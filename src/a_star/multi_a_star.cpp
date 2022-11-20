@@ -19,6 +19,41 @@
 
 namespace cmapd::multi_a_star {
 
+/**
+ * Check if an A* Node is present in the constraint list.
+ * @param constraints The list of constraints.
+ * @param agent The agent which we are checking.
+ * @param child The node to be checked.
+ * @param parent The parent of child.
+ * @return true if child is constrained.
+ */
+bool is_constrained(const std::vector<Constraint>& constraints,
+                    int agent,
+                    const Node& child,
+                    const Node& parent) {
+    // create the constraint to be checked
+    Constraint check_me{.agent = agent,
+                        .timestep = child.get_g_value(),
+                        .from_position = parent.get_location(),
+                        .to_position = child.get_location()};
+    if (std::find(constraints.cbegin(), constraints.cend(), check_me) != constraints.cend()) {
+        return true;
+    }
+    // check for a previous final constraint
+    if (std::find_if(constraints.cbegin(),
+                     constraints.cend(),
+                     [&check_me](const Constraint& constraint) -> bool {
+                         return constraint.final && check_me.agent == constraint.agent
+                                && constraint.timestep <= check_me.timestep
+                                && check_me.from_position == constraint.from_position
+                                && check_me.to_position == constraint.to_position;
+                     })
+        != constraints.cend()) {
+        return true;
+    }
+    return false;
+}
+
 path_t multi_a_star(int agent,
                     Point start_location,
                     const path_t& goal_sequence,
@@ -50,13 +85,8 @@ path_t multi_a_star(int agent,
         explored.insert(top_node);
         // Populate frontier
         for (const auto& child : top_node.get_children(map_instance)) {
-            Constraint check_me{.agent = agent,
-                                .timestep = child.get_g_value(),
-                                .from_position = top_node.get_location(),
-                                .to_position = child.get_location()};
             // Check if child is constrained
-            if (std::find(constraints.cbegin(), constraints.cend(), check_me)
-                == constraints.cend()) {
+            if (!is_constrained(constraints, agent, child, top_node)) {
                 if (!explored.contains(child) && !frontier.contains(child)) {
                     frontier.push(child);
                 } else if (auto costly_child_opt

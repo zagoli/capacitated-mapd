@@ -2,7 +2,8 @@
  * @file
  * @brief Contains the pbs method implementation.
  * @author Davide Furlani
- * @version 1.0
+ * @author Jacopo Zagoli
+ * @version 1.1
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
@@ -18,27 +19,30 @@
 
 namespace cmapd::pbs {
 
-CmapdSolution pbs(AmbientMapInstance instance, const std::vector<path_t>& goal_sequences) {
+CmapdSolution pbs(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences) {
     std::vector<Constraint> constraints{};
     std::vector<path_t> paths{};
 
-    for (int i = 0; static_cast<size_t>(i) < goal_sequences.size(); ++i) {
+    for (int agent = 0; agent < goal_sequences.size(); ++agent) {
+        // Computing path
         path_t path = multi_a_star::multi_a_star(
-            i, instance.agents().at(i), goal_sequences.at(i), instance, constraints);
+            agent, instance.agents().at(agent), goal_sequences.at(agent), instance, constraints);
         paths.push_back(path);
-        for (int t = 0; static_cast<size_t>(t) < path.size(); ++t) {
-            Point p{path.at(t)};
-            for (int a = i + 1; a < instance.num_agents(); ++a) {
+        // Adding constraints for other agents
+        for (int timestep = 0; timestep < path.size(); ++timestep) {
+            Point point{path.at(timestep)};
+            for (int other_agent = agent + 1; other_agent < instance.num_agents(); ++other_agent) {
                 for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}};
                      const auto& move : moves) {
-                    Point from_where = p + move;
+                    Point from_where{point + move};
                     if (instance.is_valid(from_where)) {
-                        constraints.emplace_back(Constraint{a, t, from_where, p});
+                        // if this is the last timestep, final should equal to true
+                        constraints.emplace_back(Constraint{
+                            other_agent, timestep, from_where, point, timestep == path.size() - 1});
                     }
                 }
             }
         }
-        instance.wall(path.back());
     }
     int makespan{0};
     int cost{0};

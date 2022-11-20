@@ -23,6 +23,9 @@ struct Constraint {
     Point from_position;
     /// The cell to which the agent can't arrive.
     Point to_position;
+    /// If it's true, indicates that no other agent can move in this way later than timestep. This
+    /// field is used only by the PBS algorithm.
+    bool final{false};
     /// Equality operator for algorithms.
     [[nodiscard]] bool operator==(const Constraint& rhs) const = default;
 };

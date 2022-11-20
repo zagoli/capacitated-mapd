@@ -18,6 +18,7 @@ TEST_CASE("pbs", "[pbs]") {
     std::vector<path_t> goal_sequences = assign_tasks(instance, 1);
 
     std::vector<path_t> final_temp_paths = pbs::pbs(instance, goal_sequences).paths;
+    REQUIRE_NOTHROW(are_valid_routes(final_temp_paths));
 }
 
 TEST_CASE("pbs_3", "[pbs]") {
@@ -25,6 +26,7 @@ TEST_CASE("pbs_3", "[pbs]") {
     std::vector<path_t> goal_sequences = assign_tasks(instance, 2);
 
     std::vector<path_t> final_temp_paths = pbs::pbs(instance, goal_sequences).paths;
+    REQUIRE_NOTHROW(are_valid_routes(final_temp_paths));
 }
 
 TEST_CASE("pbs_4", "[pbs]") {

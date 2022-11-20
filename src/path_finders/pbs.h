@@ -22,5 +22,5 @@ namespace cmapd::pbs {
  * @return a solution, if found.
  * @throws runtime_error if no solution is found.
  */
-CmapdSolution pbs(AmbientMapInstance instance, const std::vector<path_t>& goal_sequences);
+CmapdSolution pbs(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences);
 }  // namespace cmapd::pbs
