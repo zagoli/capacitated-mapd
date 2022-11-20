@@ -75,7 +75,9 @@ Please note that some tests are particularly slow.
 
 ### Compile with coverage data enabled
 
-TODO
+You can configure CMake with: `-DCOVERAGE=ON`. When you run the main executable or the tests,
+report files describing coverage will be created which can be then analyzed with the preferred
+tool of your choice.
 
 ---
 
