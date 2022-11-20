@@ -52,7 +52,8 @@ CPMAddPackage(
 CPMAddPackage(
         NAME fmt
         GITHUB_REPOSITORY fmtlib/fmt
-        GIT_TAG 9.1.0)
+        GIT_TAG 9.1.0
+        EXCLUDE_FROM_ALL TRUE)
 # ortools - BINARIES FOR UBUNTU 22.04 INCLUDED
 find_package(ortools REQUIRED CONFIG)
 
@@ -72,3 +73,25 @@ set_target_properties(cmapd PROPERTIES INSTALL_RPATH ${PROJECT_SOURCE_DIR}/third
 set(INSTALL_DIR ${PROJECT_SOURCE_DIR}/bin)
 install(TARGETS cmapd
         RUNTIME DESTINATION ${INSTALL_DIR})
+
+# --- code coverage ---
+OPTION(COVERAGE "Enables code coverage report files creation")
+if ((CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang") AND ${COVERAGE})
+    target_compile_options(cmapd_tests PUBLIC -g --coverage -O0)
+    target_link_options(cmapd_tests PUBLIC --coverage)
+
+    target_compile_options(distances PUBLIC -g --coverage -O0)
+    target_link_options(distances PUBLIC --coverage)
+
+    target_compile_options(multi_a_star PUBLIC -g --coverage -O0)
+    target_link_options(multi_a_star PUBLIC --coverage)
+
+    target_compile_options(path_finders PUBLIC -g --coverage -O0)
+    target_link_options(path_finders PUBLIC --coverage)
+
+    target_compile_options(task_assigner PUBLIC -g --coverage -O0)
+    target_link_options(task_assigner PUBLIC --coverage)
+
+    target_compile_options(cmapd PUBLIC -g --coverage -O0)
+    target_link_options(cmapd PUBLIC --coverage)
+endif ()

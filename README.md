@@ -7,8 +7,6 @@ The code is inspired by [https://github.com/fenoy/capacitated_mapd]().
 
 ## How to
 
----
-
 ### Build the main executable
 
 Once you have downloaded the code, in the project directory run:
@@ -110,8 +108,6 @@ $ scan-build make
 ```
 
 **Note:** you must have these analyzers installed to be able to run them.
-
----
 
 ## Usage
 

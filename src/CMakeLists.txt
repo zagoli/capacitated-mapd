@@ -40,6 +40,7 @@ target_link_libraries(cmapd PRIVATE
         argparse::argparse
         fmt::fmt)
 
+# compilers warning for main executable
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     target_compile_options(cmapd PUBLIC -Wall -Wpedantic -Wextra -Werror)
