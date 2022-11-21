@@ -18,7 +18,7 @@ $ cmake ..
 $ make
 ```
 
-Obviously, you can use a different generator, such as Ninja.  
+Obviously, you can use a different generator, such as Ninja, which is much faster!  
 If you wish to install the executable in the [bin/]() directory you can alternatively do the following:
 
 ```
@@ -69,7 +69,7 @@ $ make
 $ make test
 ```
 
-Please note that some tests are particularly slow.
+Please note that some tests are particularly slow, it takes an average of one minute to run them all on my machine :-)
 
 ---
 
