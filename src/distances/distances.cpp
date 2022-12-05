@@ -2,53 +2,61 @@
  * @file
  * @brief Contains the implementation of distances methods.
  * @author Jacopo Zagoli
- * @version 1.0
+ * @version 2.0
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
 
-#include "distances.h"
+#include "distances/distances.h"
 
-#include <cmath>
+#include <algorithm>
+#include <list>
+#include <set>
 
 #include "Point.h"
 #include "ambient/AmbientMapInstance.h"
 #include "custom_types.h"
+#include "distances/Node.h"
 
 namespace cmapd {
 
-h_table_t compute_h_table(const AmbientMapInstance& map_instance, auto distance_function) {
-    h_table_t hTable;
-    // iterate over every cell of the m_grid
-    for (int r{0}; r < map_instance.rows_number(); ++r) {
-        for (int c{0}; c < map_instance.columns_number(); ++c) {
-            Point current_cell{r, c};
-            // we don't compute the distance for walls
-            if (map_instance.is_valid(current_cell)) {
-                // iterate over every task to compute the distance
-                for (const auto& [start, goal] : map_instance.tasks()) {
-                    // compute distance from current cell to the task starting point
-                    hTable[current_cell][start] = distance_function(current_cell, start);
-                    // compute distance from current cell to the task ending point
-                    hTable[current_cell][goal] = distance_function(current_cell, goal);
-                }
-                // iterate over every agent to compute the distance
-                for (const auto& agent : map_instance.agents()) {
-                    // compute distance from current cell to the agent point
-                    hTable[current_cell][agent] = distance_function(current_cell, agent);
+h_table_t compute_h_table(const AmbientMapInstance& map_instance) {
+    h_table_t h_table;
+    // Creation of a list with all points of interests (agents and tasks)
+    std::vector<Point> poi{map_instance.agents()};
+    for (auto& [start, goal] : map_instance.tasks()) {
+        poi.push_back(start);
+        poi.push_back(goal);
+    }
+    // We do a BFS starting from every poi to every other location on the map
+    // iterate over every poi
+    using namespace bfs;
+    for (Point destination : poi) {
+        // BFS algorithm
+        Node root{destination};
+        std::list<Node> frontier;
+        std::set<Point> explored;
+        frontier.push_back(root);
+        while (!frontier.empty()) {
+            // get first node and remove it
+            Node node{frontier.front()};
+            frontier.pop_front();
+            // update h-table
+            h_table[node.point][destination] = node.path_cost;
+            // mark point as explored
+            explored.insert(node.point);
+            // generate child nodes
+            for (moves_t moves{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
+                Node child{node.point + move, node.path_cost + 1};
+                // check if child is valid or is in explored or frontier
+                if (map_instance.is_valid(child.point) && !explored.contains(child.point)
+                    && std::find(frontier.cbegin(), frontier.cend(), child) == frontier.cend()) {
+                    frontier.push_back(child);
                 }
             }
         }
     }
-    return hTable;
-}
-
-/// Explicit template instantiation for usage in other translation units.
-template h_table_t compute_h_table<decltype(&manhattan_distance)>(const AmbientMapInstance&,
-                                                                  decltype(&manhattan_distance));
-
-int manhattan_distance(Point first, Point second) {
-    return abs(first.row - second.row) + abs(first.col - second.col);
+    return h_table;
 }
 
 namespace multi_a_star {

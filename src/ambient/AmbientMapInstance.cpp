@@ -59,7 +59,7 @@ AmbientMapInstance::AmbientMapInstance(const std::filesystem::path& path_to_map_
                              Point{row_pos_goal, col_pos_goal});
     }
 
-    m_h_table = compute_h_table(*this, manhattan_distance);
+    m_h_table = compute_h_table(*this);
 }
 
 AmbientMapInstance::AmbientMapInstance(const AmbientMap& map,
@@ -78,7 +78,7 @@ AmbientMapInstance::AmbientMapInstance(const AmbientMap& map,
         m_grid[task.second.row][task.second.col] = 't';
     }
 
-    m_h_table = compute_h_table(*this, manhattan_distance);
+    m_h_table = compute_h_table(*this);
 }
 
 int AmbientMapInstance::num_agents() const {
@@ -118,10 +118,6 @@ const h_table_t& AmbientMapInstance::h_table() const { return m_h_table; }
 std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance) {
     os << instance.to_string();
     return os;
-}
-
-void AmbientMapInstance::wall(Point p) {
-    if (is_valid(p)) m_grid.at(p.row).at(p.col) = '#';
 }
 
 }  // namespace cmapd

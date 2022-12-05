@@ -97,7 +97,7 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
         // doesn't contain Node
         REQUIRE_FALSE(frontier.contains_more_expensive(node1, 0));
         // contains Node but cheaper
-        REQUIRE_FALSE(frontier.contains_more_expensive(node, 8));
+        REQUIRE_FALSE(frontier.contains_more_expensive(node, 9));
         // contains Node more expensive
         REQUIRE(frontier.contains_more_expensive(node, 6));
     }
@@ -126,9 +126,9 @@ TEST_CASE("Multi A* Frontier", "[multi A*]") {
 }
 
 TEST_CASE("multi A* complete", "[multi A*]") {
-    SECTION("No m_constraints") {
+    SECTION("No constraints") {
         std::vector<Point> goals{{1, 2}, {3, 3}};
-        auto path{multi_a_star::multi_a_star(0, {1, 0}, goals, instance)};
+        auto path{multi_a_star::multi_a_star(0, {1, 0}, goals, instance, {})};
         REQUIRE(std::ssize(path) == 6);
         REQUIRE(path.at(0) == Point{1, 0});  // starting point
         REQUIRE(path.at(3) == Point{1, 3});  // middle point
