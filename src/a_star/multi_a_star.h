@@ -24,8 +24,9 @@ namespace cmapd::multi_a_star {
  * @param goal_sequence The sequence of goals to be visited.
  * @param map_instance The AmbientMapInstance on which the agents are moving.
  * @param constraints A vector of m_constraints to be respected when computing the path.
+ * @param timeout A upper limit on the number of iterations. If zero, is automatically computed.
  * @return A vector of Point representing the found path.
- * @throws runtime_error if no path is found.
+ * @throws runtime_error if no path is found or timeout is reached.
  * @see Lifelong Multi-Agent Path Finding in Large-Scale Warehouses.
  * @see Artificial Intelligence A Modern Approach, third edition, chapter 3, section 5.2
  */
@@ -33,6 +34,7 @@ path_t multi_a_star(int agent,
                     Point start_location,
                     const path_t& goal_sequence,
                     const AmbientMapInstance& map_instance,
-                    const std::vector<Constraint>& constraints);
+                    const std::vector<Constraint>& constraints = {},
+                    int timeout = 0);
 
 }  // namespace cmapd::multi_a_star
