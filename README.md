@@ -18,7 +18,7 @@ $ cmake ..
 $ make
 ```
 
-Obviously, you can use a different generator, such as Ninja.  
+Obviously, you can use a different generator, such as Ninja, which is much faster!  
 If you wish to install the executable in the [bin/]() directory you can alternatively do the following:
 
 ```
@@ -69,7 +69,7 @@ $ make
 $ make test
 ```
 
-Please note that some tests are particularly slow.
+Please note that some tests are particularly slow, it takes an average of one minute to run them all on my machine :-)
 
 ---
 
@@ -177,7 +177,7 @@ point for tasks. For example a possible map is:
 The first row contains the number of agents, followed by the number of tasks.
 Then there is a row for every agent with its starting point written as row and column indexes.
 Finally, a row for every task with its starting and ending points written as row and column indexes.
-Instances are automatically generated, but here's and example anyway:
+Instances are automatically generated, but here's an example anyway:
 
 ```
 1 1         # one agent and one task
