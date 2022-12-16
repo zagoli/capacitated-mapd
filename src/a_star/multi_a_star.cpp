@@ -61,12 +61,11 @@ path_t multi_a_star(int agent,
                     const std::vector<Constraint>& constraints,
                     int timeout) {
     // compute timeout value
-    if (timeout == 0) {
+    if (timeout <= 0) {
         timeout = map_instance.rows_number() * map_instance.columns_number() * 10;
     }
-    // if the goal sequence is empty, the path is the starting point
     if (goal_sequence.empty()) {
-        return path_t{start_location};
+        throw std::runtime_error{"[multiastar] the goal sequence is empty!"};
     }
     // frontier definition
     Frontier frontier;

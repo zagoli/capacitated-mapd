@@ -61,11 +61,11 @@ class Node {
      * @param instance The map instance on which we are operating.
      * @throws runtime_error if multi_a_star can't find a path for one agent.
      */
-    explicit Node(const Node& node,
-                  int agent,
-                  std::vector<Constraint>&& constraints,
+    explicit Node(const AmbientMapInstance& instance,
                   path_t goal_sequence,
-                  const AmbientMapInstance& instance);
+                  std::vector<Constraint>&& constraints,
+                  const Node& node,
+                  int agent);
 
     /**
      * Get the lengths of every path.

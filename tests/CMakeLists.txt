@@ -20,6 +20,7 @@ add_executable(cmapd_tests
         test_cbs.cpp
         test_pp.cpp
         test_ortools.cpp
+        my_test.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMapInstance.cpp
         ${CMAKE_SOURCE_DIR}/src/generation/generate_instances.cpp)

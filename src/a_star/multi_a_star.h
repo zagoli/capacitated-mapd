@@ -21,7 +21,7 @@ namespace cmapd::multi_a_star {
  * m_constraints.
  * @param agent The integer representing the agent for which we are computing the path.
  * @param start_location The start location of the agent.
- * @param goal_sequence The sequence of goals to be visited.
+ * @param goal_sequence The sequence of goals to be visited. Must be not empty.
  * @param map_instance The AmbientMapInstance on which the agents are moving.
  * @param constraints A vector of m_constraints to be respected when computing the path.
  * @param timeout A upper limit on the number of iterations. If zero, is automatically computed.

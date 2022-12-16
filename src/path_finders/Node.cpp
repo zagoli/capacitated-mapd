@@ -47,19 +47,22 @@ Node::Node(const AmbientMapInstance& instance,
            std::vector<Constraint>&& constraints)
     : m_constraints{std::move(constraints)} {
     for (int i = 0; i < std::ssize(goal_sequences); ++i) {
-        auto start_location = goal_sequences.at(i).at(0);
-        // remove start location from goal_sequence
-        goal_sequences.at(i).erase(goal_sequences.at(i).cbegin());
+        auto& goal_sequence{goal_sequences.at(i)};
+        auto start_location{goal_sequence.at(0)};
+        // remove start location from goal_sequence if it's not the only one
+        if (goal_sequence.size() != 1) {
+            goal_sequence.erase(goal_sequence.cbegin());
+        }
         m_paths.push_back(cmapd::multi_a_star::multi_a_star(
-            i, start_location, goal_sequences.at(i), instance, m_constraints));
+            i, start_location, goal_sequence, instance, m_constraints));
     }
 }
 
-Node::Node(const Node& node,
-           int agent,
-           std::vector<Constraint>&& constraints,
+Node::Node(const AmbientMapInstance& instance,
            path_t goal_sequence,
-           const AmbientMapInstance& instance)
+           std::vector<Constraint>&& constraints,
+           const Node& node,
+           int agent)
     : m_constraints{std::move(constraints)},
       m_paths{node.m_paths} {
     auto start_location = goal_sequence.at(0);

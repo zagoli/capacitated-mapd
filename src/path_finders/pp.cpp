@@ -19,14 +19,20 @@
 
 namespace cmapd::pp {
 
-CmapdSolution pp(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences) {
+CmapdSolution pp(const AmbientMapInstance& instance, std::vector<path_t> goal_sequences) {
     std::vector<Constraint> constraints{};
     std::vector<path_t> paths{};
 
     for (int agent = 0; agent < goal_sequences.size(); ++agent) {
         // Computing path
+        auto& goal_sequence{goal_sequences.at(agent)};
+        auto start_location{goal_sequence.at(0)};
+        // remove start location from goal_sequence if it's not the only one
+        if (goal_sequence.size() != 1) {
+            goal_sequence.erase(goal_sequence.cbegin());
+        }
         path_t path = multi_a_star::multi_a_star(
-            agent, instance.agents().at(agent), goal_sequences.at(agent), instance, constraints);
+            agent, start_location, goal_sequence, instance, constraints);
         paths.push_back(path);
         // Adding constraints for other agents
         for (int timestep = 0; timestep < path.size(); ++timestep) {

@@ -63,22 +63,22 @@ CmapdSolution cbs(const AmbientMapInstance& instance, const std::vector<path_t>&
         std::vector<Constraint> first_constraints{node.get_constraints()};
         first_constraints.insert(
             first_constraints.end(), first_new_constraints.begin(), first_new_constraints.end());
-        Node first{node,
-                   conflict->first_agent,
-                   std::move(first_constraints),
+        Node first{instance,
                    goal_sequences.at(conflict->first_agent),
-                   instance};
+                   std::move(first_constraints),
+                   node,
+                   conflict->first_agent};
 
         // second node
         auto second_new_constraints = generate_constraints(conflict.value(), 2, instance);
         std::vector<Constraint> second_constraints{node.get_constraints()};
         second_constraints.insert(
             second_constraints.end(), second_new_constraints.begin(), second_new_constraints.end());
-        Node second{node,
-                    conflict->second_agent,
-                    std::move(second_constraints),
+        Node second{instance,
                     goal_sequences.at(conflict->second_agent),
-                    instance};
+                    std::move(second_constraints),
+                    node,
+                    conflict->second_agent};
 
         // 8. push nodes in the queue
         frontier.push(first);

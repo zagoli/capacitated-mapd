@@ -22,5 +22,5 @@ namespace cmapd::pp {
  * @return a solution, if found.
  * @throws runtime_error if no solution is found.
  */
-CmapdSolution pp(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences);
+CmapdSolution pp(const AmbientMapInstance& instance, std::vector<path_t> goal_sequences);
 }  // namespace cmapd::pp

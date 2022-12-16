@@ -2,7 +2,6 @@
 // Created by Jacopo on 02/11/2022.
 //
 #include <catch2/catch_test_macros.hpp>
-#include <iostream>
 
 #include "CmapdSolution.h"
 #include "distances/distances.h"
