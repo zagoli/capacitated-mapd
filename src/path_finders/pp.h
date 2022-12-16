@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Contains the pbs solver function.
+ * @brief Contains the prioritized planning solver function.
  * @author Davide Furlani
  * @version 1.0
  * @date November, 2022
@@ -16,7 +16,7 @@
 namespace cmapd::pp {
 
 /**
- * This function finds paths without conflicts for every agent using a Priority Based Search.
+ * This function finds paths without conflicts for every agent using a Prioritized Planning.
  * @param instance The ambient map instance on which we are operating.
  * @param goal_sequences A vector containing a goal sequence for every agent.
  * @return a solution, if found.

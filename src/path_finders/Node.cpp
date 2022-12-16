@@ -66,8 +66,10 @@ Node::Node(const AmbientMapInstance& instance,
     : m_constraints{std::move(constraints)},
       m_paths{node.m_paths} {
     auto start_location = goal_sequence.at(0);
-    // remove start location from goal_sequence
-    goal_sequence.erase(goal_sequence.cbegin());
+    // remove start location from goal_sequence if it's not the only one
+    if (goal_sequence.size() != 1) {
+        goal_sequence.erase(goal_sequence.cbegin());
+    }
     m_paths[agent] = cmapd::multi_a_star::multi_a_star(
         agent, start_location, goal_sequence, instance, m_constraints);
 }

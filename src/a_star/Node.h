@@ -80,6 +80,8 @@ class Node {
    [[nodiscard]] int get_label() const;
    /// Increment label value by one.
    void increment_label();
+   /// Decrement label value by one.
+   void decrement_label();
    /// Get the f-value of the node, that is, g-value + h-value;
    [[nodiscard]] int get_f_value() const;
    /// Get the g-value of the node.

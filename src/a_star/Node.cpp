@@ -71,4 +71,6 @@ int Node::get_f_value() const { return m_g + m_h; }
 
 int Node::get_g_value() const { return m_g; }
 
+void Node::decrement_label() { m_label--; }
+
 }  // namespace cmapd::multi_a_star

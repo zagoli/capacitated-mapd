@@ -54,6 +54,25 @@ bool is_constrained(const std::vector<Constraint>& constraints,
     return false;
 }
 
+/**
+ * Checks if a Node can be the last one of his path.
+ * @param agent The agent we are computing the path for.
+ * @param ending_node The candidate last Node.
+ * @param constraints The constraint list.
+ * @return true if there are no constraints on the location in ending_node after the current time.
+ */
+bool can_path_end_here(int agent,
+                       const Node& ending_node,
+                       const std::vector<Constraint>& constraints) {
+    return std::none_of(constraints.cbegin(),
+                        constraints.cend(),
+                        [agent, &ending_node](const auto& constraint) -> bool {
+                            return constraint.to_position == ending_node.get_location()
+                                   && constraint.agent == agent
+                                   && constraint.timestep >= ending_node.get_g_value();
+                        });
+}
+
 path_t multi_a_star(int agent,
                     Point start_location,
                     const path_t& goal_sequence,
@@ -89,9 +108,16 @@ path_t multi_a_star(int agent,
         }
         // Goal test
         if (top_node.get_label() == std::ssize(goal_sequence)) {
-            return top_node.get_path();
+            if (can_path_end_here(agent, top_node, constraints)) {
+                return top_node.get_path();
+            } else {
+                // We wish to end the path here, but it's not possible.
+                // As a result, the last goal location (this one) should not appear as visited, and
+                // we must visit it again later!
+                top_node.decrement_label();
+            }
         }
-        // Remember that we visited this location
+        // Remember that we visited this location and time
         explored.insert(top_node);
         // Populate frontier
         for (const auto& child : top_node.get_children(map_instance)) {
