@@ -143,7 +143,7 @@ int main(int argc, char* argv[]) {
         auto instances_in_path = std::filesystem::path{instances_in_path_opt.value()};
         const std::string& solver_type = parser.get("--solver");
         const int capacity = parser.get<int>("--capacity");
-        if (solver_type == "CBS" || solver_type == "PBS") {
+        if (solver_type == "CBS" || solver_type == "PP") {
             std::cout << fmt::format(
                 "Solving instances in {}, capacity set to {} with {} solver.\n",
                 instances_in_path.string(),
@@ -152,7 +152,7 @@ int main(int argc, char* argv[]) {
             solver(instances_in_path, map_path, capacity, solver_type);
         } else {
             std::cerr << solver_type
-                      << " is not a known solver_type. Possible solver_type are: CBS, PBS (case "
+                      << " is not a known solver. Possible solvers are: CBS, PP (case "
                          "sensitive).\n";
             std::exit(EXIT_FAILURE);
         }

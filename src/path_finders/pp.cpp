@@ -47,7 +47,7 @@ CmapdSolution pp(const AmbientMapInstance& instance, const std::vector<path_t>& 
     int makespan{0};
     int cost{0};
     for (const path_t& p : paths) {
-        if (static_cast<int>(p.size()) > makespan) makespan = static_cast<int>(p.size());
+        if (std::ssize(p) > makespan) makespan = static_cast<int>(p.size());
         cost += static_cast<int>(p.size());
     }
 
