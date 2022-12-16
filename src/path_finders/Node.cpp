@@ -2,7 +2,7 @@
  * @file
  * @brief Contains the cbs Node implementation.
  * @author Jacopo Zagoli
- * @version 1.0
+ * @version 1.1
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
@@ -53,6 +53,20 @@ Node::Node(const AmbientMapInstance& instance,
         m_paths.push_back(cmapd::multi_a_star::multi_a_star(
             i, start_location, goal_sequences.at(i), instance, m_constraints));
     }
+}
+
+Node::Node(const Node& node,
+           int agent,
+           std::vector<Constraint>&& constraints,
+           path_t goal_sequence,
+           const AmbientMapInstance& instance)
+    : m_constraints{std::move(constraints)},
+      m_paths{node.m_paths} {
+    auto start_location = goal_sequence.at(0);
+    // remove start location from goal_sequence
+    goal_sequence.erase(goal_sequence.cbegin());
+    m_paths[agent] = cmapd::multi_a_star::multi_a_star(
+        agent, start_location, goal_sequence, instance, m_constraints);
 }
 
 std::vector<int> Node::lengths() const {

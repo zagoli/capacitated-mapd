@@ -2,7 +2,7 @@
  * @file
  * @brief Contains the implementation of cbs methods.
  * @author Jacopo Zagoli
- * @version 1.0
+ * @version 1.1
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
@@ -50,26 +50,36 @@ CmapdSolution cbs(const AmbientMapInstance& instance, const std::vector<path_t>&
         auto node = frontier.top();
         frontier.pop();
         // 5. get first conflict
-        std::optional<Conflict> conflict_opt{node.first_conflict()};
+        std::optional<Conflict> conflict{node.first_conflict()};
         // 6. if conflict not found, solution found
-        if (!conflict_opt) {
+        if (!conflict) {
             return {.paths = node.get_paths(), .makespan = node.makespan(), .cost = node.cost()};
         }
         // 7. if conflict found, create two nodes: one with constraint for first agent, one
         //    with constraints for second agent
-        auto conflict = conflict_opt.value();
 
-        auto first_new_constraints = generate_constraints(conflict, 1, instance);
+        // first node
+        auto first_new_constraints = generate_constraints(conflict.value(), 1, instance);
         std::vector<Constraint> first_constraints{node.get_constraints()};
         first_constraints.insert(
             first_constraints.end(), first_new_constraints.begin(), first_new_constraints.end());
-        Node first{instance, goal_sequences, std::move(first_constraints)};
+        Node first{node,
+                   conflict->first_agent,
+                   std::move(first_constraints),
+                   goal_sequences.at(conflict->first_agent),
+                   instance};
 
-        auto second_new_constraints = generate_constraints(conflict, 2, instance);
+        // second node
+        auto second_new_constraints = generate_constraints(conflict.value(), 2, instance);
         std::vector<Constraint> second_constraints{node.get_constraints()};
         second_constraints.insert(
             second_constraints.end(), second_new_constraints.begin(), second_new_constraints.end());
-        Node second{instance, goal_sequences, std::move(second_constraints)};
+        Node second{node,
+                    conflict->second_agent,
+                    std::move(second_constraints),
+                    goal_sequences.at(conflict->second_agent),
+                    instance};
+
         // 8. push nodes in the queue
         frontier.push(first);
         frontier.push(second);

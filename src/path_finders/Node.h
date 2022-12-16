@@ -2,7 +2,7 @@
  * @file
  * @brief Contains the class Node used by cbs algorithm.
  * @author Jacopo Zagoli
- * @version 1.0
+ * @version 1.1
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
@@ -52,6 +52,21 @@ class Node {
     explicit Node(const AmbientMapInstance& instance,
                   std::vector<path_t> goal_sequences,
                   std::vector<Constraint>&& constraints = {});
+    /**
+     * Constructor for a child Node.
+     * @param node The parent Node.
+     * @param agent The agent for which we need to compute the path again.
+     * @param constraints The constraints to take into account when computing paths.
+     * @param goal_sequence The goal sequence for agent.
+     * @param instance The map instance on which we are operating.
+     * @throws runtime_error if multi_a_star can't find a path for one agent.
+     */
+    explicit Node(const Node& node,
+                  int agent,
+                  std::vector<Constraint>&& constraints,
+                  path_t goal_sequence,
+                  const AmbientMapInstance& instance);
+
     /**
      * Get the lengths of every path.
      * @return a vector containing the length of every computed path.

@@ -90,11 +90,6 @@ class AmbientMapInstance final : public AmbientMap {
      * @return stream
      */
     friend std::ostream& operator<<(std::ostream& os, const AmbientMapInstance& instance);
-    /**
-     * Method that modify the map to add a wall in a given point in the map
-     * @param p the point to tranform to a wall
-     */
-    void wall(Point p);
 };
 }  // namespace cmapd
 
