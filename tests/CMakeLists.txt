@@ -18,7 +18,7 @@ add_executable(cmapd_tests
         test_multi_a_star.cpp
         test_generation_instances.cpp
         test_cbs.cpp
-        test_pbs.cpp
+        test_pp.cpp
         test_ortools.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMapInstance.cpp
@@ -48,9 +48,9 @@ set_tests_properties(generate_instances_integration PROPERTIES
         ".*\nDone"
         FIXTURE_SETUP integration)
 
-add_test(NAME pbs_test_integration
+add_test(NAME pp_test_integration
         COMMAND cmapd --evaluate ${instances_out_dir} -c 1 -s PBS data/map_5.txt)
-set_tests_properties(pbs_test_integration PROPERTIES
+set_tests_properties(pp_test_integration PROPERTIES
         PASS_REGULAR_EXPRESSION
         "(.|\n)*TOTAL TIME:.*\nMEAN TIME:.*"
         FIXTURE_REQUIRED integration)

@@ -13,7 +13,7 @@
 #include "ambient/AmbientMapInstance.h"
 #include "custom_types.h"
 
-namespace cmapd::pbs {
+namespace cmapd::pp {
 
 /**
  * This function finds paths without conflicts for every agent using a Priority Based Search.
@@ -22,5 +22,5 @@ namespace cmapd::pbs {
  * @return a solution, if found.
  * @throws runtime_error if no solution is found.
  */
-CmapdSolution pbs(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences);
-}  // namespace cmapd::pbs
+CmapdSolution pp(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences);
+}  // namespace cmapd::pp

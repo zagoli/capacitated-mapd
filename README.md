@@ -2,7 +2,7 @@
 
 This software can generate instances of the CMAPD problem and solve them.
 The task-assignment part is solved by Google's OR-Tools library, and the actual conflict-free paths
-are calculated using a Conflict Based Search or a Priority Based Search.  
+are calculated using a Conflict Based Search or a Prioritized Planning.  
 The code is inspired by [https://github.com/fenoy/capacitated_mapd]().
 
 ## How to
@@ -139,7 +139,7 @@ To solve some already generated instances, you must say where those instances ar
 referring to, the capacity of the agents and the type of conflict solver you want to use. For example:
 
 ```
-$ cmapd --evaluate path/to/instances --capacity 2 --solver PBS path/to/map.txt
+$ cmapd --evaluate path/to/instances --capacity 2 --solver PP path/to/map.txt
 ```
 
 ### Map format

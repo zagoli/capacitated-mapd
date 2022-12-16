@@ -1,6 +1,6 @@
 /**
  * @file
- * @brief Contains the pbs method implementation.
+ * @brief Contains the pp method implementation.
  * @author Davide Furlani
  * @author Jacopo Zagoli
  * @version 1.1
@@ -17,9 +17,9 @@
 #include "ambient/AmbientMapInstance.h"
 #include "custom_types.h"
 
-namespace cmapd::pbs {
+namespace cmapd::pp {
 
-CmapdSolution pbs(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences) {
+CmapdSolution pp(const AmbientMapInstance& instance, const std::vector<path_t>& goal_sequences) {
     std::vector<Constraint> constraints{};
     std::vector<path_t> paths{};
 
@@ -53,4 +53,4 @@ CmapdSolution pbs(const AmbientMapInstance& instance, const std::vector<path_t>&
 
     return {paths, makespan, cost};
 }
-}  // namespace cmapd::pbs
+}  // namespace cmapd::pp

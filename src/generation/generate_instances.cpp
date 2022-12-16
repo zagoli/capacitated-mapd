@@ -39,7 +39,7 @@ std::vector<AmbientMapInstance> generate_instances(const AmbientMap& map,
     auto grid = map.map();
     for (int i = 0; i < static_cast<int>(grid.size()); i++) {
         for (int j = 0; j < static_cast<int>(grid[i].size()); j++) {
-            if (grid[i][j] == 'O') possible_positions.emplace_back(Point{i, j});
+            if (grid[i][j] == 'O') possible_positions.emplace_back(i, j);
         }
     }
 
@@ -75,15 +75,15 @@ std::vector<AmbientMapInstance> generate_instances(const AmbientMap& map,
             Point the_chosen_end{copy_possible_positions[the_chosen_two]};
             copy_possible_positions.erase(copy_possible_positions.begin() + the_chosen_two);
 
-            tasks.emplace_back(std::pair{the_chosen_start, the_chosen_end});
+            tasks.emplace_back(the_chosen_start, the_chosen_end);
         }
-        instances.emplace_back(AmbientMapInstance{map, agents, tasks});
+        instances.emplace_back(map, agents, tasks);
 
-        std::string nome_file = fmt::format("instance_{}.txt", i);
+        std::string file_name = fmt::format("instance_{}.txt", i);
         std::filesystem::path absolute_path = absolute(std::filesystem::path(save_path));
         std::filesystem::create_directory(absolute_path);
 
-        std::ofstream out_file{absolute_path.string() + "/" + nome_file};
+        std::ofstream out_file{absolute_path.string() + "/" + file_name};
 
         out_file << agents.size() << " " << tasks.size() << std::endl;
         for (Point a : agents) out_file << a.row << " " << a.col << std::endl;

@@ -21,7 +21,7 @@
 #include "generation/generate_instances.h"
 #include "ortools/ortools.h"
 #include "path_finders/cbs.h"
-#include "path_finders/pbs.h"
+#include "path_finders/pp.h"
 
 /**
  * Solves an instance, printing the solutions and execution times.
@@ -90,7 +90,7 @@ int main(int argc, char* argv[]) {
     parser.add_argument("-s", "--solver")
         .help(
             "Specify the type of solver to use when evaluating the instances. "
-            "Could be CBS or PBS.")
+            "Could be CBS or PP.")
         .metavar("SOLVER")
         .default_value("CBS"s);
 
@@ -209,8 +209,8 @@ void solver(const std::filesystem::path& instances_path,
                 T_PF.start();
                 if (solver == "CBS") {
                     solution = cbs::cbs(instance, goal_sequences);
-                } else if (solver == "PBS") {
-                    solution = pbs::pbs(instance, goal_sequences);
+                } else if (solver == "PP") {
+                    solution = pp::pp(instance, goal_sequences);
                 }
                 T_PF.stop();
                 print_solution(solution);
