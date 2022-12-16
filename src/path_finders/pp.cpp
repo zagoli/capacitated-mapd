@@ -3,7 +3,7 @@
  * @brief Contains the pp method implementation.
  * @author Davide Furlani
  * @author Jacopo Zagoli
- * @version 1.1
+ * @version 1.2
  * @date October, 2022
  * @copyright 2022 Jacopo Zagoli, Davide Furlani
  */
@@ -38,6 +38,7 @@ CmapdSolution pp(const AmbientMapInstance& instance, std::vector<path_t> goal_se
         for (int timestep = 0; timestep < path.size(); ++timestep) {
             Point point{path.at(timestep)};
             for (int other_agent = agent + 1; other_agent < instance.num_agents(); ++other_agent) {
+                // Vertex
                 for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}};
                      const auto& move : moves) {
                     Point from_where{point + move};
@@ -47,9 +48,15 @@ CmapdSolution pp(const AmbientMapInstance& instance, std::vector<path_t> goal_se
                             other_agent, timestep, from_where, point, timestep == path.size() - 1});
                     }
                 }
+                // Edge
+                if (timestep < path.size() - 1) {
+                    constraints.emplace_back(
+                        Constraint{other_agent, timestep + 1, path.at(timestep + 1), point});
+                }
             }
         }
     }
+
     int makespan{0};
     int cost{0};
     for (const path_t& p : paths) {
