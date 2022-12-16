@@ -6,7 +6,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-namespace AmbientMapTest {
+namespace {
 using cmapd::AmbientMap;
 
 TEST_CASE("test assign map", "[instantiation_map]") {
@@ -92,4 +92,4 @@ TEST_CASE("test if to_string return the correct map string", "[to_string_method_
 
     REQUIRE(map.to_string() == "#####\n OOO \n# # #\n OOO \n#####\n");
 }
-}  // namespace AmbientMapTest
+}  // namespace

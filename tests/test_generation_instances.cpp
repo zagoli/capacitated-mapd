@@ -7,7 +7,7 @@
 
 #include "generation/generate_instances.h"
 
-namespace GenerateInstances {
+namespace {
 using cmapd::generate_instances;
 
 TEST_CASE("test generation instances", "[generate_instances]") {
@@ -50,4 +50,4 @@ TEST_CASE("test generation instances", "[generate_instances]") {
     REQUIRE(instances[0].num_tasks() == 2);
 }
 
-}  // namespace GenerateInstances
+}  // namespace

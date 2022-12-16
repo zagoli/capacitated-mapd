@@ -6,7 +6,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-namespace AmbientMapInstanceTest {
+namespace {
 using cmapd::AmbientMapInstance;
 
 TEST_CASE("test assign instance", "[instantiation_instance]") {
@@ -83,4 +83,4 @@ TEST_CASE("test if to_string return the correct instance string", "[to_string_me
 
     REQUIRE(instance.to_string() == "#####\n ata \n# # #\n ttt \n#####\n");
 }
-}
+}  // namespace

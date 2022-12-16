@@ -6,7 +6,7 @@
 #include "distances/distances.h"
 #include "ortools/ortools.h"
 
-namespace ortools_test {
+namespace {
 
 using namespace cmapd;
 
@@ -53,4 +53,4 @@ TEST_CASE("advanced ortools test", "[ortools]") {
     REQUIRE(goal_sequences.at(2) == valid_path_2);
 }
 
-}  // namespace ortools_test
+}  // namespace

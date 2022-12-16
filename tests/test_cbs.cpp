@@ -10,7 +10,7 @@
 #include "path_finders/cbs.h"
 #include "path_finders_utils.h"
 
-namespace cbs_test {
+namespace {
 
 TEST_CASE("cbs node", "[cbs]") {
     const std::vector<cmapd::path_t> goal_sequences_1
@@ -111,4 +111,4 @@ TEST_CASE("advanced cbs search", "[cbs]") {
     REQUIRE_NOTHROW(are_valid_routes(solution.paths));
 }
 
-}  // namespace cbs_test
+}  // namespace

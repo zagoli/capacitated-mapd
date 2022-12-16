@@ -9,7 +9,7 @@
 #include "path_finders/pp.h"
 #include "path_finders_utils.h"
 
-namespace pp_test {
+namespace {
 
 using namespace cmapd;
 
@@ -36,4 +36,4 @@ TEST_CASE("pp_4", "[pp]") {
     std::vector<path_t> final_temp_paths = pp::pp(instance, goal_sequences).paths;
     REQUIRE_NOTHROW(are_valid_routes(final_temp_paths));
 }
-}  // namespace pp_test
+}  // namespace

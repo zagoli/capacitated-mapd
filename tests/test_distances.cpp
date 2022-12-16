@@ -4,7 +4,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include "distances/distances.h"
 
-namespace distance_test {
+namespace {
 
 using namespace cmapd;
 
@@ -64,4 +64,4 @@ TEST_CASE("compute h-distance", "[distances]") {
     REQUIRE(h_value == 5);
 }
 
-}  // namespace distance_test
+}  // namespace

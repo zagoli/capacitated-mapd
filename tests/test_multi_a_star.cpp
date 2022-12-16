@@ -8,7 +8,7 @@
 #include "a_star/Node.h"
 #include "a_star/multi_a_star.h"
 
-namespace multi_a_star_test {
+namespace {
 
 const std::vector<cmapd::Point> goal_sequence = {{1, 2}, {3, 2}, {3, 1}, {3, 3}};
 const cmapd::AmbientMapInstance instance{"data/instance_1.txt", "data/map_1.txt"};
@@ -153,4 +153,4 @@ TEST_CASE("multi A* complete", "[multi A*]") {
     }
 }
 
-}  // namespace multi_a_star_test
+}  // namespace
