@@ -9,13 +9,15 @@
 
 #include "a_star/multi_a_star.h"
 
-#include <set>
+#include <vector>
 
 #include "Constraint.h"
+#include "ConstraintsContainer.h"
 #include "Point.h"
 #include "a_star/Frontier.h"
 #include "a_star/Node.h"
 #include "custom_types.h"
+#include "distances/distances.h"
 
 namespace cmapd::multi_a_star {
 
@@ -27,32 +29,10 @@ namespace cmapd::multi_a_star {
  * @param parent The parent of child.
  * @return true if child is constrained.
  */
-bool is_constrained(const std::vector<Constraint>& constraints,
+bool is_constrained(const ConstraintsContainer& constraints,
                     int agent,
                     const Node& child,
-                    const Node& parent) {
-    // create the constraint to be checked
-    Constraint check_me{.agent = agent,
-                        .timestep = child.get_g_value(),
-                        .from_position = parent.get_location(),
-                        .to_position = child.get_location()};
-    if (std::find(constraints.cbegin(), constraints.cend(), check_me) != constraints.cend()) {
-        return true;
-    }
-    // check for a previous final constraint
-    if (std::find_if(constraints.cbegin(),
-                     constraints.cend(),
-                     [&check_me](const Constraint& constraint) -> bool {
-                         return constraint.final && check_me.agent == constraint.agent
-                                && constraint.timestep <= check_me.timestep
-                                && check_me.from_position == constraint.from_position
-                                && check_me.to_position == constraint.to_position;
-                     })
-        != constraints.cend()) {
-        return true;
-    }
-    return false;
-}
+                    const Point& from_position);
 
 /**
  * Checks if a Node can be the last one of his path.
@@ -61,23 +41,19 @@ bool is_constrained(const std::vector<Constraint>& constraints,
  * @param constraints The constraint list.
  * @return true if there are no constraints on the location in ending_node after the current time.
  */
-bool can_path_end_here(int agent,
-                       const Node& ending_node,
-                       const std::vector<Constraint>& constraints) {
-    return std::none_of(constraints.cbegin(),
-                        constraints.cend(),
-                        [agent, &ending_node](const auto& constraint) -> bool {
-                            return constraint.to_position == ending_node.get_location()
-                                   && constraint.agent == agent
-                                   && constraint.timestep >= ending_node.get_g_value();
-                        });
-}
+bool can_path_end_here(int agent, const Node& ending_node, const ConstraintsContainer& constraints);
+
+/**
+ * Check if a node is not already in the frontier and in the explored set.
+ * @return true iff child is not in explored and frontier.
+ */
+bool is_child_novel(const Frontier& frontier, const std::vector<Node>& explored, const Node& child);
 
 path_t multi_a_star(int agent,
                     Point start_location,
                     const path_t& goal_sequence,
                     const AmbientMapInstance& map_instance,
-                    const std::vector<Constraint>& constraints,
+                    const ConstraintsContainer& constraints,
                     int timeout) {
     // compute timeout value
     if (timeout <= 0) {
@@ -87,9 +63,12 @@ path_t multi_a_star(int agent,
         throw std::runtime_error{"[multiastar] the goal sequence is empty!"};
     }
     // frontier definition
-    Frontier frontier;
-    // explore set definition
-    std::set<Node> explored;
+    const int queues_reserved_space{
+        compute_h_value(start_location, 0, map_instance.h_table(), goal_sequence) * 10};
+    Frontier frontier(queues_reserved_space);
+    // explored set definition
+    std::vector<Node> explored;
+    explored.reserve(queues_reserved_space);
     // generation of root node in the frontier
     frontier.push(Node{start_location, map_instance.h_table(), goal_sequence});
     // main loop
@@ -118,22 +97,75 @@ path_t multi_a_star(int agent,
             }
         }
         // Remember that we visited this location and time
-        explored.insert(top_node);
+        explored.push_back(top_node);
         // Populate frontier
         for (const auto& child : top_node.get_children(map_instance)) {
             // Check if child is constrained
-            if (!is_constrained(constraints, agent, child, top_node)) {
-                if (!explored.contains(child) && !frontier.contains(child)) {
+            if (!is_constrained(constraints, agent, child, top_node.get_location())) {
+                if (is_child_novel(frontier, explored, child)) {
                     frontier.push(child);
                 } else if (auto costly_child_opt
                            = frontier.contains_more_expensive(child, child.get_f_value())) {
-                    frontier.replace(costly_child_opt.value(), child);
+                    frontier.replace(*costly_child_opt, child);
                 }
             }
         }
     }
     // No solution is found
     throw std::runtime_error("[multiastar] No solution  for agent " + std::to_string(agent));
+}
+
+bool is_child_novel(const Frontier& frontier,
+                    const std::vector<Node>& explored,
+                    const Node& child) {
+    bool is_not_in_explored
+        = std::find(explored.cbegin(), explored.cend(), child) == explored.cend();
+    bool is_not_in_frontier = !frontier.contains(child);
+    return is_not_in_explored && is_not_in_frontier;
+}
+
+bool can_path_end_here(int agent,
+                       const Node& ending_node,
+                       const ConstraintsContainer& constraints) {
+    int timestep{ending_node.get_g_value()};
+    std::vector<Constraint> my_constraints{constraints.greater_equal_timestep(timestep)};
+    return std::none_of(my_constraints.cbegin(),
+                        my_constraints.cend(),
+                        [agent, &ending_node](const auto& constraint) -> bool {
+                            return constraint.to_position == ending_node.get_location()
+                                   && constraint.agent == agent;
+                        });
+}
+
+bool is_constrained(const ConstraintsContainer& constraints,
+                    int agent,
+                    const Node& child,
+                    const Point& from_position) {
+    int timestep{child.get_g_value()};
+    const auto& my_constraints{constraints.at_timestep(timestep)};
+    if (std::find_if(my_constraints.cbegin(),
+                     my_constraints.cend(),
+                     [&](const Constraint& constraint) -> bool {
+                         return constraint.agent == agent
+                                && constraint.from_position == from_position
+                                && constraint.to_position == child.get_location();
+                     })
+        != my_constraints.cend()) {
+        return true;
+    }
+    // check for a previous final constraint
+    if (std::find_if(my_constraints.cbegin(),
+                     my_constraints.cend(),
+                     [&](const Constraint& constraint) -> bool {
+                         return constraint.final && constraint.agent == agent
+                                && constraint.timestep <= child.get_g_value()
+                                && constraint.from_position == from_position
+                                && constraint.to_position == child.get_location();
+                     })
+        != my_constraints.cend()) {
+        return true;
+    }
+    return false;
 }
 
 }  // namespace cmapd::multi_a_star

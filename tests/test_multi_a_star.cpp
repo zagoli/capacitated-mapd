@@ -4,6 +4,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "ConstraintsContainer.h"
 #include "a_star/Frontier.h"
 #include "a_star/Node.h"
 #include "a_star/multi_a_star.h"
@@ -143,9 +144,11 @@ TEST_CASE("multi A* complete", "[multi A*]") {
     }
     SECTION("Constraints") {
         std::vector<Point> goals{{3, 1}};
-        std::vector<Constraint> constraints{
-            {.agent = 0, .timestep = 2, .from_position = {1, 3}, .to_position = {2, 3}},
-            {.agent = 1, .timestep = 2, .from_position = {1, 3}, .to_position = {1, 2}}};
+
+        ConstraintsContainer constraints;
+        constraints.add_constraints(
+            {{.agent = 0, .timestep = 2, .from_position = {1, 3}, .to_position = {2, 3}},
+             {.agent = 1, .timestep = 2, .from_position = {1, 3}, .to_position = {1, 2}}});
         auto path{multi_a_star::multi_a_star(0, {1, 4}, goals, instance, constraints)};
         REQUIRE(std::ssize(path) == 6);
         path_t expected_path{{1, 4}, {1, 3}, {1, 2}, {1, 1}, {2, 1}, {3, 1}};

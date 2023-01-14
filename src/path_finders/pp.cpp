@@ -12,6 +12,7 @@
 
 #include "CmapdSolution.h"
 #include "Constraint.h"
+#include "ConstraintsContainer.h"
 #include "Point.h"
 #include "a_star/multi_a_star.h"
 #include "ambient/AmbientMapInstance.h"
@@ -20,7 +21,7 @@
 namespace cmapd::pp {
 
 CmapdSolution pp(const AmbientMapInstance& instance, std::vector<path_t> goal_sequences) {
-    std::vector<Constraint> constraints{};
+    ConstraintsContainer constraints{};
     std::vector<path_t> paths{};
 
     for (int agent = 0; agent < goal_sequences.size(); ++agent) {
@@ -44,14 +45,17 @@ CmapdSolution pp(const AmbientMapInstance& instance, std::vector<path_t> goal_se
                     Point from_where{point + move};
                     if (instance.is_valid(from_where)) {
                         // if this is the last timestep, final should equal to true
-                        constraints.emplace_back(Constraint{
-                            other_agent, timestep, from_where, point, timestep == path.size() - 1});
+                        constraints.add_constraint({other_agent,
+                                                    timestep,
+                                                    from_where,
+                                                    point,
+                                                    timestep == path.size() - 1});
                     }
                 }
                 // Edge
                 if (timestep < path.size() - 1) {
-                    constraints.emplace_back(
-                        Constraint{other_agent, timestep + 1, path.at(timestep + 1), point});
+                    constraints.add_constraint(
+                        {other_agent, timestep + 1, path.at(timestep + 1), point});
                 }
             }
         }

@@ -13,6 +13,7 @@
 
 #include "Conflict.h"
 #include "Constraint.h"
+#include "ConstraintsContainer.h"
 #include "ambient/AmbientMapInstance.h"
 #include "custom_types.h"
 
@@ -27,7 +28,7 @@ class Node {
     /// the paths of the current node, one for every agent.
     std::vector<path_t> m_paths;
     /// the constraints of the current node
-    std::vector<Constraint> m_constraints;
+    ConstraintsContainer m_constraints;
     /**
      * Detect the first conflict in the provided paths, if present.
      * @param first_agent The number of the first agent.
@@ -51,7 +52,7 @@ class Node {
      */
     explicit Node(const AmbientMapInstance& instance,
                   std::vector<path_t> goal_sequences,
-                  std::vector<Constraint>&& constraints = {});
+                  ConstraintsContainer constraints = {});
     /**
      * Constructor for a child Node.
      * @param node The parent Node.
@@ -63,7 +64,7 @@ class Node {
      */
     explicit Node(const AmbientMapInstance& instance,
                   path_t goal_sequence,
-                  std::vector<Constraint>&& constraints,
+                  ConstraintsContainer constraints,
                   const Node& node,
                   int agent);
 
@@ -101,7 +102,7 @@ class Node {
      * Get the constraints of the current node.
      * @return the constraints of the current node.
      */
-    [[nodiscard]] std::vector<Constraint> get_constraints() const;
+    [[nodiscard]] ConstraintsContainer get_constraints() const;
 };
 
 }  // namespace cmapd::cbs

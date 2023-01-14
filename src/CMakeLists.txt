@@ -34,7 +34,8 @@ add_executable(cmapd
         main.cpp
         ambient/AmbientMap.cpp
         ambient/AmbientMapInstance.cpp
-        generation/generate_instances.cpp)
+        generation/generate_instances.cpp
+        ConstraintsContainer.cpp)
 target_include_directories(cmapd PRIVATE
         ${CMAKE_SOURCE_DIR}/src
         ${CMAKE_SOURCE_DIR}/third_party/timer)

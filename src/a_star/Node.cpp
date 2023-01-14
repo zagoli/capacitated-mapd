@@ -52,15 +52,6 @@ std::vector<Node> Node::get_children(const AmbientMapInstance& instance) const {
 
 path_t Node::get_path() const { return m_path; }
 
-std::partial_ordering Node::operator<=>(const Node& rhs) const {
-    if (auto c = get_location() <=> rhs.get_location(); c != nullptr) return c;
-    return m_g <=> rhs.m_g;
-}
-
-bool Node::operator==(const Node& rhs) const {
-    return m_location == rhs.m_location && m_g == rhs.m_g;
-}
-
 const Point& Node::get_location() const { return m_location; }
 
 int Node::get_label() const { return m_label; }
@@ -72,5 +63,9 @@ int Node::get_f_value() const { return m_g + m_h; }
 int Node::get_g_value() const { return m_g; }
 
 void Node::decrement_label() { m_label--; }
+
+bool Node::operator==(const Node& rhs) const {
+    return m_location == rhs.m_location && m_label == rhs.m_label && m_g == rhs.m_g;
+}
 
 }  // namespace cmapd::multi_a_star

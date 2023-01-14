@@ -22,7 +22,8 @@ add_executable(cmapd_tests
         test_ortools.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMap.cpp
         ${CMAKE_SOURCE_DIR}/src/ambient/AmbientMapInstance.cpp
-        ${CMAKE_SOURCE_DIR}/src/generation/generate_instances.cpp)
+        ${CMAKE_SOURCE_DIR}/src/generation/generate_instances.cpp
+        ${CMAKE_SOURCE_DIR}/src/ConstraintsContainer.cpp)
 target_include_directories(cmapd_tests
         PRIVATE
         ${CMAKE_SOURCE_DIR}/src)

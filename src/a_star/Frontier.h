@@ -8,8 +8,8 @@
  */
 
 #pragma once
-#include <forward_list>
 #include <optional>
+#include <vector>
 
 #include "a_star/Node.h"
 
@@ -17,15 +17,19 @@ namespace cmapd::multi_a_star {
 
 /**
  * @class Frontier
- * @brief This class is a sort of priority queue, which also allows to replace elements in it
+ * @brief This class is sort of a priority queue, which also allows to replace elements in it
  * and to test if an object is contained in the queue. For now it contains multi A* nodes.
  */
 class Frontier {
   private:
     /// The underlying data structure containing the Nodes.
-    std::forward_list<Node> m_queue;
+    std::vector<Node> m_queue;
 
   public:
+    /// Default constructor.
+    Frontier();
+    /// Constructor which reserves space in advance.
+    explicit Frontier(int space_to_reserve);
     /**
      * Insert a Node in the frontier.
      * @param node The Node to be inserted.
@@ -50,8 +54,7 @@ class Frontier {
      * @param cost The f-value to compare with Nodes in the frontier.
      * @return An optional containing a Node if found and nothing otherwise.
      */
-    [[nodiscard]] std::optional<Node> contains_more_expensive(const Node& node,
-                                                                    int cost) const;
+    [[nodiscard]] std::optional<Node> contains_more_expensive(const Node& node, int cost) const;
     /**
      * Test if the frontier is empty.
      * @return True if the frontier is empty, false otherwise.
