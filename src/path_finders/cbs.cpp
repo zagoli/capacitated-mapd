@@ -101,12 +101,12 @@ std::vector<Constraint> generate_constraints(const Conflict& conflict,
     std::vector<Constraint> constraints{};
     if (conflict.type == ConflictType::EDGE) {
         if (agent_num == 1) {
-            constraints.emplace_back(Constraint{conflict.first_agent,
+            constraints.emplace_back(Constraint{conflict.second_agent,
                                                 conflict.timestep,
                                                 conflict.first_position,
                                                 conflict.second_position});
         } else {
-            constraints.emplace_back(Constraint{conflict.second_agent,
+            constraints.emplace_back(Constraint{conflict.first_agent,
                                                 conflict.timestep,
                                                 conflict.second_position,
                                                 conflict.first_position});
@@ -114,9 +114,9 @@ std::vector<Constraint> generate_constraints(const Conflict& conflict,
     } else if (conflict.type == ConflictType::VERTEX) {
         int agent;
         if (agent_num == 1) {
-            agent = conflict.first_agent;
-        } else {
             agent = conflict.second_agent;
+        } else {
+            agent = conflict.first_agent;
         }
         for (moves_t moves{{0, 0}, {0, 1}, {1, 0}, {0, -1}, {-1, 0}}; const auto& move : moves) {
             Point from_where = conflict.first_position + move;

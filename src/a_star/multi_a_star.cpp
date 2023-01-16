@@ -148,7 +148,7 @@ bool is_constrained(const ConstraintsContainer& constraints,
                      [&](const Constraint& constraint) -> bool {
                          return
                              // base check
-                             (constraint.agent == agent && constraint.from_position == from_position
+                             (constraint.agent != agent && constraint.from_position == from_position
                               && constraint.to_position == child.get_location())
                              && (
                                  // normal constraint
