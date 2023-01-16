@@ -46,6 +46,12 @@ class ConstraintsContainer {
      * @return a vector of constraints.
      */
     std::vector<Constraint> greater_equal_timestep(int timestep) const;
+    /**
+     * Get the constraints with timestep equal or less than specified.
+     * @param timestep
+     * @return a vector of constraints.
+     */
+    std::vector<Constraint> less_equal_timestep(int timestep) const;
 };
 
 }  // namespace cmapd

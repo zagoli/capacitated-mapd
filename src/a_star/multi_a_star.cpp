@@ -142,25 +142,19 @@ bool is_constrained(const ConstraintsContainer& constraints,
                     const Node& child,
                     const Point& from_position) {
     int timestep{child.get_g_value()};
-    const auto& my_constraints{constraints.at_timestep(timestep)};
+    const auto& my_constraints{constraints.less_equal_timestep(timestep)};
     if (std::find_if(my_constraints.cbegin(),
                      my_constraints.cend(),
                      [&](const Constraint& constraint) -> bool {
-                         return constraint.agent == agent
-                                && constraint.from_position == from_position
-                                && constraint.to_position == child.get_location();
-                     })
-        != my_constraints.cend()) {
-        return true;
-    }
-    // check for a previous final constraint
-    if (std::find_if(my_constraints.cbegin(),
-                     my_constraints.cend(),
-                     [&](const Constraint& constraint) -> bool {
-                         return constraint.final && constraint.agent == agent
-                                && constraint.timestep <= child.get_g_value()
-                                && constraint.from_position == from_position
-                                && constraint.to_position == child.get_location();
+                         return
+                             // base check
+                             (constraint.agent == agent && constraint.from_position == from_position
+                              && constraint.to_position == child.get_location())
+                             && (
+                                 // normal constraint
+                                 (constraint.timestep == child.get_g_value()) ||
+                                 // final constraint
+                                 (constraint.final && constraint.timestep <= child.get_g_value()));
                      })
         != my_constraints.cend()) {
         return true;

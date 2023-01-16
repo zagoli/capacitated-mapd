@@ -20,6 +20,7 @@ std::vector<Constraint> ConstraintsContainer::at_timestep(int timestep) const {
         return {};
     }
 }
+
 std::vector<Constraint> ConstraintsContainer::greater_equal_timestep(int timestep) const {
     std::vector<Constraint> result;
     for (const auto& element : m_constraints_map) {
@@ -29,6 +30,17 @@ std::vector<Constraint> ConstraintsContainer::greater_equal_timestep(int timeste
     }
     return result;
 }
+
+std::vector<Constraint> ConstraintsContainer::less_equal_timestep(int timestep) const {
+    std::vector<Constraint> result;
+    for (const auto& element : m_constraints_map) {
+        if (element.first <= timestep) {
+            result.insert(result.end(), element.second.begin(), element.second.end());
+        }
+    }
+    return result;
+}
+
 void ConstraintsContainer::add_constraints(const std::vector<Constraint>& constraints) {
     for (const auto& constraint : constraints) {
         add_constraint(constraint);
